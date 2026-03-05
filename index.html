@@ -408,56 +408,55 @@
                             fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"
                             stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
 
-                            <!-- Defs for animation and masks -->
+                            <!-- Accurate Hand-drawn Tracing Line-Art SVG -->
                             <defs>
                                 <path id="t-torso"
-                                    d="M 152,240 V 125 Q 152,105 172,105 H 228 Q 248,105 248,125 V 170 Q 248,190 228,190 H 208" />
-                                <circle id="t-head" cx="200" cy="65" r="24" />
+                                    d="M 160,240 V 105 A 20,20 0 0,1 180,85 H 240 A 20,20 0 0,1 260,105 V 150 A 20,20 0 0,1 240,170 H 220" />
+                                <circle id="t-head" cx="210" cy="55" r="24" />
 
-                                <path id="table-top" d="M 30,240 H 370" stroke-width="20" />
-                                <rect id="table-leg" x="66" y="255" width="16" height="65" rx="6" />
-                                <rect id="table-leg-r" x="318" y="255" width="16" height="65" rx="6" />
+                                <path id="t-leg-l" d="M 185,255 V 320 H 165" />
+                                <path id="t-leg-r" d="M 215,255 V 320 H 235" />
 
-                                <circle id="p-head" cx="330" cy="216" r="18" />
-                                <path id="p-torso" d="M 312,216 H 220 Q 200,216 200,230 H 80 L 40,240" />
+                                <path id="table-top" d="M 40,240 H 360" stroke-width="20" />
+                                <path id="table-leg" d="M 70,255 V 320" stroke-width="20" />
+                                <path id="table-leg-r" d="M 330,255 V 320" stroke-width="20" />
 
-                                <path id="p-arm" d="M 285,225 H 200 V 240 H 285 A 7.5,7.5 0 0,0 285,225" />
+                                <circle id="p-head" cx="325" cy="216" r="18" />
+                                <path id="p-torso" d="M 307,216 H 235 A 10,10 0 0,0 225,226 H 80 L 40,240" />
+                                <path id="p-arm" d="M 285,226 H 195 V 240 H 285" />
 
-                                <path id="t-leg-l" d="M 185,255 V 320 H 165 Q 175,305 185,305" />
-                                <path id="t-leg-r" d="M 215,255 V 320 H 235 Q 225,305 215,305" />
-
-                                <!-- Animated Right Leg of Patient (Bent) -->
+                                <!-- Animated Patient Leg (Rhythmic bend) -->
                                 <path id="anim-leg"
-                                    d="M 195,240 L 195,210 L 175,125 L 165,125 L 85,125 L 45,110 L 45,130 L 70,130 L 70,145 L 185,145 L 210,240 Z">
+                                    d="M 195,240 L 195,210 L 175,125 L 165,125 L 85,125 L 45,110 L 45,130 L 70,130 L 70,145 L 185,145 L 210,240">
                                     <animate attributeName="d" repeatCount="indefinite" dur="3s" keyTimes="0;0.5;1"
                                         calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
-                                        values="M 195,240 L 195,210 L 175,125 L 165,125 L 85,125 L 45,110 L 45,130 L 70,130 L 70,145 L 185,145 L 210,240 Z; 
-                                            M 195,240 L 195,210 L 185,160 L 175,160 L 95,160 L 55,145 L 55,165 L 80,165 L 80,180 L 195,180 L 210,240 Z; 
-                                            M 195,240 L 195,210 L 175,125 L 165,125 L 85,125 L 45,110 L 45,130 L 70,130 L 70,145 L 185,145 L 210,240 Z" />
+                                        values="M 195,240 L 195,210 L 175,125 L 165,125 L 85,125 L 45,110 L 45,130 L 70,130 L 70,145 L 185,145 L 210,240; 
+                                            M 195,240 L 195,210 L 185,160 L 175,160 L 95,160 L 55,145 L 55,165 L 80,165 L 80,180 L 195,180 L 210,240; 
+                                            M 195,240 L 195,210 L 175,125 L 165,125 L 85,125 L 45,110 L 45,130 L 70,130 L 70,145 L 185,145 L 210,240" />
                                 </path>
 
-                                <!-- Animated Therapist Right Arm (Holding knee) -->
+                                <!-- Animated Therapist Right Arm (On Knee) -->
                                 <path id="t-arm-r"
-                                    d="M 248,135 V 155 Q 248,175 228,175 H 180 Q 165,175 165,160 V 125 L 185,125 V 155 H 225 V 135 Z">
+                                    d="M 260,135 V 155 A 15,15 0 0,1 245,170 H 180 A 15,15 0 0,1 165,155 V 125 L 185,125 V 155 H 225 V 135">
                                     <animate attributeName="d" repeatCount="indefinite" dur="3s" keyTimes="0;0.5;1"
                                         calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
-                                        values="M 248,135 V 162 Q 248,182 228,182 H 180 Q 165,182 165,167 V 135 L 185,135 V 162 H 225 V 135 Z; 
-                                            M 248,135 V 202 Q 248,222 228,222 H 190 Q 175,222 175,207 V 170 L 195,170 V 202 H 225 V 135 Z; 
-                                            M 248,135 V 162 Q 248,182 228,182 H 180 Q 165,182 165,167 V 135 L 185,135 V 162 H 225 V 135 Z" />
+                                        values="M 260,135 V 162 A 15,15 0 0,1 245,177 H 180 A 15,15 0 0,1 165,162 V 135 L 185,135 V 162 H 225 V 135; 
+                                            M 260,135 V 202 A 15,15 0 0,1 245,217 H 190 A 15,15 0 0,1 175,202 V 170 L 195,170 V 202 H 225 V 135; 
+                                            M 260,135 V 162 A 15,15 0 0,1 245,177 H 180 A 15,15 0 0,1 165,162 V 135 L 185,135 V 162 H 225 V 135" />
                                 </path>
 
-                                <!-- Animated Therapist Left Arm (Holding ankle) -->
-                                <path id="t-arm-l" d="M 152,145 L 85,145 V 130 H 152 Z">
+                                <!-- Animated Therapist Left Arm (Ankle Support) -->
+                                <path id="t-arm-l" d="M 160,145 L 95,145 V 130">
                                     <animate attributeName="d" repeatCount="indefinite" dur="3s" keyTimes="0;0.5;1"
-                                        calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="M 152,145 L 85,145 V 130 H 152 Z; 
-                                            M 152,145 L 95,180 V 165 L 152,130 Z; 
-                                            M 152,145 L 85,145 V 130 H 152 Z" />
+                                        calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="M 160,145 L 95,145 V 130; 
+                                            M 160,145 L 105,180 V 165; 
+                                            M 160,145 L 95,145 V 130" />
                                 </path>
 
-                                <!-- Masks to create true line-art intersections -->
+                                <!-- SVG Transparency Masks using Black/White -->
                                 <mask id="mask-anim-leg">
                                     <rect width="400" height="400" fill="white" />
-                                    <!-- Cut out holes around foreground elements by stroking them thick and black -->
+                                    <!-- Foreground anims punch empty transparent lines via thick black stroke -->
                                     <use href="#anim-leg" stroke="black" stroke-width="24" fill="none" />
                                     <use href="#t-arm-r" stroke="black" stroke-width="24" fill="none" />
                                     <use href="#t-arm-l" stroke="black" stroke-width="24" fill="none" />
@@ -465,9 +464,7 @@
 
                                 <mask id="mask-patient">
                                     <rect width="400" height="400" fill="white" />
-                                    <!-- Patient torso cuts through therapist torso and table -->
                                     <use href="#p-torso" stroke="black" stroke-width="24" fill="none" />
-                                    <!-- The animated leg and arms also cut through -->
                                     <use href="#anim-leg" stroke="black" stroke-width="24" fill="none" />
                                     <use href="#t-arm-r" stroke="black" stroke-width="24" fill="none" />
                                 </mask>
@@ -480,36 +477,30 @@
                                 </mask>
                             </defs>
 
-                            <!-- Background Elements -->
+                            <!-- Drawing SVG Line Art with Proper Masks (from back to front) -->
                             <g mask="url(#mask-patient)">
-                                <!-- Therapist body -->
                                 <use href="#t-head" />
                                 <use href="#t-torso" />
                             </g>
 
-                            <!-- Therapist Legs (Behind everything) -->
                             <use href="#t-leg-l" />
                             <use href="#t-leg-r" />
 
                             <g mask="url(#mask-table)">
-                                <!-- Table top line -->
                                 <use href="#table-top" />
                             </g>
 
-                            <!-- Table Legs -->
                             <use href="#table-leg" />
                             <use href="#table-leg-r" />
 
-                            <!-- Middle Elements -->
                             <g mask="url(#mask-anim-leg)">
-                                <!-- Patient head & torso & straight leg -->
                                 <use href="#p-head" />
                                 <use href="#p-torso" />
                                 <use href="#p-arm" />
                             </g>
 
-                            <!-- Foreground Elements (Animated) -->
-                            <use href="#anim-leg" class="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" />
+                            <!-- Foreground Anims -->
+                            <use href="#anim-leg" />
                             <use href="#t-arm-r" />
                             <use href="#t-arm-l" />
                         </svg>
