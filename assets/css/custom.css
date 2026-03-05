@@ -258,6 +258,23 @@ body.menu-open {
   }
 }
 
+.how-step-icon svg {
+  animation: how-step-icon-color 2.8s ease-in-out infinite;
+}
+
+@keyframes how-step-icon-color {
+  0%,
+  100% {
+    color: rgba(19, 236, 236, 0.7);
+    filter: drop-shadow(0 0 0 rgba(19, 236, 236, 0));
+  }
+
+  50% {
+    color: rgba(157, 255, 255, 1);
+    filter: drop-shadow(0 0 8px rgba(19, 236, 236, 0.5));
+  }
+}
+
 .how-step-icon::after {
   content: '';
   position: absolute;
