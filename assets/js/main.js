@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const header = document.getElementById('main-header');
   const spotlight = document.getElementById('mouse-spotlight');
   const themeToggle = document.getElementById('theme-toggle');
+  const themeToggleMobile = document.getElementById('theme-toggle-mobile');
   const themeIcon = document.getElementById('theme-toggle-icon');
 
   const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
@@ -21,12 +22,17 @@ document.addEventListener('DOMContentLoaded', () => {
     themeIcon.textContent = html.classList.contains('dark') ? 'dark_mode' : 'light_mode';
   };
 
+  const toggleTheme = () => {
+    html.classList.toggle('dark');
+    html.classList.toggle('light');
+    syncThemeIcon();
+  };
+
   if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      html.classList.toggle('dark');
-      html.classList.toggle('light');
-      syncThemeIcon();
-    });
+    themeToggle.addEventListener('click', toggleTheme);
+  }
+  if (themeToggleMobile) {
+    themeToggleMobile.addEventListener('click', toggleTheme);
   }
   syncThemeIcon();
 
