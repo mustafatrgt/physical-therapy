@@ -44,8 +44,8 @@ body.menu-open {
 }
 
 .light .header-scrolled {
-  background: rgba(240, 244, 248, 0.9);
-  border-bottom: 1px solid rgba(19, 236, 236, 0.2);
+  background: transparent;
+  border-bottom: 0;
 }
 
 .light .text-primary {
@@ -222,10 +222,10 @@ body.menu-open {
 }
 
 .header-scrolled {
-  background: rgba(8, 15, 15, 0.6);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(19, 236, 236, 0.05);
-  padding: 1rem 1.5rem;
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom: 0;
+  padding: 0.85rem 0.5rem;
 }
 
 @keyframes pulse-glow {
@@ -294,7 +294,7 @@ body.menu-open {
   }
 
   .header-scrolled {
-    padding: 0.75rem 0.5rem;
+    padding: 0.7rem 0.4rem;
   }
 }
 
