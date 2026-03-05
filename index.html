@@ -1,546 +1,992 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Physical Therapy Clinic | Premium Recovery</title>
-<link rel="preload" fetchpriority="high" as="image" href="https://lh3.googleusercontent.com/aida-public/AB6AXuBLyxKNhCPkZ2RmeAKdW9kDYmLUBuAH3Dhb5j-oSHQC42yfblbOGql-pCRLw2NSfdYe-dbL0vAq3-2zccu1F82YJEXwmU3tDp7bY6yTAoU-r4_LMDF7Qm7d5soB_i3e7UFigPtUWWbQSnL-ZMLf4JfIlv4g8cFzVl28SdnatU_cMUU3SGU8Pe8iQtyBglbCpu4-7qqkxDqguNhc4FbvOptRjRNcoI3idnzzJKyjz6LNXulA6vQmmAtYCVw76DD1BfmgApPG-Q3E834">
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">const spotlight = document.getElementById('mouse-spotlight'); 
-document.addEventListener('mousemove', (e) => { 
-    spotlight.style.setProperty('--x', e.clientX + 'px'); 
-    spotlight.style.setProperty('--y', e.clientY + 'px'); 
-}); 
+<html class="dark" lang="en">
 
-const header = document.getElementById('main-header');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        header.classList.add('header-scrolled');
-        header.classList.remove('py-4');
-    } else {
-        header.classList.remove('header-scrolled');
-        header.classList.add('py-4');
-    }
-});
-
-const observerOptions = { threshold: 0.1 }; 
-const observer = new IntersectionObserver((entries) => { 
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('active');
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Physical Therapy Clinic | Premium Recovery</title>
+    <link rel="preload" fetchpriority="high" as="image"
+        href="https://lh3.googleusercontent.com/aida-public/AB6AXuBLyxKNhCPkZ2RmeAKdW9kDYmLUBuAH3Dhb5j-oSHQC42yfblbOGql-pCRLw2NSfdYe-dbL0vAq3-2zccu1F82YJEXwmU3tDp7bY6yTAoU-r4_LMDF7Qm7d5soB_i3e7UFigPtUWWbQSnL-ZMLf4JfIlv4g8cFzVl28SdnatU_cMUU3SGU8Pe8iQtyBglbCpu4-7qqkxDqguNhc4FbvOptRjRNcoI3idnzzJKyjz6LNXulA6vQmmAtYCVw76DD1BfmgApPG-Q3E834">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ecec",
+                        "background-light": "#F0F4F8",
+                        "background-dark": "#080f0f",
+                        "charcoal": "#1a202c"
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }</script>
+    <style>
+        .light body {
+            background-color: #F0F4F8;
+            color: #1a202c;
         }
-    }); 
-}, observerOptions); 
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        .light .glass-panel {
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(19, 236, 236, 0.2);
+        }
 
-    const themeToggle = document.querySelector('button:has(.material-symbols-outlined:contains("dark_mode")), button:has(.material-symbols-outlined:contains("light_mode"))');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const html = document.documentElement;
-            const icon = themeToggle.querySelector('.material-symbols-outlined');
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                html.classList.add('light');
-                icon.textContent = 'light_mode';
+        .light .text-slate-100,
+        .light .text-white {
+            color: #1a202c;
+        }
+
+        .light .text-slate-300,
+        .light .text-slate-400 {
+            color: #4a5568;
+        }
+
+        .light .liquid-blob {
+            background-color: rgba(19, 236, 236, 0.4);
+        }
+
+        .light .header-scrolled {
+            background: rgba(240, 244, 248, 0.8);
+            border-bottom: 1px solid rgba(19, 236, 236, 0.2);
+        }
+
+        .light .text-primary {
+            color: #0ea5e9;
+        }
+
+        .light .bg-primary {
+            background-color: #0ea5e9;
+        }
+    </style>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #080f0f;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(19, 236, 236, 0.08);
+        }
+
+        .liquid-blob {
+            filter: blur(60px);
+            z-index: -1;
+        }
+
+        .refractive-border {
+            position: relative;
+        }
+
+        .refractive-border::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(135deg, rgba(19, 236, 236, 0.2), transparent, rgba(19, 236, 236, 0.1));
+            border-radius: inherit;
+            z-index: -1;
+        }
+
+        #mouse-spotlight {
+            pointer-events: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            background: radial-gradient(600px circle at var(--x, 0) var(--y, 0), rgba(19, 236, 236, 0.05), transparent 40%);
+        }
+
+        .rotating-border-container {
+            position: relative;
+            z-index: 0;
+        }
+
+        .rotating-border-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 1px;
+            background: conic-gradient(from var(--angle), transparent 80%, rgba(19, 236, 236, 0.5), transparent 98%);
+            border-radius: inherit;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            animation: rotate-border 4s linear infinite;
+            pointer-events: none;
+        }
+
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        .rotating-border-container:hover::before {
+            opacity: 0.6;
+        }
+
+        @keyframes rotate-border {
+            to {
+                --angle: 360deg;
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-load {
+            animation: fadeInLoad 1.2s ease-out forwards;
+        }
+
+        @keyframes fadeInLoad {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes floating {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .floating-animation {
+            animation: floating 6s ease-in-out infinite;
+        }
+
+        .tracking-tightest {
+            letter-spacing: -0.05em;
+        }
+
+        .header-scrolled {
+            background: rgba(8, 15, 15, 0.6);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(19, 236, 236, 0.05);
+            padding: 1rem 1.5rem;
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.6;
+                transform: scale(1.1);
+            }
+        }
+
+        .animate-pulse-glow {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        </angle>
+    </style>
+</head>
+
+<body class="bg-background-dark text-slate-100 font-display selection:bg-primary/30">
+    <div id="mouse-spotlight"></div>
+    <div class="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 liquid-blob"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 liquid-blob"></div>
+    <div class="fixed top-[30%] right-[10%] w-[30%] h-[30%] rounded-full bg-primary/5 liquid-blob"></div>
+    <script>const spotlight = document.getElementById('mouse-spotlight');
+        document.addEventListener('mousemove', (e) => {
+            spotlight.style.setProperty('--x', e.clientX + 'px');
+            spotlight.style.setProperty('--y', e.clientY + 'px');
+        });
+
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+                header.classList.remove('py-4');
             } else {
-                html.classList.remove('light');
-                html.classList.add('dark');
-                icon.textContent = 'dark_mode';
+                header.classList.remove('header-scrolled');
+                header.classList.add('py-4');
             }
         });
-    }
-});</script><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script id="tailwind-config">tailwind.config = { 
-    darkMode: "class", 
-    theme: { 
-        extend: { 
-            colors: { 
-                "primary": "#13ecec", 
-                "background-light": "#F0F4F8", 
-                "background-dark": "#080f0f", 
-                "charcoal": "#1a202c"
-            }, 
-            fontFamily: { 
-                "display": ["Plus Jakarta Sans", "sans-serif"] 
-            }, 
-            borderRadius: { 
-                "DEFAULT": "0.25rem", 
-                "lg": "0.5rem", 
-                "xl": "1.5rem", 
-                "full": "9999px" 
-            }, 
-        }, 
-    }, 
-}</script><style>
-    .light body { background-color: #F0F4F8; color: #1a202c; }
-    .light .glass-panel { background: rgba(0, 0, 0, 0.03); border: 1px solid rgba(19, 236, 236, 0.2); }
-    .light .text-slate-100, .light .text-white { color: #1a202c; }
-    .light .text-slate-300, .light .text-slate-400 { color: #4a5568; }
-    .light .liquid-blob { background-color: rgba(19, 236, 236, 0.4); }
-    .light .header-scrolled { background: rgba(240, 244, 248, 0.8); border-bottom: 1px solid rgba(19, 236, 236, 0.2); }
-    .light .text-primary { color: #0ea5e9; }
-    .light .bg-primary { background-color: #0ea5e9; }
-</style><style>body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #080f0f; overflow-x: hidden; } .glass-panel { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(19, 236, 236, 0.08); } .liquid-blob { filter: blur(60px); z-index: -1; } .refractive-border { position: relative; } .refractive-border::after { content: ''; position: absolute; inset: -1px; background: linear-gradient(135deg, rgba(19, 236, 236, 0.2), transparent, rgba(19, 236, 236, 0.1)); border-radius: inherit; z-index: -1; } #mouse-spotlight { pointer-events: none; position: fixed; inset: 0; z-index: 1; background: radial-gradient(600px circle at var(--x, 0) var(--y, 0), rgba(19, 236, 236, 0.05), transparent 40%); } .rotating-border-container { position: relative; z-index: 0; } .rotating-border-container::before { content: ''; position: absolute; inset: 0; padding: 1px; background: conic-gradient(from var(--angle), transparent 80%, rgba(19, 236, 236, 0.5), transparent 98%); border-radius: inherit; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity 0.3s ease; animation: rotate-border 4s linear infinite; pointer-events: none; } @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; } .rotating-border-container:hover::before { opacity: 0.6; } @keyframes rotate-border { to { --angle: 360deg; } } .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); } .reveal.active { opacity: 1; transform: translateY(0); } .fade-in-load { animation: fadeInLoad 1.2s ease-out forwards; } @keyframes fadeInLoad { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } @keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } } .floating-animation { animation: floating 6s ease-in-out infinite; } .tracking-tightest { letter-spacing: -0.05em; } .header-scrolled { background: rgba(8, 15, 15, 0.6); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(19, 236, 236, 0.05); padding: 1rem 1.5rem; } @keyframes pulse-glow { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.1); } } .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }</angle></style></head>
-<body class="bg-background-dark text-slate-100 font-display selection:bg-primary/30"><div id="mouse-spotlight"></div><div class="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 liquid-blob"></div><div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 liquid-blob"></div><div class="fixed top-[30%] right-[10%] w-[30%] h-[30%] rounded-full bg-primary/5 liquid-blob"></div><script>const spotlight = document.getElementById('mouse-spotlight'); 
-document.addEventListener('mousemove', (e) => { 
-    spotlight.style.setProperty('--x', e.clientX + 'px'); 
-    spotlight.style.setProperty('--y', e.clientY + 'px'); 
-}); 
 
-const header = document.getElementById('main-header');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        header.classList.add('header-scrolled');
-        header.classList.remove('py-4');
-    } else {
-        header.classList.remove('header-scrolled');
-        header.classList.add('py-4');
-    }
-});
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
 
-const observerOptions = { threshold: 0.1 }; 
-const observer = new IntersectionObserver((entries) => { 
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-        }
-    }); 
-}, observerOptions); 
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    const themeToggle = document.querySelector('button:has(.material-symbols-outlined:contains("dark_mode")), button:has(.material-symbols-outlined:contains("light_mode"))');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const html = document.documentElement;
-            const icon = themeToggle.querySelector('.material-symbols-outlined');
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                html.classList.add('light');
-                icon.textContent = 'light_mode';
-            } else {
-                html.classList.remove('light');
-                html.classList.add('dark');
-                icon.textContent = 'dark_mode';
+            const themeToggle = document.querySelector('button:has(.material-symbols-outlined:contains("dark_mode")), button:has(.material-symbols-outlined:contains("light_mode"))');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    const html = document.documentElement;
+                    const icon = themeToggle.querySelector('.material-symbols-outlined');
+                    if (html.classList.contains('dark')) {
+                        html.classList.remove('dark');
+                        html.classList.add('light');
+                        icon.textContent = 'light_mode';
+                    } else {
+                        html.classList.remove('light');
+                        html.classList.add('dark');
+                        icon.textContent = 'dark_mode';
+                    }
+                });
             }
-        });
-    }
-});</script>
-<!-- Sticky Glass Header -->
-<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 py-4" id="main-header">
-<nav class="max-w-7xl mx-auto glass-panel rounded-full px-8 py-4 flex items-center justify-between refractive-border">
-<div class="flex items-center gap-3">
-<div class="size-10 bg-primary rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(19,236,236,0.3)]">
-<span class="material-symbols-outlined text-background-dark text-2xl font-bold">architecture</span>
-</div>
-<h2 class="text-slate-100 text-xl font-extrabold tracking-tighter">PT CLINIC</h2>
-</div>
-<div class="hidden md:flex items-center gap-10">
-<a class="text-slate-300 hover:text-primary transition-colors text-sm font-semibold tracking-wide" href="#">Services</a>
-<a class="text-slate-300 hover:text-primary transition-colors text-sm font-semibold tracking-wide" href="#">About</a>
-<a class="text-slate-300 hover:text-primary transition-colors text-sm font-semibold tracking-wide" href="#">Team</a>
-<a class="text-slate-300 hover:text-primary transition-colors text-sm font-semibold tracking-wide" href="#">Insurance</a>
-</div>
-<div class="flex items-center gap-4">
-<button class="size-10 rounded-full glass-panel flex items-center justify-center text-slate-300 hover:text-primary transition-all">
-<span class="material-symbols-outlined text-xl">dark_mode</span>
-</button>
-<button class="relative group overflow-hidden bg-primary px-6 py-2.5 rounded-full text-background-dark font-bold text-sm transition-all shadow-[0_4px_15px_rgba(19,236,236,0.2)]">
-<span class="relative z-10">Book Now</span>
-<div class="absolute inset-0 bg-white/30 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
-</button>
-</div>
-</nav>
-</header>
-<main class="relative">
-<!-- Liquid Core Glows -->
-<div class="absolute top-0 left-1/4 size-[600px] liquid-glow -z-10 opacity-50 blur-3xl"></div>
-<div class="absolute top-1/2 right-0 size-[800px] liquid-glow -z-10 opacity-30 blur-3xl"></div>
-<!-- Hero Section -->
-<section class="max-w-7xl mx-auto px-6 pt-40 pb-32">
-<div class="grid lg:grid-cols-2 gap-20 items-center">
-<div class="space-y-10">
-<div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-primary text-[10px] font-black tracking-[0.2em] uppercase">
-<span class="relative flex h-2 w-2">
-<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-</span>
-                Premium Rehabilitation
+        });</script>
+    <!-- Sticky Glass Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 py-4" id="main-header">
+        <nav
+            class="max-w-7xl mx-auto glass-panel rounded-full px-8 py-4 flex items-center justify-between refractive-border">
+            <div class="flex items-center gap-3">
+                <div
+                    class="size-10 bg-primary rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(19,236,236,0.3)]">
+                    <span class="material-symbols-outlined text-background-dark text-2xl font-bold">architecture</span>
+                </div>
+                <h2 class="text-slate-100 text-xl font-extrabold tracking-tighter">PT CLINIC</h2>
             </div>
-<h1 class="text-6xl lg:text-8xl font-extrabold leading-[0.95] text-white tracking-tightest">
-                Personalized Therapy That <span class="text-transparent bg-clip-text bg-gradient-to-br from-primary via-cyan-400 to-blue-500">Gets You Moving</span>
-</h1>
-<p class="text-xl text-slate-400 max-w-xl leading-relaxed font-medium">
-                At PT Clinic, we redefine recovery through biological precision and specialized care tailored to your unique lifestyle.
-            </p>
-<div class="flex flex-col sm:flex-row items-center gap-6">
-<button class="relative group overflow-hidden bg-primary px-10 py-5 rounded-2xl text-background-dark font-black text-lg transition-all hover:scale-105 shadow-[0_20px_40px_rgba(19,236,236,0.15)]">
-<span class="relative z-10">Book Appointment</span>
-<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
-</button>
-<button class="px-10 py-5 rounded-2xl glass-panel text-white font-bold text-lg border border-white/10 hover:bg-white/5 transition-all group overflow-hidden relative"><span class="relative z-10">Meet Our Team</span><div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div></button>
-</div>
-</div>
-<div class="relative">
-<div class="absolute -inset-10 bg-primary/20 rounded-full blur-[100px] opacity-30 animate-pulse"></div>
-<div class="glass-panel p-4 rounded-[2.5rem] refractive-border rotating-border-container floating-animation relative overflow-hidden">
-<div class="aspect-[4/5] rounded-[2rem] overflow-hidden relative">
-<img alt="Therapy Session" class="w-full h-full object-cover" fetchpriority="high" decoding="async" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLyxKNhCPkZ2RmeAKdW9kDYmLUBuAH3Dhb5j-oSHQC42yfblbOGql-pCRLw2NSfdYe-dbL0vAq3-2zccu1F82YJEXwmU3tDp7bY6yTAoU-r4_LMDF7Qm7d5soB_i3e7UFigPtUWWbQSnL-ZMLf4JfIlv4g8cFzVl28SdnatU_cMUU3SGU8Pe8iQtyBglbCpu4-7qqkxDqguNhc4FbvOptRjRNcoI3idnzzJKyjz6LNXulA6vQmmAtYCVw76DD1BfmgApPG-Q3E834"/>
-<div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 via-transparent to-transparent"></div>
-<div class="absolute bottom-8 left-8 right-8 glass-panel p-6 rounded-2xl flex items-center justify-between">
-<div>
-<p class="text-[10px] text-primary font-black uppercase tracking-widest mb-1">Clinic Status</p>
-<p class="text-white font-bold">Accepting New Patients</p>
-</div>
-<span class="material-symbols-outlined text-primary text-3xl">verified_user</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Trust Stats -->
-<section class="max-w-7xl mx-auto px-6 mb-32 reveal">
-<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<h3 class="text-4xl font-extrabold text-white mb-2">4.9/5</h3>
-<p class="text-slate-400 text-sm font-medium">Patient Rating</p>
-</div>
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<h3 class="text-4xl font-extrabold text-white mb-2">15+</h3>
-<p class="text-slate-400 text-sm font-medium">Licensed Therapists</p>
-</div>
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<h3 class="text-4xl font-extrabold text-white mb-2">20+</h3>
-<p class="text-slate-400 text-sm font-medium">Insurance Partners</p>
-</div>
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<h3 class="text-4xl font-extrabold text-white mb-2">100%</h3>
-<p class="text-slate-400 text-sm font-medium">Dedicated Care</p>
-</div>
-</div>
-</section>
-<!-- Services Section -->
-<section class="max-w-7xl mx-auto px-6 py-24 border-t border-white/5 reveal"><div class="absolute inset-0 pointer-events-none opacity-[0.03]"><svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg"><path d="M0 100 Q 250 50 500 100 T 1000 100" fill="none" stroke="#13ecec" stroke-width="2"><animate attributename="d" dur="10s" repeatcount="indefinite" values="M0 100 Q 250 50 500 100 T 1000 100; M0 100 Q 250 150 500 100 T 1000 100; M0 100 Q 250 50 500 100 T 1000 100"></animate></path></svg></div>
-<div class="text-center mb-16">
-<h2 class="text-3xl lg:text-5xl font-extrabold text-white mb-4">Helping You <span class="text-primary">Move Better</span></h2>
-<p class="text-slate-400 max-w-2xl mx-auto">We provide personalized treatment plans for sports recovery, post-surgical rehabilitation, and chronic pain management.</p>
-</div>
-<div class="grid md:grid-cols-3 gap-6">
-<!-- Service Cards -->
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<div class="size-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all duration-500">
-<span class="material-symbols-outlined text-3xl">orthopedics</span>
-</div>
-<h4 class="text-xl font-bold text-white mb-3">Orthopedic PT</h4>
-<p class="text-slate-400 text-sm leading-relaxed mb-6">Expert care for bone, joint, and muscle injuries to restore your mobility.</p>
-<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
-</div>
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<div class="size-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all">
-<span class="material-symbols-outlined text-3xl">sports_gymnastics</span>
-</div>
-<h4 class="text-xl font-bold text-white mb-3">Sports Injury Rehab</h4>
-<p class="text-slate-400 text-sm leading-relaxed mb-6">Specialized programs for athletes to return to peak performance safely.</p>
-<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
-</div>
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<div class="size-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all">
-<span class="material-symbols-outlined text-3xl">healing</span>
-</div>
-<h4 class="text-xl font-bold text-white mb-3">Post-Surgical Rehab</h4>
-<p class="text-slate-400 text-sm leading-relaxed mb-6">Optimized recovery protocols following surgeries to ensure best outcomes.</p>
-<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
-</div>
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<div class="size-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all">
-<span class="material-symbols-outlined text-3xl">monitor_heart</span>
-</div>
-<h4 class="text-xl font-bold text-white mb-3">Chronic Pain Management</h4>
-<p class="text-slate-400 text-sm leading-relaxed mb-6">Innovative techniques to reduce persistent pain and improve daily life.</p>
-<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
-</div>
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<div class="size-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all">
-<span class="material-symbols-outlined text-3xl">back_hand</span>
-</div>
-<h4 class="text-xl font-bold text-white mb-3">Manual Therapy</h4>
-<p class="text-slate-400 text-sm leading-relaxed mb-6">Hands-on techniques including joint mobilization and soft tissue work.</p>
-<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
-</div>
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<div class="size-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all">
-<span class="material-symbols-outlined text-3xl">balance</span>
-</div>
-<h4 class="text-xl font-bold text-white mb-3">Balance Training</h4>
-<p class="text-slate-400 text-sm leading-relaxed mb-6">Fall prevention and stability exercises for all ages and mobility levels.</p>
-<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
-</div>
-</div>
-</section>
-<!-- How It Works & Conditions -->
-<section class="max-w-7xl mx-auto px-6 py-24 reveal">
-<div class="grid lg:grid-cols-2 gap-20">
-<div>
-<h3 class="text-3xl font-extrabold text-white mb-10">Common <span class="text-primary">Conditions</span> We Treat</h3>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-<div class="glass-panel rounded-2xl p-5 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-center gap-4">
-<span class="material-symbols-outlined text-primary">check_circle</span>
-<span class="text-slate-200 font-semibold">Back Pain</span>
-</div>
-<div class="glass-panel rounded-2xl p-5 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-center gap-4">
-<span class="material-symbols-outlined text-primary">check_circle</span>
-<span class="text-slate-200 font-semibold">Neck Pain</span>
-</div>
-<div class="glass-panel rounded-2xl p-5 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-center gap-4">
-<span class="material-symbols-outlined text-primary">check_circle</span>
-<span class="text-slate-200 font-semibold">Sciatica</span>
-</div>
-<div class="glass-panel rounded-2xl p-5 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-center gap-4">
-<span class="material-symbols-outlined text-primary">check_circle</span>
-<span class="text-slate-200 font-semibold">Shoulder Pain</span>
-</div>
-<div class="glass-panel rounded-2xl p-5 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-center gap-4">
-<span class="material-symbols-outlined text-primary">check_circle</span>
-<span class="text-slate-200 font-semibold">Knee Injuries</span>
-</div>
-<div class="glass-panel rounded-2xl p-5 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-center gap-4">
-<span class="material-symbols-outlined text-primary">check_circle</span>
-<span class="text-slate-200 font-semibold">Arthritis</span>
-</div>
-<div class="glass-panel rounded-2xl p-5 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-center gap-4">
-<span class="material-symbols-outlined text-primary">check_circle</span>
-<span class="text-slate-200 font-semibold">Foot/Ankle Pain</span>
-</div>
-<div class="glass-panel rounded-2xl p-5 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-center gap-4">
-<span class="material-symbols-outlined text-primary">check_circle</span>
-<span class="text-slate-200 font-semibold">Wrist/Hand Pain</span>
-</div>
-</div>
-</div>
-<div>
-<h3 class="text-3xl font-extrabold text-white mb-10">How It <span class="text-primary">Works</span></h3>
-<div class="space-y-6">
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-start gap-6">
-<div class="size-12 rounded-full bg-primary text-background-dark flex items-center justify-center font-bold shrink-0 shadow-[0_0_15px_rgba(19,236,236,0.3)]">1</div>
-<div>
-<h5 class="text-lg font-bold text-white mb-2">Detailed Evaluation</h5>
-<p class="text-slate-400 text-sm leading-relaxed">Comprehensive assessment of your movement, strength, and clinical history.</p>
-</div>
-</div>
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-start gap-6">
-<div class="size-12 rounded-full bg-primary text-background-dark flex items-center justify-center font-bold shrink-0 shadow-[0_0_15px_rgba(19,236,236,0.3)]">2</div>
-<div>
-<h5 class="text-lg font-bold text-white mb-2">Personalized Plan</h5>
-<p class="text-slate-400 text-sm leading-relaxed">We design a custom roadmap focused on your specific recovery goals.</p>
-</div>
-</div>
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-start gap-6">
-<div class="size-12 rounded-full bg-primary text-background-dark flex items-center justify-center font-bold shrink-0 shadow-[0_0_15px_rgba(19,236,236,0.3)]">3</div>
-<div>
-<h5 class="text-lg font-bold text-white mb-2">Guided Recovery</h5>
-<p class="text-slate-400 text-sm leading-relaxed">One-on-one sessions with expert therapists using modern techniques.</p>
-</div>
-</div>
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-start gap-6">
-<div class="size-12 rounded-full bg-primary text-background-dark flex items-center justify-center font-bold shrink-0 shadow-[0_0_15px_rgba(19,236,236,0.3)]">4</div>
-<div>
-<h5 class="text-lg font-bold text-white mb-2">Prevention &amp; Maintenance</h5>
-<p class="text-slate-400 text-sm leading-relaxed">Empowering you with the knowledge to stay healthy and injury-free long-term.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Testimonials -->
-<section class="max-w-7xl mx-auto px-6 py-24 reveal">
-<div class="text-center mb-16">
-<h2 class="text-4xl font-extrabold text-white mb-4">Patient <span class="text-primary">Success Stories</span></h2>
-</div>
-<div class="grid md:grid-cols-2 gap-8">
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<span class="material-symbols-outlined absolute top-6 right-10 text-primary/20 text-6xl">format_quote</span>
-<div class="flex gap-1 text-primary mb-6">
-<span class="material-symbols-outlined text-[18px] fill-1">star</span>
-<span class="material-symbols-outlined text-[18px] fill-1">star</span>
-<span class="material-symbols-outlined text-[18px] fill-1">star</span>
-<span class="material-symbols-outlined text-[18px] fill-1">star</span>
-<span class="material-symbols-outlined text-[18px] fill-1">star</span>
-</div>
-<p class="text-slate-300 text-lg mb-8">"After my ACL surgery, I was worried I'd never run again. The team at PT Clinic was incredible. Their personalized approach helped me regain strength faster than I expected. I'm back on the trails now!"</p>
-<div class="flex items-center gap-4">
-<div class="size-12 rounded-full bg-slate-700 bg-cover bg-center" data-alt="Female patient portrait" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCR0VXthMLsXqSuipSPXfh-YhpryaiT8zf8wia3eCPdGDCJxdVDSUCbxwV9uFb8h3FcSw-Uglb8mUe42Aczpe6LKJkKCunWoq085EqJb5ir-jFs93YBTD5UomuNJI_YxNRo4N80B781g13AKDZZrcPzKA2oLMTmMAWIHSIYehxg5ZoM46FKhvi9wGseBEogj_EdFzFWoNOlDcF6aum4IXDRR7lNIB8g02-ayVIMSJvexdHk3xs15JidKsV0J_Umf3jh56Zzd7FDh3Q')"></div>
-<div>
-<p class="text-white font-bold">Sarah M.</p>
-<p class="text-slate-500 text-sm">Recovered Runner</p>
-</div>
-</div>
-</div>
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<span class="material-symbols-outlined absolute top-6 right-10 text-primary/20 text-6xl">format_quote</span>
-<div class="flex gap-1 text-primary mb-6">
-<span class="material-symbols-outlined text-[18px] fill-1">star</span>
-<span class="material-symbols-outlined text-[18px] fill-1">star</span>
-<span class="material-symbols-outlined text-[18px] fill-1">star</span>
-<span class="material-symbols-outlined text-[18px] fill-1">star</span>
-<span class="material-symbols-outlined text-[18px] fill-1">star</span>
-</div>
-<p class="text-slate-300 text-lg mb-8">"Chronic back pain was affecting my work and sleep for years. Manual therapy and a consistent exercise plan changed everything. Professional, caring, and truly life-changing care."</p>
-<div class="flex items-center gap-4">
-<div class="size-12 rounded-full bg-slate-700 bg-cover bg-center" data-alt="Male patient portrait" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDsfUsGNbdJFomawBFAUyqZ-uZglO22yd9pp_HqP4uFSURa7Zb7hmREavHobFpfEKJnS-vnMyx5kMbY8z0O_NXGnk_ATl7XK7LXzU-lyyQGyv7u-VbxecKd6_xszfqxSC7D7azD3Xz7BjJAshCP3VDf0nmQBmgjkdB4iH6fZOq4ZH6vp-ud9oZ0cCtTEHAhbzxdAJD1tfwO9AxyYyCHRee23UgDto_Cg9Z8QW-GaOgWt3ozx94ehm2kPoOSqptvrVrTTfUjN86Mm84')"></div>
-<div>
-<p class="text-white font-bold">Michael R.</p>
-<p class="text-slate-500 text-sm">Software Engineer</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Team Section -->
-<section class="max-w-7xl mx-auto px-6 py-24 reveal">
-<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-<div>
-<h2 class="text-4xl font-extrabold text-white mb-4">Meet Our <span class="text-primary">Team</span></h2>
-<p class="text-slate-400 max-w-xl">World-class therapists dedicated to your health and performance.</p>
-</div>
-<button class="group relative overflow-hidden glass-panel rounded-full px-8 py-4 refractive-border bg-white/[0.02] rotating-border-container transition-all font-bold">
-<span class="relative z-10 flex items-center gap-2">View Full Team <span class="material-symbols-outlined">expand_more</span></span>
-<div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
-</button>
-</div>
-<div class="grid md:grid-cols-4 gap-6">
-<!-- Team Member 1 -->
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<div class="aspect-[4/5] rounded-2xl overflow-hidden mb-6 grayscale group-hover:grayscale-0 transition-all duration-500">
-<div class="w-full h-full bg-cover bg-center" data-alt="Dr. Alex Rivera - Physical Therapist" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDupFWG0ZVHgn6FKmuadE--MqUnWsnsfVlxvTblj6xpea8sFaLYLV_MjQR7XF3LB8WBF9f-sJJcjzkh82ZJsRoWCdiSZ7PUlIWobRuYLeg5fmDf1TcwYS1-M2VzC3Rp1W8kG5CF3qCMhHJix3adFhevh1KQEfhd-XT6eQrfpRrUdAREON30qEWSVNuHSnLe_Lh_vJOxwI_mLuQjST3y7M7UH1LeY6cpXUPxS7k4dvT9oSYlBdvTHmuKY3bJ613EgWci8iF8_YFqtqA')"></div>
-</div>
-<h5 class="text-white font-bold text-lg">Dr. Alex Rivera</h5>
-<p class="text-primary text-xs font-bold uppercase tracking-widest mb-4">Lead Specialist</p>
-</div>
-<!-- Team Member 2 -->
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<div class="aspect-[4/5] rounded-2xl overflow-hidden mb-6 grayscale group-hover:grayscale-0 transition-all duration-500">
-<div class="w-full h-full bg-cover bg-center" data-alt="Dr. Sarah Jenkins - Orthopedic Specialist" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCt3hzya5nS7YBLJZ-0CwTXvGTKQ1v0RnnvYQ7C62RqtNFMBsDCJduYWhVYfP8Iwcz834zNFfittHy1qtslqf0S5ZZqauu0NluIN-wjP1VSbHSwi4omdnuu99lpxLOboZ-65xaadzHeKMEyeKWHSdTOTxfw_2yxkU4kx3TiQadm8Yr0KyhuQRGNvY-0qD5FrdP344pRMT6uk8d02Qz-WIJtWPdT7JjxUr8m5kNFbxvxgtdg7v5t03or_rsrePVIwVYIeVGdqNq80E8')"></div>
-</div>
-<h5 class="text-white font-bold text-lg">Dr. Sarah Jenkins</h5>
-<p class="text-primary text-xs font-bold uppercase tracking-widest mb-4">Orthopedic Specialist</p>
-</div>
-<!-- Team Member 3 -->
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<div class="aspect-[4/5] rounded-2xl overflow-hidden mb-6 grayscale group-hover:grayscale-0 transition-all duration-500">
-<div class="w-full h-full bg-cover bg-center" data-alt="Mark Thompson - Sports Rehab" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjip6C9srrOX00gIjpXhuNawLtx5UaBxiy71hy9cIu20Nbp-6aWTxa5zCA5ejmObdnqSLQ6VBfv-QqPFpjQMMjWbo8FRcdq2wO934Mwn2ELwvfAiwkgEDsLKBapfEehiKAd9Np6ENFy91PNB67LCowoJmW8MQbKzsvNrcmRFk0L2EOna2vTFfukPvytbSORFcf8hyWUEiU7FS_gLHGlsfRF05j2ZtgH_un9yDBit_IINpCp34Irtkw6k6H65ORHnvGBWs-CTRm1ZI')"></div>
-</div>
-<h5 class="text-white font-bold text-lg">Mark Thompson</h5>
-<p class="text-primary text-xs font-bold uppercase tracking-widest mb-4">Sports Rehabilitation</p>
-</div>
-<!-- Team Member 4 -->
-<div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<div class="aspect-[4/5] rounded-2xl overflow-hidden mb-6 grayscale group-hover:grayscale-0 transition-all duration-500">
-<div class="w-full h-full bg-cover bg-center" data-alt="Dr. Emily Chen - Manual Therapist" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDEjaBbRi6YF89jhJ6nagE0jzNx4g121LoxN8kIUNzOrJutYeFzXJoHZcqQXLsJYR7RNh16QOSCPbmD5TZEjXShKTjdJcmInkZTvM8oaGB3ATS_Kr1LqJwVeeS7UUFH3pA0E9ck0Zqb8eKQtx4AhAjFyUXodGfNUD_TV7JVJIkcSl3AyAOgIVu6JWPA9wYlbEtN845IhAirqTNzx84_HAIYf7MRPHGy7k9hY7x_RfHaRK-jsRiwDWpvF925XdK-J6jcRvIpP4pUOiU')"></div>
-</div>
-<h5 class="text-white font-bold text-lg">Dr. Emily Chen</h5>
-<p class="text-primary text-xs font-bold uppercase tracking-widest mb-4">Manual Therapist</p>
-</div>
-</div>
-</section>
-<!-- Insurance -->
-<section class="max-w-7xl mx-auto px-6 py-32 reveal">
-<div class="glass-panel rounded-[3rem] p-12 md:p-20 refractive-border rotating-border-container overflow-hidden">
-<div class="absolute top-0 right-0 w-96 h-96 bg-primary/5 blur-[100px] animate-pulse-glow"></div>
-<div class="relative z-10 text-center mb-16">
-<span class="text-primary text-[10px] font-black tracking-[0.3em] uppercase mb-4 block">Partnerships</span>
-<h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6">Insurance &amp; Payment Options</h2>
-<p class="text-slate-400 max-w-2xl mx-auto text-lg">We partner with industry-leading providers to ensure your focus remains entirely on recovery. Experience seamless processing and direct billing with our trusted network.</p>
-</div>
-<div class="grid grid-cols-2 md:grid-cols-5 gap-8">
-<div class="group h-24 glass-panel rounded-2xl flex items-center justify-center border border-white/5 hover:border-primary/30 transition-all duration-500">
-<span class="text-slate-500 group-hover:text-primary font-black text-xl tracking-tighter opacity-50 group-hover:opacity-100 transition-all">AETNA</span>
-</div>
-<div class="group h-24 glass-panel rounded-2xl flex items-center justify-center border border-white/5 hover:border-primary/30 transition-all duration-500">
-<span class="text-slate-500 group-hover:text-primary font-black text-xl tracking-tighter opacity-50 group-hover:opacity-100 transition-all">BCBS</span>
-</div>
-<div class="group h-24 glass-panel rounded-2xl flex items-center justify-center border border-white/5 hover:border-primary/30 transition-all duration-500">
-<span class="text-slate-500 group-hover:text-primary font-black text-xl tracking-tighter opacity-50 group-hover:opacity-100 transition-all">CIGNA</span>
-</div>
-<div class="group h-24 glass-panel rounded-2xl flex items-center justify-center border border-white/5 hover:border-primary/30 transition-all duration-500">
-<span class="text-slate-500 group-hover:text-primary font-black text-xl tracking-tighter opacity-50 group-hover:opacity-100 transition-all">UNITED</span>
-</div>
-<div class="group h-24 glass-panel rounded-2xl flex items-center justify-center border border-white/5 hover:border-primary/30 transition-all duration-500">
-<span class="text-slate-500 group-hover:text-primary font-black text-xl tracking-tighter opacity-50 group-hover:opacity-100 transition-all">HUMANA</span>
-</div>
-</div>
-<div class="mt-16 pt-8 border-t border-white/5 text-center">
-<p class="text-slate-500 text-sm italic">Don't see your provider? Contact our billing specialist for a full list of partners.</p>
-</div>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="mt-40 border-t border-white/5 bg-background-dark/50 backdrop-blur-3xl">
-<div class="max-w-7xl mx-auto px-6 py-24">
-<div class="grid grid-cols-1 lg:grid-cols-4 gap-16 mb-24">
-<div class="col-span-1 lg:col-span-1">
-<div class="flex items-center gap-3 mb-8">
-<div class="size-10 bg-primary rounded-xl flex items-center justify-center">
-<span class="material-symbols-outlined text-background-dark text-2xl font-bold">architecture</span>
-</div>
-<h2 class="text-white text-2xl font-black tracking-tighter">PT CLINIC</h2>
-</div>
-<p class="text-slate-400 leading-relaxed mb-10 font-medium">
-                    Redefining rehabilitation through precision science and specialized human care.
-                </p>
-<div class="flex gap-4">
-<a class="size-12 rounded-xl glass-panel flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary/50 transition-all" href="#">
-<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
-</a>
-<a class="size-12 rounded-xl glass-panel flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary/50 transition-all" href="#">
-<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
-</a>
-</div>
-</div>
-<div>
-<h4 class="text-white font-bold mb-8">Quick Links</h4>
-<ul class="space-y-4">
-<li><a class="text-slate-400 hover:text-primary transition-colors font-medium text-sm" href="#">Our Services</a></li>
-<li><a class="text-slate-400 hover:text-primary transition-colors font-medium text-sm" href="#">Find a Therapist</a></li>
-<li><a class="text-slate-400 hover:text-primary transition-colors font-medium text-sm" href="#">Patient Portal</a></li>
-<li><a class="text-slate-400 hover:text-primary transition-colors font-medium text-sm" href="#">Insurance Info</a></li>
-</ul>
-</div>
-<div>
-<h4 class="text-white font-bold mb-8">Newsletter</h4>
-<p class="text-slate-400 text-sm mb-6">Stay updated with the latest in recovery science.</p>
-<div class="relative group">
-<input class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-primary/50 transition-all" placeholder="Your email" type="email"/>
-<button class="absolute right-2 top-2 bottom-2 bg-primary px-4 rounded-lg text-background-dark">
-<span class="material-symbols-outlined text-xl">arrow_forward</span>
-</button>
-</div>
-</div>
-<div>
-<h4 class="text-white font-bold mb-8">Contact</h4>
-<ul class="space-y-4">
-<li class="flex gap-4">
-<span class="material-symbols-outlined text-primary">location_on</span>
-<span class="text-slate-400 text-sm">123 Wellness Way, Metro City</span>
-</li>
-<li class="flex gap-4">
-<span class="material-symbols-outlined text-primary">call</span>
-<span class="text-slate-400 text-sm">(555) 000-1234</span>
-</li>
-<li class="flex gap-4">
-<span class="material-symbols-outlined text-primary">mail</span>
-<span class="text-slate-400 text-sm">hello@ptclinic.com</span>
-</li>
-</ul>
-</div>
-</div>
-<div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-<p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em]">© 2024 PHYSICAL THERAPY CLINIC. ALL RIGHTS RESERVED.</p>
-<div class="flex gap-8">
-<a class="text-slate-500 hover:text-white transition-colors text-[10px] font-black uppercase tracking-widest" href="#">Privacy</a>
-<a class="text-slate-500 hover:text-white transition-colors text-[10px] font-black uppercase tracking-widest" href="#">Terms</a>
-</div>
-</div>
-</div>
-</footer>
-</body></html>
+            <div class="hidden md:flex items-center gap-10">
+                <a class="text-slate-300 hover:text-primary transition-colors text-sm font-semibold tracking-wide"
+                    href="#">Services</a>
+                <a class="text-slate-300 hover:text-primary transition-colors text-sm font-semibold tracking-wide"
+                    href="#">About</a>
+                <a class="text-slate-300 hover:text-primary transition-colors text-sm font-semibold tracking-wide"
+                    href="#">Team</a>
+                <a class="text-slate-300 hover:text-primary transition-colors text-sm font-semibold tracking-wide"
+                    href="#">Insurance</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button
+                    class="size-10 rounded-full glass-panel flex items-center justify-center text-slate-300 hover:text-primary transition-all">
+                    <span class="material-symbols-outlined text-xl">dark_mode</span>
+                </button>
+                <button
+                    class="relative group overflow-hidden bg-primary px-6 py-2.5 rounded-full text-background-dark font-bold text-sm transition-all shadow-[0_4px_15px_rgba(19,236,236,0.2)]">
+                    <span class="relative z-10">Book Now</span>
+                    <div
+                        class="absolute inset-0 bg-white/30 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                    </div>
+                </button>
+            </div>
+        </nav>
+    </header>
+    <main class="relative">
+        <!-- Liquid Core Glows -->
+        <div class="absolute top-0 left-1/4 size-[600px] liquid-glow -z-10 opacity-50 blur-3xl"></div>
+        <div class="absolute top-1/2 right-0 size-[800px] liquid-glow -z-10 opacity-30 blur-3xl"></div>
+        <!-- Hero Section -->
+        <section class="max-w-7xl mx-auto px-6 pt-40 pb-32">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div class="space-y-10">
+                    <div
+                        class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-primary text-[10px] font-black tracking-[0.2em] uppercase">
+                        <span class="relative flex h-2 w-2">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                        </span>
+                        Premium Rehabilitation
+                    </div>
+                    <h1 class="text-6xl lg:text-8xl font-extrabold leading-[0.95] text-white tracking-tightest">
+                        Personalized Therapy That <span
+                            class="text-transparent bg-clip-text bg-gradient-to-br from-primary via-cyan-400 to-blue-500">Gets
+                            You Moving</span>
+                    </h1>
+                    <p class="text-xl text-slate-400 max-w-xl leading-relaxed font-medium">
+                        At PT Clinic, we redefine recovery through biological precision and specialized care tailored to
+                        your unique lifestyle.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center gap-6">
+                        <button
+                            class="relative group overflow-hidden bg-primary px-10 py-5 rounded-2xl text-background-dark font-black text-lg transition-all hover:scale-105 shadow-[0_20px_40px_rgba(19,236,236,0.15)]">
+                            <span class="relative z-10">Book Appointment</span>
+                            <div
+                                class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                            </div>
+                        </button>
+                        <button
+                            class="px-10 py-5 rounded-2xl glass-panel text-white font-bold text-lg border border-white/10 hover:bg-white/5 transition-all group overflow-hidden relative"><span
+                                class="relative z-10">Meet Our Team</span>
+                            <div
+                                class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute -inset-10 bg-primary/20 rounded-full blur-[100px] opacity-30 animate-pulse">
+                    </div>
+                    <div
+                        class="glass-panel p-4 rounded-[2.5rem] refractive-border rotating-border-container floating-animation relative overflow-hidden">
+                        <div class="aspect-[4/5] rounded-[2rem] overflow-hidden relative">
+                            <img alt="Therapy Session" class="w-full h-full object-cover" fetchpriority="high"
+                                decoding="async"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLyxKNhCPkZ2RmeAKdW9kDYmLUBuAH3Dhb5j-oSHQC42yfblbOGql-pCRLw2NSfdYe-dbL0vAq3-2zccu1F82YJEXwmU3tDp7bY6yTAoU-r4_LMDF7Qm7d5soB_i3e7UFigPtUWWbQSnL-ZMLf4JfIlv4g8cFzVl28SdnatU_cMUU3SGU8Pe8iQtyBglbCpu4-7qqkxDqguNhc4FbvOptRjRNcoI3idnzzJKyjz6LNXulA6vQmmAtYCVw76DD1BfmgApPG-Q3E834" />
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-background-dark/80 via-transparent to-transparent">
+                            </div>
+                            <div
+                                class="absolute bottom-8 left-8 right-8 glass-panel p-6 rounded-2xl flex items-center justify-between">
+                                <div>
+                                    <p class="text-[10px] text-primary font-black uppercase tracking-widest mb-1">Clinic
+                                        Status</p>
+                                    <p class="text-white font-bold">Accepting New Patients</p>
+                                </div>
+                                <span class="material-symbols-outlined text-primary text-3xl">verified_user</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Interactive Demonstration -->
+        <section class="max-w-7xl mx-auto px-6 mb-32 reveal">
+            <div
+                class="glass-panel rounded-[3rem] p-10 md:p-16 refractive-border bg-white/[0.02] rotating-border-container relative overflow-hidden flex flex-col md:flex-row items-center gap-16">
+                <div class="absolute -top-40 -right-40 w-96 h-96 bg-primary/20 rounded-full blur-[100px] animate-pulse">
+                </div>
+                <div class="w-full md:w-1/2 relative z-10 space-y-8">
+                    <div
+                        class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-primary text-[10px] font-black tracking-[0.2em] uppercase">
+                        <span class="material-symbols-outlined text-sm">animation</span>
+                        Interactive Demo
+                    </div>
+                    <h2 class="text-4xl lg:text-5xl font-extrabold text-white leading-tight">Rhythmic <span
+                            class="text-primary">Rehabilitation</span></h2>
+                    <p class="text-slate-400 leading-relaxed text-lg">Experience our hands-on approach. Our specialists
+                        guide your joints through precise, rhythmic motions to restore mobility, reduce stiffness, and
+                        accelerate tissue recovery.</p>
+                </div>
+                <div class="w-full md:w-1/2 flex justify-center relative z-10" aria-hidden="true">
+                    <div
+                        class="w-full max-w-sm aspect-square relative glass-panel rounded-3xl border border-white/5 p-8 flex items-center justify-center shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
+                        <svg viewBox="0 0 200 200"
+                            class="w-full h-full drop-shadow-[0_0_15px_rgba(255,255,255,0.15)] text-slate-100"
+                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <path id="table-shape" d="M 10,140 h 180 v 15 h -180 z" />
+                                <path id="patient-torso-shape" d="M 154,126 q -5,14 -20,14 H 94 V 126 q 30,-5 60,0 z" />
+                                <path id="patient-r-leg-shape"
+                                    d="M 94,126 L 30,126 L 18,116 L 10,116 L 20,140 L 94,140 Z" />
+                                <path id="anim-leg"
+                                    d="M 94,123 L 55,118 L 25,118 L 12,108 L 4,108 L 18,130 L 55,132 L 94,137 Z">
+                                    <animate attributeName="d" repeatCount="indefinite" dur="3s" keyTimes="0;0.5;1"
+                                        calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
+                                        values="M 94,123 L 55,118 L 25,118 L 12,108 L 4,108 L 18,130 L 55,132 L 94,137 Z; M 94,123 L 65,75 L 35,75 L 22,65 L 14,65 L 28,87 L 65,89 L 94,137 Z; M 94,123 L 55,118 L 25,118 L 12,108 L 4,108 L 18,130 L 55,132 L 94,137 Z" />
+                                </path>
+                                <path id="arm1" d="M 85,65 L 70,90 L 55,118" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <animate attributeName="d" repeatCount="indefinite" dur="3s" keyTimes="0;0.5;1"
+                                        calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
+                                        values="M 85,65 L 70,90 L 55,118; M 85,65 L 75,70 L 63,77; M 85,65 L 70,90 L 55,118" />
+                                </path>
+                                <path id="arm2" d="M 115,65 L 105,90 L 25,118" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <animate attributeName="d" repeatCount="indefinite" dur="3s" keyTimes="0;0.5;1"
+                                        calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
+                                        values="M 115,65 L 105,90 L 25,118; M 115,65 L 90,70 L 32,77; M 115,65 L 105,90 L 25,118" />
+                                </path>
+                                <mask id="mask-therapist-legs">
+                                    <rect width="200" height="200" fill="white" />
+                                    <use href="#table-shape" fill="black" stroke="black" stroke-width="8"
+                                        stroke-linejoin="round" />
+                                </mask>
+                                <mask id="mask-therapist-torso">
+                                    <rect width="200" height="200" fill="white" />
+                                    <use href="#patient-torso-shape" fill="black" stroke="black" stroke-width="8"
+                                        stroke-linejoin="round" />
+                                    <use href="#patient-r-leg-shape" fill="black" stroke="black" stroke-width="8"
+                                        stroke-linejoin="round" />
+                                    <use href="#anim-leg" fill="black" stroke="black" stroke-width="8"
+                                        stroke-linejoin="round" />
+                                    <use href="#arm1" fill="none" stroke="black" stroke-width="12"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <use href="#arm2" fill="none" stroke="black" stroke-width="12"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </mask>
+                                <mask id="mask-patient-r-leg">
+                                    <rect width="200" height="200" fill="white" />
+                                    <use href="#anim-leg" fill="black" stroke="black" stroke-width="8"
+                                        stroke-linejoin="round" />
+                                    <use href="#arm1" fill="none" stroke="black" stroke-width="12"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <use href="#arm2" fill="none" stroke="black" stroke-width="12"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </mask>
+                                <mask id="mask-left-leg">
+                                    <rect width="200" height="200" fill="white" />
+                                    <use href="#arm1" fill="none" stroke="black" stroke-width="12"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <use href="#arm2" fill="none" stroke="black" stroke-width="12"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </mask>
+                                <mask id="mask-patient-torso">
+                                    <rect width="200" height="200" fill="white" />
+                                    <use href="#anim-leg" fill="black" stroke="black" stroke-width="8"
+                                        stroke-linejoin="round" />
+                                    <use href="#arm1" fill="none" stroke="black" stroke-width="12"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <use href="#arm2" fill="none" stroke="black" stroke-width="12"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </mask>
+                            </defs>
+                            <g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"
+                                fill="none">
+                                <g mask="url(#mask-therapist-legs)">
+                                    <path d="M 85,155 v 30 h -8 a 4,4 0 0,0 0,8 h 16 v -38 z" />
+                                    <path d="M 115,155 v 30 h 8 a 4,4 0 0,1 0,8 h -16 v -38 z" />
+                                </g>
+                                <use href="#table-shape" />
+                                <path d="M 30,155 v 35 M 170,155 v 35" />
+                                <circle cx="100" cy="35" r="12" />
+                                <g mask="url(#mask-therapist-torso)">
+                                    <path d="M 82,55 q 18,-15 36,0 v 85 h -36 z" />
+                                </g>
+                                <circle cx="168" cy="126" r="12" />
+                                <g mask="url(#mask-patient-torso)">
+                                    <use href="#patient-torso-shape" />
+                                    <path d="M 145,131 Q 120,135 95,131" />
+                                </g>
+                                <g mask="url(#mask-patient-r-leg)">
+                                    <use href="#patient-r-leg-shape" />
+                                </g>
+                                <g mask="url(#mask-left-leg)">
+                                    <use href="#anim-leg" />
+                                </g>
+                                <use href="#arm1" />
+                                <use href="#arm2" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Trust Stats -->
+        <section class="max-w-7xl mx-auto px-6 mb-32 reveal">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div
+                    class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
+                    <h3 class="text-4xl font-extrabold text-white mb-2">4.9/5</h3>
+                    <p class="text-slate-400 text-sm font-medium">Patient Rating</p>
+                </div>
+                <div
+                    class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
+                    <h3 class="text-4xl font-extrabold text-white mb-2">15+</h3>
+                    <p class="text-slate-400 text-sm font-medium">Licensed Therapists</p>
+                </div>
+                <div
+                    class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
+                    <h3 class="text-4xl font-extrabold text-white mb-2">20+</h3>
+                    <p class="text-slate-400 text-sm font-medium">Insurance Partners</p>
+                </div>
+                <div
+                    class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
+                    <h3 class="text-4xl font-extrabold text-white mb-2">100%</h3>
+                    <p class="text-slate-400 text-sm font-medium">Dedicated Care</p>
+                </div>
+            </div>
+        </section>
+        <!-- Services Section -->
+        <section class="max-w-7xl mx-auto px-6 py-24 border-t border-white/5 reveal">
+            <div class="absolute inset-0 pointer-events-none opacity-[0.03]"><svg height="100%" width="100%"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 100 Q 250 50 500 100 T 1000 100" fill="none" stroke="#13ecec" stroke-width="2">
+                        <animate attributename="d" dur="10s" repeatcount="indefinite"
+                            values="M0 100 Q 250 50 500 100 T 1000 100; M0 100 Q 250 150 500 100 T 1000 100; M0 100 Q 250 50 500 100 T 1000 100">
+                        </animate>
+                    </path>
+                </svg></div>
+            <div class="text-center mb-16">
+                <h2 class="text-3xl lg:text-5xl font-extrabold text-white mb-4">Helping You <span
+                        class="text-primary">Move Better</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">We provide personalized treatment plans for sports recovery,
+                    post-surgical rehabilitation, and chronic pain management.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Service Cards -->
+                <div
+                    class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
+                    <div
+                        class="size-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all duration-500">
+                        <span class="material-symbols-outlined text-3xl">orthopedics</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Orthopedic PT</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Expert care for bone, joint, and muscle
+                        injuries to restore your mobility.</p>
+                    <a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2"
+                        href="#">Learn More <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                </div>
+                <div
+                    class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
+                    <div
+                        class="size-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all">
+                        <span class="material-symbols-outlined text-3xl">sports_gymnastics</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Sports Injury Rehab</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Specialized programs for athletes to return
+                        to peak performance safely.</p>
+                    <a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2"
+                        href="#">Learn More <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                </div>
+                <div
+                    class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
+                    <div
+                        class="size-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all">
+                        <span class="material-symbols-outlined text-3xl">healing</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Post-Surgical Rehab</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Optimized recovery protocols following
+                        surgeries to ensure best outcomes.</p>
+                    <a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2"
+                        href="#">Learn More <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                </div>
+                <div
+                    class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
+                    <div
+                        class="size-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all">
+                        <span class="material-symbols-outlined text-3xl">monitor_heart</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Chronic Pain Management</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Innovative techniques to reduce persistent
+                        pain and improve daily life.</p>
+                    <a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2"
+                        href="#">Learn More <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                </div>
+                <div
+                    class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
+                    <div
+                        class="size-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all">
+                        <span class="material-symbols-outlined text-3xl">back_hand</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Manual Therapy</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Hands-on techniques including joint
+                        mobilization and soft tissue work.</p>
+                    <a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2"
+                        href="#">Learn More <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                </div>
+                <div
+                    class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
+                    <div
+                        class="size-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all">
+                        <span class="material-symbols-outlined text-3xl">balance</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Balance Training</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Fall prevention and stability exercises for
+                        all ages and mobility levels.</p>
+                    <a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2"
+                        href="#">Learn More <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+                </div>
+            </div>
+        </section>
+        <!-- How It Works & Conditions -->
+        <section class="max-w-7xl mx-auto px-6 py-24 reveal">
+            <div class="grid lg:grid-cols-2 gap-20">
+                <div>
+                    <h3 class="text-3xl font-extrabold text-white mb-10">Common <span
+                            class="text-primary">Conditions</span> We Treat</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div
+                            class="glass-panel rounded-2xl p-5 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-center gap-4">
+                            <span class="material-symbols-outlined text-primary">check_circle</span>
+                            <span class="text-slate-200 font-semibold">Back Pain</span>
+                        </div>
+                        <div
+                            class="glass-panel rounded-2xl p-5 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-center gap-4">
+                            <span class="material-symbols-outlined text-primary">check_circle</span>
+                            <span class="text-slate-200 font-semibold">Neck Pain</span>
+                        </div>
+                        <div
+                            class="glass-panel rounded-2xl p-5 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-center gap-4">
+                            <span class="material-symbols-outlined text-primary">check_circle</span>
+                            <span class="text-slate-200 font-semibold">Sciatica</span>
+                        </div>
+                        <div
+                            class="glass-panel rounded-2xl p-5 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-center gap-4">
+                            <span class="material-symbols-outlined text-primary">check_circle</span>
+                            <span class="text-slate-200 font-semibold">Shoulder Pain</span>
+                        </div>
+                        <div
+                            class="glass-panel rounded-2xl p-5 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-center gap-4">
+                            <span class="material-symbols-outlined text-primary">check_circle</span>
+                            <span class="text-slate-200 font-semibold">Knee Injuries</span>
+                        </div>
+                        <div
+                            class="glass-panel rounded-2xl p-5 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-center gap-4">
+                            <span class="material-symbols-outlined text-primary">check_circle</span>
+                            <span class="text-slate-200 font-semibold">Arthritis</span>
+                        </div>
+                        <div
+                            class="glass-panel rounded-2xl p-5 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-center gap-4">
+                            <span class="material-symbols-outlined text-primary">check_circle</span>
+                            <span class="text-slate-200 font-semibold">Foot/Ankle Pain</span>
+                        </div>
+                        <div
+                            class="glass-panel rounded-2xl p-5 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-center gap-4">
+                            <span class="material-symbols-outlined text-primary">check_circle</span>
+                            <span class="text-slate-200 font-semibold">Wrist/Hand Pain</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-extrabold text-white mb-10">How It <span class="text-primary">Works</span>
+                    </h3>
+                    <div class="space-y-6">
+                        <div
+                            class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-start gap-6">
+                            <div
+                                class="size-12 rounded-full bg-primary text-background-dark flex items-center justify-center font-bold shrink-0 shadow-[0_0_15px_rgba(19,236,236,0.3)]">
+                                1</div>
+                            <div>
+                                <h5 class="text-lg font-bold text-white mb-2">Detailed Evaluation</h5>
+                                <p class="text-slate-400 text-sm leading-relaxed">Comprehensive assessment of your
+                                    movement, strength, and clinical history.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-start gap-6">
+                            <div
+                                class="size-12 rounded-full bg-primary text-background-dark flex items-center justify-center font-bold shrink-0 shadow-[0_0_15px_rgba(19,236,236,0.3)]">
+                                2</div>
+                            <div>
+                                <h5 class="text-lg font-bold text-white mb-2">Personalized Plan</h5>
+                                <p class="text-slate-400 text-sm leading-relaxed">We design a custom roadmap focused on
+                                    your specific recovery goals.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-start gap-6">
+                            <div
+                                class="size-12 rounded-full bg-primary text-background-dark flex items-center justify-center font-bold shrink-0 shadow-[0_0_15px_rgba(19,236,236,0.3)]">
+                                3</div>
+                            <div>
+                                <h5 class="text-lg font-bold text-white mb-2">Guided Recovery</h5>
+                                <p class="text-slate-400 text-sm leading-relaxed">One-on-one sessions with expert
+                                    therapists using modern techniques.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-start gap-6">
+                            <div
+                                class="size-12 rounded-full bg-primary text-background-dark flex items-center justify-center font-bold shrink-0 shadow-[0_0_15px_rgba(19,236,236,0.3)]">
+                                4</div>
+                            <div>
+                                <h5 class="text-lg font-bold text-white mb-2">Prevention &amp; Maintenance</h5>
+                                <p class="text-slate-400 text-sm leading-relaxed">Empowering you with the knowledge to
+                                    stay healthy and injury-free long-term.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Testimonials -->
+        <section class="max-w-7xl mx-auto px-6 py-24 reveal">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-extrabold text-white mb-4">Patient <span class="text-primary">Success
+                        Stories</span></h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div
+                    class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
+                    <span
+                        class="material-symbols-outlined absolute top-6 right-10 text-primary/20 text-6xl">format_quote</span>
+                    <div class="flex gap-1 text-primary mb-6">
+                        <span class="material-symbols-outlined text-[18px] fill-1">star</span>
+                        <span class="material-symbols-outlined text-[18px] fill-1">star</span>
+                        <span class="material-symbols-outlined text-[18px] fill-1">star</span>
+                        <span class="material-symbols-outlined text-[18px] fill-1">star</span>
+                        <span class="material-symbols-outlined text-[18px] fill-1">star</span>
+                    </div>
+                    <p class="text-slate-300 text-lg mb-8">"After my ACL surgery, I was worried I'd never run again. The
+                        team at PT Clinic was incredible. Their personalized approach helped me regain strength faster
+                        than I expected. I'm back on the trails now!"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="size-12 rounded-full bg-slate-700 bg-cover bg-center"
+                            data-alt="Female patient portrait"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCR0VXthMLsXqSuipSPXfh-YhpryaiT8zf8wia3eCPdGDCJxdVDSUCbxwV9uFb8h3FcSw-Uglb8mUe42Aczpe6LKJkKCunWoq085EqJb5ir-jFs93YBTD5UomuNJI_YxNRo4N80B781g13AKDZZrcPzKA2oLMTmMAWIHSIYehxg5ZoM46FKhvi9wGseBEogj_EdFzFWoNOlDcF6aum4IXDRR7lNIB8g02-ayVIMSJvexdHk3xs15JidKsV0J_Umf3jh56Zzd7FDh3Q')">
+                        </div>
+                        <div>
+                            <p class="text-white font-bold">Sarah M.</p>
+                            <p class="text-slate-500 text-sm">Recovered Runner</p>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
+                    <span
+                        class="material-symbols-outlined absolute top-6 right-10 text-primary/20 text-6xl">format_quote</span>
+                    <div class="flex gap-1 text-primary mb-6">
+                        <span class="material-symbols-outlined text-[18px] fill-1">star</span>
+                        <span class="material-symbols-outlined text-[18px] fill-1">star</span>
+                        <span class="material-symbols-outlined text-[18px] fill-1">star</span>
+                        <span class="material-symbols-outlined text-[18px] fill-1">star</span>
+                        <span class="material-symbols-outlined text-[18px] fill-1">star</span>
+                    </div>
+                    <p class="text-slate-300 text-lg mb-8">"Chronic back pain was affecting my work and sleep for years.
+                        Manual therapy and a consistent exercise plan changed everything. Professional, caring, and
+                        truly life-changing care."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="size-12 rounded-full bg-slate-700 bg-cover bg-center"
+                            data-alt="Male patient portrait"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDsfUsGNbdJFomawBFAUyqZ-uZglO22yd9pp_HqP4uFSURa7Zb7hmREavHobFpfEKJnS-vnMyx5kMbY8z0O_NXGnk_ATl7XK7LXzU-lyyQGyv7u-VbxecKd6_xszfqxSC7D7azD3Xz7BjJAshCP3VDf0nmQBmgjkdB4iH6fZOq4ZH6vp-ud9oZ0cCtTEHAhbzxdAJD1tfwO9AxyYyCHRee23UgDto_Cg9Z8QW-GaOgWt3ozx94ehm2kPoOSqptvrVrTTfUjN86Mm84')">
+                        </div>
+                        <div>
+                            <p class="text-white font-bold">Michael R.</p>
+                            <p class="text-slate-500 text-sm">Software Engineer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Team Section -->
+        <section class="max-w-7xl mx-auto px-6 py-24 reveal">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div>
+                    <h2 class="text-4xl font-extrabold text-white mb-4">Meet Our <span class="text-primary">Team</span>
+                    </h2>
+                    <p class="text-slate-400 max-w-xl">World-class therapists dedicated to your health and performance.
+                    </p>
+                </div>
+                <button
+                    class="group relative overflow-hidden glass-panel rounded-full px-8 py-4 refractive-border bg-white/[0.02] rotating-border-container transition-all font-bold">
+                    <span class="relative z-10 flex items-center gap-2">View Full Team <span
+                            class="material-symbols-outlined">expand_more</span></span>
+                    <div
+                        class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                    </div>
+                </button>
+            </div>
+            <div class="grid md:grid-cols-4 gap-6">
+                <!-- Team Member 1 -->
+                <div
+                    class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
+                    <div
+                        class="aspect-[4/5] rounded-2xl overflow-hidden mb-6 grayscale group-hover:grayscale-0 transition-all duration-500">
+                        <div class="w-full h-full bg-cover bg-center" data-alt="Dr. Alex Rivera - Physical Therapist"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDupFWG0ZVHgn6FKmuadE--MqUnWsnsfVlxvTblj6xpea8sFaLYLV_MjQR7XF3LB8WBF9f-sJJcjzkh82ZJsRoWCdiSZ7PUlIWobRuYLeg5fmDf1TcwYS1-M2VzC3Rp1W8kG5CF3qCMhHJix3adFhevh1KQEfhd-XT6eQrfpRrUdAREON30qEWSVNuHSnLe_Lh_vJOxwI_mLuQjST3y7M7UH1LeY6cpXUPxS7k4dvT9oSYlBdvTHmuKY3bJ613EgWci8iF8_YFqtqA')">
+                        </div>
+                    </div>
+                    <h5 class="text-white font-bold text-lg">Dr. Alex Rivera</h5>
+                    <p class="text-primary text-xs font-bold uppercase tracking-widest mb-4">Lead Specialist</p>
+                </div>
+                <!-- Team Member 2 -->
+                <div
+                    class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
+                    <div
+                        class="aspect-[4/5] rounded-2xl overflow-hidden mb-6 grayscale group-hover:grayscale-0 transition-all duration-500">
+                        <div class="w-full h-full bg-cover bg-center"
+                            data-alt="Dr. Sarah Jenkins - Orthopedic Specialist"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCt3hzya5nS7YBLJZ-0CwTXvGTKQ1v0RnnvYQ7C62RqtNFMBsDCJduYWhVYfP8Iwcz834zNFfittHy1qtslqf0S5ZZqauu0NluIN-wjP1VSbHSwi4omdnuu99lpxLOboZ-65xaadzHeKMEyeKWHSdTOTxfw_2yxkU4kx3TiQadm8Yr0KyhuQRGNvY-0qD5FrdP344pRMT6uk8d02Qz-WIJtWPdT7JjxUr8m5kNFbxvxgtdg7v5t03or_rsrePVIwVYIeVGdqNq80E8')">
+                        </div>
+                    </div>
+                    <h5 class="text-white font-bold text-lg">Dr. Sarah Jenkins</h5>
+                    <p class="text-primary text-xs font-bold uppercase tracking-widest mb-4">Orthopedic Specialist</p>
+                </div>
+                <!-- Team Member 3 -->
+                <div
+                    class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
+                    <div
+                        class="aspect-[4/5] rounded-2xl overflow-hidden mb-6 grayscale group-hover:grayscale-0 transition-all duration-500">
+                        <div class="w-full h-full bg-cover bg-center" data-alt="Mark Thompson - Sports Rehab"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjip6C9srrOX00gIjpXhuNawLtx5UaBxiy71hy9cIu20Nbp-6aWTxa5zCA5ejmObdnqSLQ6VBfv-QqPFpjQMMjWbo8FRcdq2wO934Mwn2ELwvfAiwkgEDsLKBapfEehiKAd9Np6ENFy91PNB67LCowoJmW8MQbKzsvNrcmRFk0L2EOna2vTFfukPvytbSORFcf8hyWUEiU7FS_gLHGlsfRF05j2ZtgH_un9yDBit_IINpCp34Irtkw6k6H65ORHnvGBWs-CTRm1ZI')">
+                        </div>
+                    </div>
+                    <h5 class="text-white font-bold text-lg">Mark Thompson</h5>
+                    <p class="text-primary text-xs font-bold uppercase tracking-widest mb-4">Sports Rehabilitation</p>
+                </div>
+                <!-- Team Member 4 -->
+                <div
+                    class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
+                    <div
+                        class="aspect-[4/5] rounded-2xl overflow-hidden mb-6 grayscale group-hover:grayscale-0 transition-all duration-500">
+                        <div class="w-full h-full bg-cover bg-center" data-alt="Dr. Emily Chen - Manual Therapist"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDEjaBbRi6YF89jhJ6nagE0jzNx4g121LoxN8kIUNzOrJutYeFzXJoHZcqQXLsJYR7RNh16QOSCPbmD5TZEjXShKTjdJcmInkZTvM8oaGB3ATS_Kr1LqJwVeeS7UUFH3pA0E9ck0Zqb8eKQtx4AhAjFyUXodGfNUD_TV7JVJIkcSl3AyAOgIVu6JWPA9wYlbEtN845IhAirqTNzx84_HAIYf7MRPHGy7k9hY7x_RfHaRK-jsRiwDWpvF925XdK-J6jcRvIpP4pUOiU')">
+                        </div>
+                    </div>
+                    <h5 class="text-white font-bold text-lg">Dr. Emily Chen</h5>
+                    <p class="text-primary text-xs font-bold uppercase tracking-widest mb-4">Manual Therapist</p>
+                </div>
+            </div>
+        </section>
+        <!-- Insurance -->
+        <section class="max-w-7xl mx-auto px-6 py-32 reveal">
+            <div
+                class="glass-panel rounded-[3rem] p-12 md:p-20 refractive-border rotating-border-container overflow-hidden">
+                <div class="absolute top-0 right-0 w-96 h-96 bg-primary/5 blur-[100px] animate-pulse-glow"></div>
+                <div class="relative z-10 text-center mb-16">
+                    <span
+                        class="text-primary text-[10px] font-black tracking-[0.3em] uppercase mb-4 block">Partnerships</span>
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6">Insurance &amp; Payment Options</h2>
+                    <p class="text-slate-400 max-w-2xl mx-auto text-lg">We partner with industry-leading providers to
+                        ensure your focus remains entirely on recovery. Experience seamless processing and direct
+                        billing with our trusted network.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+                    <div
+                        class="group h-24 glass-panel rounded-2xl flex items-center justify-center border border-white/5 hover:border-primary/30 transition-all duration-500">
+                        <span
+                            class="text-slate-500 group-hover:text-primary font-black text-xl tracking-tighter opacity-50 group-hover:opacity-100 transition-all">AETNA</span>
+                    </div>
+                    <div
+                        class="group h-24 glass-panel rounded-2xl flex items-center justify-center border border-white/5 hover:border-primary/30 transition-all duration-500">
+                        <span
+                            class="text-slate-500 group-hover:text-primary font-black text-xl tracking-tighter opacity-50 group-hover:opacity-100 transition-all">BCBS</span>
+                    </div>
+                    <div
+                        class="group h-24 glass-panel rounded-2xl flex items-center justify-center border border-white/5 hover:border-primary/30 transition-all duration-500">
+                        <span
+                            class="text-slate-500 group-hover:text-primary font-black text-xl tracking-tighter opacity-50 group-hover:opacity-100 transition-all">CIGNA</span>
+                    </div>
+                    <div
+                        class="group h-24 glass-panel rounded-2xl flex items-center justify-center border border-white/5 hover:border-primary/30 transition-all duration-500">
+                        <span
+                            class="text-slate-500 group-hover:text-primary font-black text-xl tracking-tighter opacity-50 group-hover:opacity-100 transition-all">UNITED</span>
+                    </div>
+                    <div
+                        class="group h-24 glass-panel rounded-2xl flex items-center justify-center border border-white/5 hover:border-primary/30 transition-all duration-500">
+                        <span
+                            class="text-slate-500 group-hover:text-primary font-black text-xl tracking-tighter opacity-50 group-hover:opacity-100 transition-all">HUMANA</span>
+                    </div>
+                </div>
+                <div class="mt-16 pt-8 border-t border-white/5 text-center">
+                    <p class="text-slate-500 text-sm italic">Don't see your provider? Contact our billing specialist for
+                        a full list of partners.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="mt-40 border-t border-white/5 bg-background-dark/50 backdrop-blur-3xl">
+        <div class="max-w-7xl mx-auto px-6 py-24">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-16 mb-24">
+                <div class="col-span-1 lg:col-span-1">
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="size-10 bg-primary rounded-xl flex items-center justify-center">
+                            <span
+                                class="material-symbols-outlined text-background-dark text-2xl font-bold">architecture</span>
+                        </div>
+                        <h2 class="text-white text-2xl font-black tracking-tighter">PT CLINIC</h2>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed mb-10 font-medium">
+                        Redefining rehabilitation through precision science and specialized human care.
+                    </p>
+                    <div class="flex gap-4">
+                        <a class="size-12 rounded-xl glass-panel flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary/50 transition-all"
+                            href="#">
+                            <svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+                                <path
+                                    d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a class="size-12 rounded-xl glass-panel flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary/50 transition-all"
+                            href="#">
+                            <svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z">
+                                </path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-8">Quick Links</h4>
+                    <ul class="space-y-4">
+                        <li><a class="text-slate-400 hover:text-primary transition-colors font-medium text-sm"
+                                href="#">Our Services</a></li>
+                        <li><a class="text-slate-400 hover:text-primary transition-colors font-medium text-sm"
+                                href="#">Find a Therapist</a></li>
+                        <li><a class="text-slate-400 hover:text-primary transition-colors font-medium text-sm"
+                                href="#">Patient Portal</a></li>
+                        <li><a class="text-slate-400 hover:text-primary transition-colors font-medium text-sm"
+                                href="#">Insurance Info</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-8">Newsletter</h4>
+                    <p class="text-slate-400 text-sm mb-6">Stay updated with the latest in recovery science.</p>
+                    <div class="relative group">
+                        <input
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-primary/50 transition-all"
+                            placeholder="Your email" type="email" />
+                        <button class="absolute right-2 top-2 bottom-2 bg-primary px-4 rounded-lg text-background-dark">
+                            <span class="material-symbols-outlined text-xl">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-8">Contact</h4>
+                    <ul class="space-y-4">
+                        <li class="flex gap-4">
+                            <span class="material-symbols-outlined text-primary">location_on</span>
+                            <span class="text-slate-400 text-sm">123 Wellness Way, Metro City</span>
+                        </li>
+                        <li class="flex gap-4">
+                            <span class="material-symbols-outlined text-primary">call</span>
+                            <span class="text-slate-400 text-sm">(555) 000-1234</span>
+                        </li>
+                        <li class="flex gap-4">
+                            <span class="material-symbols-outlined text-primary">mail</span>
+                            <span class="text-slate-400 text-sm">hello@ptclinic.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em]">© 2024 PHYSICAL THERAPY
+                    CLINIC. ALL RIGHTS RESERVED.</p>
+                <div class="flex gap-8">
+                    <a class="text-slate-500 hover:text-white transition-colors text-[10px] font-black uppercase tracking-widest"
+                        href="#">Privacy</a>
+                    <a class="text-slate-500 hover:text-white transition-colors text-[10px] font-black uppercase tracking-widest"
+                        href="#">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
