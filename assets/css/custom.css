@@ -275,9 +275,34 @@ body.menu-open {
   color: #13ecec;
 }
 
+#main-header nav {
+  overflow: clip;
+}
+
+#main-header .brand-title {
+  white-space: nowrap;
+}
+
 @media (max-width: 767px) {
   #mobile-menu-panel .glass-panel {
     background: rgba(8, 15, 15, 0.96);
+  }
+}
+
+@media (max-width: 389px) {
+  #main-header {
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+  }
+
+  #main-header .brand-title {
+    max-width: 88px;
+    font-size: 0.8rem;
+  }
+
+  #mobile-menu-toggle {
+    width: 2.25rem;
+    height: 2.25rem;
   }
 }
 
