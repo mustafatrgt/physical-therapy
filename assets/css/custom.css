@@ -245,6 +245,32 @@ body.menu-open {
   animation: pulse-glow 3s ease-in-out infinite;
 }
 
+@keyframes how-step-breath {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
+}
+
+.how-step-icon::after {
+  content: '';
+  position: absolute;
+  inset: 12%;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(19, 236, 236, 0.25), rgba(19, 236, 236, 0));
+  animation: how-step-breath 2.8s ease-in-out infinite;
+}
+
+.how-step-breath {
+  animation: how-step-breath 2.8s ease-in-out infinite;
+}
+
 .reveal-left,
 .reveal-right,
 .reveal-up {
