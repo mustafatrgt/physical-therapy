@@ -1,0 +1,21 @@
+{
+  "name": "stitch_iv_hydration_wellness_landing_page-(2)",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "tailwindcss -c tailwind.config.cjs -i ./assets/css/tailwind.input.css -o ./assets/css/tailwind.css --minify",
+    "dev:css": "tailwindcss -c tailwind.config.cjs -i ./assets/css/tailwind.input.css -o ./assets/css/tailwind.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.1",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.11",
+    "tailwindcss": "^4.2.1"
+  }
+}
