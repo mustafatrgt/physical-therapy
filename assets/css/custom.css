@@ -363,6 +363,59 @@ body.menu-open {
   opacity: 0.22;
 }
 
+.physio-knee-demo {
+  filter: drop-shadow(0 0 24px rgba(19, 236, 236, 0.12));
+}
+
+.physio-table {
+  fill: rgba(19, 236, 236, 0.14);
+  stroke: rgba(19, 236, 236, 0.4);
+  stroke-width: 2;
+}
+
+.physio-head,
+.physio-joint,
+.physio-foot {
+  fill: rgba(19, 236, 236, 0.18);
+  stroke: currentColor;
+  stroke-width: 3;
+}
+
+.physio-limb {
+  stroke: currentColor;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.physio-knee-pulse {
+  fill: rgba(19, 236, 236, 0.18);
+  animation: physio-knee-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes physio-knee-pulse {
+  0%,
+  100% {
+    transform: scale(0.95);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: scale(1.4);
+    opacity: 0.1;
+  }
+}
+
+.light .physio-knee-demo {
+  filter: drop-shadow(0 0 12px rgba(14, 165, 233, 0.12));
+}
+
+.light .physio-head,
+.light .physio-joint,
+.light .physio-foot {
+  fill: rgba(14, 165, 233, 0.14);
+}
+
 #main-header nav {
   overflow: clip;
 }
