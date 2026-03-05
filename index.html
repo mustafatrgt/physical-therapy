@@ -403,65 +403,115 @@
                 <div class="w-full md:w-1/2 flex justify-center relative z-10" aria-hidden="true">
                     <div
                         class="w-full max-w-sm aspect-square relative glass-panel rounded-3xl border border-white/5 p-8 flex items-center justify-center shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
-                        <svg viewBox="0 0 200 200"
+                        <svg viewBox="0 0 400 400"
                             class="w-full h-full drop-shadow-[0_0_15px_rgba(255,255,255,0.15)] text-slate-100"
-                            fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"
+                            fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"
                             stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+
+                            <!-- Defs for animation and masks -->
                             <defs>
-                                <path id="t-torso" d="M 85,130 V 85 A 20,20 0 0,1 125,85 V 130" />
-                                <path id="p-torso" d="M 100,130 V 120 Q 120,112 143,120 V 130" />
-                                <path id="p-stat-leg" d="M 100,120 H 40 L 15,100 L 25,102 L 40,130" />
+                                <path id="t-torso"
+                                    d="M 152,240 V 125 Q 152,105 172,105 H 228 Q 248,105 248,125 V 170 Q 248,190 228,190 H 208" />
+                                <circle id="t-head" cx="200" cy="65" r="24" />
 
+                                <path id="table-top" d="M 30,240 H 370" stroke-width="20" />
+                                <rect id="table-leg" x="66" y="255" width="16" height="65" rx="6" />
+                                <rect id="table-leg-r" x="318" y="255" width="16" height="65" rx="6" />
+
+                                <circle id="p-head" cx="330" cy="216" r="18" />
+                                <path id="p-torso" d="M 312,216 H 220 Q 200,216 200,230 H 80 L 40,240" />
+
+                                <path id="p-arm" d="M 285,225 H 200 V 240 H 285 A 7.5,7.5 0 0,0 285,225" />
+
+                                <path id="t-leg-l" d="M 185,255 V 320 H 165 Q 175,305 185,305" />
+                                <path id="t-leg-r" d="M 215,255 V 320 H 235 Q 225,305 215,305" />
+
+                                <!-- Animated Right Leg of Patient (Bent) -->
                                 <path id="anim-leg"
-                                    d="M 100,130 L 62,112 L 32,112 L 18,92 L 28,96 L 62,102 L 100,120 Z">
+                                    d="M 195,240 L 195,210 L 175,125 L 165,125 L 85,125 L 45,110 L 45,130 L 70,130 L 70,145 L 185,145 L 210,240 Z">
                                     <animate attributeName="d" repeatCount="indefinite" dur="3s" keyTimes="0;0.5;1"
                                         calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
-                                        values="M 100,130 L 62,112 L 32,112 L 18,92 L 28,96 L 62,102 L 100,120 Z; M 100,130 L 77,93 L 57,113 L 42,92 L 52,96 L 77,83 L 100,120 Z; M 100,130 L 62,112 L 32,112 L 18,92 L 28,96 L 62,102 L 100,120 Z" />
-                                </path>
-                                <path id="arm1" d="M 85,80 L 32,102 L 32,112 L 85,90 Z">
-                                    <animate attributeName="d" repeatCount="indefinite" dur="3s" keyTimes="0;0.5;1"
-                                        calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
-                                        values="M 85,80 L 32,102 L 32,112 L 85,90 Z; M 85,80 L 57,103 L 57,113 L 85,90 Z; M 85,80 L 32,102 L 32,112 L 85,90 Z" />
-                                </path>
-                                <path id="arm2" d="M 115,80 L 110,110 L 62,112 L 62,102 L 100,103 L 105,80 Z">
-                                    <animate attributeName="d" repeatCount="indefinite" dur="3s" keyTimes="0;0.5;1"
-                                        calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
-                                        values="M 115,80 L 110,110 L 62,112 L 62,102 L 100,103 L 105,80 Z; M 115,80 L 110,105 L 77,93 L 77,83 L 100,98 L 105,80 Z; M 115,80 L 110,110 L 62,112 L 62,102 L 100,103 L 105,80 Z" />
+                                        values="M 195,240 L 195,210 L 175,125 L 165,125 L 85,125 L 45,110 L 45,130 L 70,130 L 70,145 L 185,145 L 210,240 Z; 
+                                            M 195,240 L 195,210 L 185,160 L 175,160 L 95,160 L 55,145 L 55,165 L 80,165 L 80,180 L 195,180 L 210,240 Z; 
+                                            M 195,240 L 195,210 L 175,125 L 165,125 L 85,125 L 45,110 L 45,130 L 70,130 L 70,145 L 185,145 L 210,240 Z" />
                                 </path>
 
-                                <mask id="fg-mask">
-                                    <rect width="200" height="200" fill="white" />
-                                    <!-- Animated foreground elements punch holes in the background with a thicker stroke to create gaps -->
-                                    <use href="#anim-leg" fill="black" stroke="black" stroke-width="10" />
-                                    <use href="#arm1" fill="black" stroke="black" stroke-width="10" />
-                                    <use href="#arm2" fill="black" stroke="black" stroke-width="10" />
+                                <!-- Animated Therapist Right Arm (Holding knee) -->
+                                <path id="t-arm-r"
+                                    d="M 248,135 V 155 Q 248,175 228,175 H 180 Q 165,175 165,160 V 125 L 185,125 V 155 H 225 V 135 Z">
+                                    <animate attributeName="d" repeatCount="indefinite" dur="3s" keyTimes="0;0.5;1"
+                                        calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
+                                        values="M 248,135 V 162 Q 248,182 228,182 H 180 Q 165,182 165,167 V 135 L 185,135 V 162 H 225 V 135 Z; 
+                                            M 248,135 V 202 Q 248,222 228,222 H 190 Q 175,222 175,207 V 170 L 195,170 V 202 H 225 V 135 Z; 
+                                            M 248,135 V 162 Q 248,182 228,182 H 180 Q 165,182 165,167 V 135 L 185,135 V 162 H 225 V 135 Z" />
+                                </path>
+
+                                <!-- Animated Therapist Left Arm (Holding ankle) -->
+                                <path id="t-arm-l" d="M 152,145 L 85,145 V 130 H 152 Z">
+                                    <animate attributeName="d" repeatCount="indefinite" dur="3s" keyTimes="0;0.5;1"
+                                        calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="M 152,145 L 85,145 V 130 H 152 Z; 
+                                            M 152,145 L 95,180 V 165 L 152,130 Z; 
+                                            M 152,145 L 85,145 V 130 H 152 Z" />
+                                </path>
+
+                                <!-- Masks to create true line-art intersections -->
+                                <mask id="mask-anim-leg">
+                                    <rect width="400" height="400" fill="white" />
+                                    <!-- Cut out holes around foreground elements by stroking them thick and black -->
+                                    <use href="#anim-leg" stroke="black" stroke-width="24" fill="none" />
+                                    <use href="#t-arm-r" stroke="black" stroke-width="24" fill="none" />
+                                    <use href="#t-arm-l" stroke="black" stroke-width="24" fill="none" />
+                                </mask>
+
+                                <mask id="mask-patient">
+                                    <rect width="400" height="400" fill="white" />
+                                    <!-- Patient torso cuts through therapist torso and table -->
+                                    <use href="#p-torso" stroke="black" stroke-width="24" fill="none" />
+                                    <!-- The animated leg and arms also cut through -->
+                                    <use href="#anim-leg" stroke="black" stroke-width="24" fill="none" />
+                                    <use href="#t-arm-r" stroke="black" stroke-width="24" fill="none" />
+                                </mask>
+
+                                <mask id="mask-table">
+                                    <rect width="400" height="400" fill="white" />
+                                    <use href="#p-arm" stroke="black" stroke-width="24" fill="none" />
+                                    <use href="#p-torso" stroke="black" stroke-width="24" fill="none" />
+                                    <use href="#anim-leg" stroke="black" stroke-width="24" fill="none" />
                                 </mask>
                             </defs>
 
-                            <!-- Background Elements (Masked) -->
-                            <g mask="url(#fg-mask)">
+                            <!-- Background Elements -->
+                            <g mask="url(#mask-patient)">
+                                <!-- Therapist body -->
+                                <use href="#t-head" />
                                 <use href="#t-torso" />
-                                <use href="#p-torso" />
-                                <use href="#p-stat-leg" />
                             </g>
 
-                            <!-- Unmasked Static Elements -->
-                            <!-- Therapist Legs -->
-                            <path d="M 90,145 V 170 H 82 A 5,5 0 0,0 82,180 H 96 V 145 Z" />
-                            <path d="M 110,145 V 170 H 118 A 5,5 0 0,1 118,180 H 104 V 145 Z" />
+                            <!-- Therapist Legs (Behind everything) -->
+                            <use href="#t-leg-l" />
+                            <use href="#t-leg-r" />
 
-                            <!-- Head Circles -->
-                            <circle cx="105" cy="45" r="14" />
-                            <circle cx="155" cy="118" r="12" />
+                            <g mask="url(#mask-table)">
+                                <!-- Table top line -->
+                                <use href="#table-top" />
+                            </g>
 
-                            <!-- Table -->
-                            <path d="M 45,145 V 180 M 155,145 V 180" />
-                            <rect x="25" y="130" width="150" height="15" rx="3" />
+                            <!-- Table Legs -->
+                            <use href="#table-leg" />
+                            <use href="#table-leg-r" />
 
-                            <!-- Foreground Animated Elements -->
-                            <use href="#anim-leg" />
-                            <use href="#arm1" />
-                            <use href="#arm2" />
+                            <!-- Middle Elements -->
+                            <g mask="url(#mask-anim-leg)">
+                                <!-- Patient head & torso & straight leg -->
+                                <use href="#p-head" />
+                                <use href="#p-torso" />
+                                <use href="#p-arm" />
+                            </g>
+
+                            <!-- Foreground Elements (Animated) -->
+                            <use href="#anim-leg" class="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" />
+                            <use href="#t-arm-r" />
+                            <use href="#t-arm-l" />
                         </svg>
                     </div>
                 </div>
