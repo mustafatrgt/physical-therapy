@@ -47,6 +47,19 @@ if (continueLink) {
   continueLink.setAttribute('href', continueHref);
 }
 
+const anchorToStatus = () => {
+  if (!statusEl) return;
+  statusEl.scrollIntoView({
+    behavior: 'smooth',
+    block: 'center',
+    inline: 'nearest',
+  });
+  if (!statusEl.hasAttribute('tabindex')) {
+    statusEl.setAttribute('tabindex', '-1');
+  }
+  statusEl.focus({ preventScroll: true });
+};
+
 const setStatus = (message, tone = 'info') => {
   if (!statusEl) return;
 
@@ -58,6 +71,10 @@ const setStatus = (message, tone = 'info') => {
     statusEl.classList.add('is-success');
   } else if (tone === 'muted') {
     statusEl.classList.add('is-muted');
+  }
+
+  if (tone === 'error') {
+    requestAnimationFrame(anchorToStatus);
   }
 };
 
@@ -156,6 +173,19 @@ const clearPersistedProfile = () => {
   }
 };
 
+const buildLocalProfileFromFirebaseUser = (user, providerName = 'unknown') => ({
+  fullName: user?.displayName || user?.email || 'PT Clinic Patient',
+  email: user?.email || '',
+  avatarUrl: user?.photoURL || '',
+  firebaseUid: user?.uid || '',
+  provider: providerName,
+  providers: Array.isArray(user?.providerData)
+    ? user.providerData
+      .map((item) => item?.providerId)
+      .filter((item) => typeof item === 'string' && item.length > 0)
+    : [],
+});
+
 const buildProvider = (providerName) => {
   if (providerName === 'google') {
     const provider = new GoogleAuthProvider();
@@ -189,6 +219,32 @@ const authLabel = {
   google: 'Google',
   microsoft: 'Outlook',
   apple: 'Apple',
+};
+
+const getProviderAuthErrorMessage = (providerName, errorCode) => {
+  const label = authLabel[providerName] || 'Provider';
+  const codeSuffix = errorCode ? ` (${errorCode})` : '';
+
+  if (errorCode === 'auth/operation-not-allowed') {
+    return `${label} sign-in is disabled in Firebase Authentication.${codeSuffix}`;
+  }
+  if (errorCode === 'auth/unauthorized-domain') {
+    return `This domain is not authorized for ${label}. Add ${window.location.hostname} in Firebase Auth > Settings > Authorized domains.${codeSuffix}`;
+  }
+  if (errorCode === 'auth/invalid-app-credential' || errorCode === 'auth/invalid-credential') {
+    return `${label} provider credentials are invalid. Check provider setup in Firebase console.${codeSuffix}`;
+  }
+  if (errorCode === 'auth/account-exists-with-different-credential') {
+    return `This email already exists with another sign-in method.${codeSuffix}`;
+  }
+  if (errorCode === 'auth/network-request-failed') {
+    return `Network error while contacting auth provider. Please retry.${codeSuffix}`;
+  }
+  if (errorCode === 'auth/internal-error') {
+    return `${label} sign-in failed due to an internal auth error. Retry in a few seconds.${codeSuffix}`;
+  }
+
+  return `Could not sign in with ${label}. Check provider setup in Firebase console.${codeSuffix}`;
 };
 
 const resolveProvider = (user, requestedProvider) => {
@@ -278,8 +334,22 @@ const start = async () => {
     return;
   }
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+  if (!String(firebaseConfig.apiKey || '').startsWith('AIza')) {
+    setStatus('Firebase API key format is invalid. Update FIREBASE_API_KEY on Vercel and redeploy.', 'error');
+    setAuthControlsDisabled(true);
+    return;
+  }
+
+  let app;
+  let auth;
+  try {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+  } catch {
+    setStatus('Firebase configuration is invalid. Check Vercel env vars and redeploy.', 'error');
+    setAuthControlsDisabled(true);
+    return;
+  }
 
   try {
     await setPersistence(auth, browserLocalPersistence);
@@ -301,9 +371,13 @@ const start = async () => {
         email: payload?.user?.email || user.email || '',
         avatarUrl: payload?.user?.avatarUrl || user.photoURL || '',
         firebaseUid: payload?.user?.firebaseUid || user.uid,
+        provider: payload?.user?.provider || providerName || 'unknown',
+        providers: payload?.user?.providers || [],
       });
       setStatus(`Signed in as ${fullName}.`, 'success');
     } catch (error) {
+      const fallbackProvider = providerName || resolveProvider(user);
+      persistUserProfile(buildLocalProfileFromFirebaseUser(user, fallbackProvider));
       setStatus(error instanceof Error ? error.message : 'Database sync failed.', 'error');
     } finally {
       syncingUser = false;
@@ -318,8 +392,10 @@ const start = async () => {
       return;
     }
 
+    const resolvedProvider = resolveProvider(user);
+    persistUserProfile(buildLocalProfileFromFirebaseUser(user, resolvedProvider));
     renderSignedInState(user);
-    await ensureSynced(user, resolveProvider(user));
+    await ensureSynced(user, resolvedProvider);
   });
 
   signOutBtn?.addEventListener('click', async () => {
@@ -328,33 +404,15 @@ const start = async () => {
       await signOut(auth);
       renderSignedOutState();
       setStatus('Signed out successfully.', 'muted');
+      window.setTimeout(() => {
+        window.location.reload();
+      }, 120);
     } catch {
       setStatus('Could not sign out. Please retry.', 'error');
     } finally {
       setAuthControlsDisabled(false);
     }
   });
-
-  try {
-    const redirectResult = await getRedirectResult(auth);
-    if (redirectResult?.user) {
-      const providerName = resolveProvider(
-        redirectResult.user,
-        redirectResult.providerId === 'google.com'
-          ? 'google'
-          : redirectResult.providerId === 'microsoft.com'
-            ? 'microsoft'
-            : redirectResult.providerId === 'apple.com'
-              ? 'apple'
-              : undefined
-      );
-
-      renderSignedInState(redirectResult.user);
-      await ensureSynced(redirectResult.user, providerName);
-    }
-  } catch {
-    setStatus('Provider redirect could not be completed. Try again.', 'error');
-  }
 
   providerButtons.forEach((button) => {
     button.addEventListener('click', async () => {
@@ -368,6 +426,7 @@ const start = async () => {
       try {
         const provider = buildProvider(providerName);
         const result = await signInWithPopup(auth, provider);
+        persistUserProfile(buildLocalProfileFromFirebaseUser(result.user, providerName));
         renderSignedInState(result.user);
         await ensureSynced(result.user, providerName);
       } catch (error) {
@@ -384,7 +443,7 @@ const start = async () => {
         } else if (code === 'auth/popup-closed-by-user') {
           setStatus('Sign-in popup was closed before completion.', 'muted');
         } else {
-          setStatus(`Could not sign in with ${label}. Check provider setup in Firebase console.`, 'error');
+          setStatus(getProviderAuthErrorMessage(providerName, code), 'error');
         }
       } finally {
         setAuthControlsDisabled(false);
@@ -435,6 +494,7 @@ const start = async () => {
       }
 
       const activeUser = auth.currentUser || credential.user;
+      persistUserProfile(buildLocalProfileFromFirebaseUser(activeUser, 'password'));
       renderSignedInState(activeUser);
       await ensureSynced(activeUser, 'password');
       if (emailAuthPassword) {
@@ -471,6 +531,30 @@ const start = async () => {
   });
 
   setStatus('Choose a provider or sign in with email.', 'info');
+
+  void (async () => {
+    try {
+      const redirectResult = await getRedirectResult(auth);
+      if (!redirectResult?.user) return;
+
+      const providerName = resolveProvider(
+        redirectResult.user,
+        redirectResult.providerId === 'google.com'
+          ? 'google'
+          : redirectResult.providerId === 'microsoft.com'
+            ? 'microsoft'
+            : redirectResult.providerId === 'apple.com'
+              ? 'apple'
+              : undefined
+      );
+
+      persistUserProfile(buildLocalProfileFromFirebaseUser(redirectResult.user, providerName));
+      renderSignedInState(redirectResult.user);
+      await ensureSynced(redirectResult.user, providerName);
+    } catch {
+      setStatus('Provider redirect could not be completed. Try again.', 'error');
+    }
+  })();
 };
 
 void start();

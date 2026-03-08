@@ -17,15 +17,105 @@
   const isLoginPage = page === 'login';
   const bookHref = headerSlot?.dataset.bookHref || (isBookingPage ? '#appointment' : './booking.html');
   const loginHref = './login.html';
-  const useHomeAnchors = isBookingPage || isLoginPage;
+  const profileHref = './profile.html';
+  const useHomeAnchors = isBookingPage || isLoginPage || page === 'profile';
   const navLinks = {
     services: useHomeAnchors ? './index.html#services' : '#services',
     about: useHomeAnchors ? './index.html#about' : '#about',
     team: useHomeAnchors ? './index.html#team' : '#team',
     insurance: useHomeAnchors ? './index.html#insurance' : '#insurance',
   };
-  const patientPortalHref = isBookingPage ? '#appointment' : './booking.html#appointment';
+  const patientPortalHref = profileHref;
   const homeHref = './index.html';
+  const userStorageKey = 'pt-clinic-user-profile';
+  const parseFirebaseAuthUserFallback = () => {
+    try {
+      for (let index = 0; index < localStorage.length; index += 1) {
+        const key = localStorage.key(index);
+        if (!key || !key.startsWith('firebase:authUser:')) {
+          continue;
+        }
+
+        const raw = localStorage.getItem(key);
+        if (!raw) {
+          continue;
+        }
+
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== 'object') {
+          continue;
+        }
+
+        const providers = Array.isArray(parsed.providerData)
+          ? parsed.providerData
+            .map((provider) => provider?.providerId)
+            .filter((providerId) => typeof providerId === 'string' && providerId.length > 0)
+          : [];
+
+        return {
+          fullName: parsed.displayName || parsed.email || 'PT Clinic Patient',
+          email: parsed.email || '',
+          avatarUrl: parsed.photoURL || '',
+          firebaseUid: parsed.uid || '',
+          provider: providers[0] || 'unknown',
+          providers,
+        };
+      }
+    } catch {
+      return null;
+    }
+
+    return null;
+  };
+
+  const readProfile = () => {
+    try {
+      const raw = localStorage.getItem(userStorageKey);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          return parsed;
+        }
+      }
+
+      const fallbackProfile = parseFirebaseAuthUserFallback();
+      if (fallbackProfile) {
+        localStorage.setItem(userStorageKey, JSON.stringify(fallbackProfile));
+        return fallbackProfile;
+      }
+
+      return null;
+    } catch {
+      return null;
+    }
+  };
+  const escapeHtml = (value) => String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+  const userProfile = readProfile();
+  const isSignedIn = Boolean(userProfile && (userProfile.email || userProfile.fullName || userProfile.firebaseUid));
+  const avatarUrl = userProfile?.avatarUrl || './assets/images/team-alex.webp';
+  const displayName = userProfile?.fullName || userProfile?.email || 'Patient Profile';
+  const safeDisplayName = escapeHtml(displayName);
+  const displayInitial = safeDisplayName.trim().charAt(0).toUpperCase() || 'P';
+  const desktopProfileButton = isSignedIn
+    ? `<a class="hidden md:inline-flex items-center justify-center size-10 rounded-full border border-primary/30 bg-white/[0.04] hover:border-primary/50 transition-all overflow-hidden refractive-border rotating-border-container" href="${profileHref}" aria-label="Open profile" title="${safeDisplayName}">
+<img class="header-avatar-image size-full object-cover" src="${escapeHtml(avatarUrl)}" alt="${safeDisplayName}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
+<span class="header-avatar-fallback hidden items-center justify-center size-full bg-primary/20 text-primary text-sm font-black">${displayInitial}</span>
+</a>`
+    : '';
+  const mobileProfileLink = isSignedIn
+    ? `<a class="mobile-menu-link flex items-center gap-3 text-xl font-black leading-tight text-white" href="${profileHref}">
+<span class="inline-flex size-8 rounded-full overflow-hidden border border-primary/30 bg-white/[0.04]">
+<img class="header-avatar-image size-full object-cover" src="${escapeHtml(avatarUrl)}" alt="${safeDisplayName}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
+<span class="header-avatar-fallback hidden items-center justify-center size-full bg-primary/20 text-primary text-xs font-black">${displayInitial}</span>
+</span>
+<span>Profile</span>
+</a>`
+    : '';
   const desktopSignInButton = isLoginPage
     ? ''
     : `<a class="hidden md:inline-flex relative group overflow-hidden px-4 md:px-5 py-2 md:py-2.5 rounded-full text-slate-200 border border-white/10 hover:border-primary/35 hover:text-primary text-xs md:text-sm font-bold transition-all bg-white/[0.02] refractive-border rotating-border-container" href="${loginHref}">
@@ -38,7 +128,7 @@
 <span class="relative z-10">Book Now</span>
 <div class="absolute inset-0 bg-white/30 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </a>`;
-  const mobileSignInButton = isLoginPage
+  const mobileSignInButton = isLoginPage || isSignedIn
     ? ''
     : `<a class="relative group overflow-hidden glass-panel border border-white/10 px-6 py-4 rounded-2xl text-slate-100 font-black text-sm transition-all text-center" href="${loginHref}">
 <span class="relative z-10">Sign In</span>
@@ -94,7 +184,7 @@ ${iconSprite}
 <button aria-controls="mobile-menu-panel" aria-expanded="false" aria-label="Open menu" class="md:hidden size-9 sm:size-10 rounded-full glass-panel flex items-center justify-center text-slate-300 hover:text-primary transition-all" id="mobile-menu-toggle" type="button">
 <svg aria-hidden="true" class="ms-icon text-xl"><use href="#menu"></use></svg>
 </button>
-${desktopSignInButton}
+${isSignedIn ? desktopProfileButton : desktopSignInButton}
 ${desktopBookNowButton}
 </div>
 </nav>
@@ -113,6 +203,7 @@ ${desktopBookNowButton}
 <a class="mobile-menu-link text-3xl font-black leading-tight text-white" href="${navLinks.about}">About</a>
 <a class="mobile-menu-link text-3xl font-black leading-tight text-white" href="${navLinks.team}">Team</a>
 <a class="mobile-menu-link text-3xl font-black leading-tight text-white" href="${navLinks.insurance}">Insurance</a>
+${mobileProfileLink}
 </nav>
 <button aria-label="Toggle theme" class="mt-8 h-11 w-fit px-4 rounded-full glass-panel flex items-center gap-2 text-slate-200 hover:text-primary transition-all group relative overflow-hidden refractive-border bg-white/[0.02] rotating-border-container" id="theme-toggle-mobile" type="button">
 <span class="relative z-10 flex items-center gap-2"><svg aria-hidden="true" class="ms-icon text-xl" id="theme-toggle-icon-mobile"><use data-theme-icon-use href="#dark_mode"></use></svg>

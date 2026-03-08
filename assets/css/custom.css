@@ -667,6 +667,150 @@ body.menu-open {
   font-weight: 700;
 }
 
+.auth-secondary-btn {
+  width: 100%;
+  min-height: 3.5rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: linear-gradient(120deg, rgba(19, 236, 236, 0.06) 0%, rgba(8, 14, 15, 0.52) 62%, rgba(8, 14, 15, 0.76) 100%);
+  color: rgba(226, 232, 240, 0.98);
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  padding: 0.75rem 1.1rem;
+  transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, color 0.22s ease;
+}
+
+.auth-secondary-btn:hover {
+  border-color: rgba(19, 236, 236, 0.42);
+  box-shadow: 0 0 0 1px rgba(19, 236, 236, 0.2), 0 14px 34px -24px rgba(19, 236, 236, 0.42);
+  transform: translateY(-1px);
+}
+
+.auth-secondary-btn:focus-visible {
+  outline: none;
+  border-color: rgba(19, 236, 236, 0.62);
+  box-shadow: 0 0 0 1px rgba(19, 236, 236, 0.32), 0 0 0 4px rgba(19, 236, 236, 0.11);
+}
+
+.auth-secondary-btn:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.auth-secondary-btn-copy {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+}
+
+.auth-secondary-btn-copy strong {
+  font-size: 0.96rem;
+  line-height: 1.2;
+}
+
+.auth-secondary-btn-copy small {
+  color: rgba(148, 163, 184, 0.92);
+  font-size: 0.73rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.auth-signed-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.auth-signed-btn {
+  width: 100%;
+  min-height: 5rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.26);
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  padding: 0.95rem 1.15rem;
+  transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, color 0.22s ease;
+}
+
+.auth-signed-btn:hover {
+  transform: translateY(-1px);
+}
+
+.auth-signed-btn:focus-visible {
+  outline: none;
+}
+
+.auth-signed-btn-copy {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.18rem;
+}
+
+.auth-signed-btn-copy strong {
+  font-size: 0.98rem;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.auth-signed-btn-copy small {
+  font-size: 0.71rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.auth-signed-btn--primary {
+  background: linear-gradient(135deg, rgba(19, 236, 236, 0.92) 0%, rgba(33, 214, 223, 0.94) 100%);
+  border-color: rgba(19, 236, 236, 0.55);
+  color: #041a21;
+  box-shadow: 0 14px 30px -24px rgba(19, 236, 236, 0.6);
+}
+
+.auth-signed-btn--primary:hover {
+  box-shadow: 0 0 0 1px rgba(19, 236, 236, 0.3), 0 18px 34px -22px rgba(19, 236, 236, 0.66);
+}
+
+.auth-signed-btn--primary:focus-visible {
+  border-color: rgba(19, 236, 236, 0.72);
+  box-shadow: 0 0 0 1px rgba(19, 236, 236, 0.36), 0 0 0 4px rgba(19, 236, 236, 0.12);
+}
+
+.auth-signed-btn--primary .auth-signed-btn-copy small {
+  color: rgba(5, 33, 42, 0.74);
+}
+
+.auth-signed-btn--secondary {
+  background: linear-gradient(120deg, rgba(19, 236, 236, 0.07) 0%, rgba(8, 14, 15, 0.5) 62%, rgba(8, 14, 15, 0.76) 100%);
+  color: rgba(226, 232, 240, 0.98);
+}
+
+.auth-signed-btn--secondary:hover {
+  border-color: rgba(19, 236, 236, 0.42);
+  box-shadow: 0 0 0 1px rgba(19, 236, 236, 0.2), 0 14px 34px -24px rgba(19, 236, 236, 0.42);
+}
+
+.auth-signed-btn--secondary:focus-visible {
+  border-color: rgba(19, 236, 236, 0.62);
+  box-shadow: 0 0 0 1px rgba(19, 236, 236, 0.32), 0 0 0 4px rgba(19, 236, 236, 0.11);
+}
+
+.auth-signed-btn--secondary .auth-signed-btn-copy small {
+  color: rgba(148, 163, 184, 0.9);
+}
+
+@media (min-width: 640px) {
+  .auth-signed-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .auth-divider {
   display: flex;
   align-items: center;
@@ -779,26 +923,54 @@ body.menu-open {
 }
 
 .auth-status {
+  position: relative;
   border-radius: 0.9rem;
   border: 1px solid rgba(148, 163, 184, 0.25);
-  background: rgba(8, 14, 15, 0.5);
-  padding: 0.75rem 0.95rem;
+  border-left: 3px solid rgba(19, 236, 236, 0.56);
+  background: linear-gradient(120deg, rgba(19, 236, 236, 0.09) 0%, rgba(8, 14, 15, 0.42) 60%, rgba(8, 14, 15, 0.58) 100%);
+  padding: 0.75rem 0.95rem 0.75rem 2rem;
   color: rgba(148, 163, 184, 0.95);
   font-size: 0.82rem;
   line-height: 1.4;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.auth-status::before {
+  content: '';
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: rgba(19, 236, 236, 0.9);
+  box-shadow: 0 0 10px rgba(19, 236, 236, 0.45);
+  transform: translateY(-50%);
 }
 
 .auth-status.is-success {
   color: rgba(34, 197, 94, 0.98);
   border-color: rgba(34, 197, 94, 0.32);
+  border-left-color: rgba(34, 197, 94, 0.65);
   background: rgba(21, 46, 29, 0.58);
+}
+
+.auth-status.is-success::before {
+  background: rgba(34, 197, 94, 0.95);
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.45);
 }
 
 .auth-status.is-error {
   color: rgba(251, 113, 133, 0.98);
   border-color: rgba(251, 113, 133, 0.35);
+  border-left-color: rgba(251, 113, 133, 0.7);
   background: rgba(60, 21, 31, 0.6);
+}
+
+.auth-status.is-error::before {
+  background: rgba(251, 113, 133, 0.95);
+  box-shadow: 0 0 10px rgba(251, 113, 133, 0.45);
 }
 
 .auth-status.is-muted {
@@ -818,6 +990,50 @@ body.menu-open {
 }
 
 .light .auth-provider-copy small {
+  color: #64748b;
+}
+
+.light .auth-secondary-btn {
+  border-color: rgba(15, 23, 42, 0.14);
+  background: linear-gradient(120deg, rgba(19, 236, 236, 0.12) 0%, rgba(255, 255, 255, 0.92) 62%, rgba(255, 255, 255, 0.98) 100%);
+  color: #1e293b;
+}
+
+.light .auth-secondary-btn:hover {
+  border-color: rgba(8, 145, 178, 0.42);
+  box-shadow: 0 0 0 1px rgba(8, 145, 178, 0.18), 0 14px 34px -24px rgba(8, 145, 178, 0.35);
+}
+
+.light .auth-secondary-btn-copy small {
+  color: #64748b;
+}
+
+.light .auth-signed-btn {
+  border-color: rgba(15, 23, 42, 0.14);
+}
+
+.light .auth-signed-btn--primary {
+  background: linear-gradient(135deg, rgba(19, 236, 236, 0.9) 0%, rgba(33, 214, 223, 0.92) 100%);
+  border-color: rgba(8, 145, 178, 0.42);
+  color: #03202a;
+  box-shadow: 0 14px 30px -24px rgba(8, 145, 178, 0.52);
+}
+
+.light .auth-signed-btn--primary .auth-signed-btn-copy small {
+  color: rgba(5, 41, 52, 0.72);
+}
+
+.light .auth-signed-btn--secondary {
+  background: linear-gradient(120deg, rgba(19, 236, 236, 0.1) 0%, rgba(255, 255, 255, 0.92) 62%, rgba(255, 255, 255, 0.98) 100%);
+  color: #1e293b;
+}
+
+.light .auth-signed-btn--secondary:hover {
+  border-color: rgba(8, 145, 178, 0.42);
+  box-shadow: 0 0 0 1px rgba(8, 145, 178, 0.18), 0 14px 34px -24px rgba(8, 145, 178, 0.35);
+}
+
+.light .auth-signed-btn--secondary .auth-signed-btn-copy small {
   color: #64748b;
 }
 
@@ -876,21 +1092,167 @@ body.menu-open {
 }
 
 .light .auth-status {
-  border-color: rgba(15, 23, 42, 0.14);
-  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(15, 23, 42, 0.16);
+  border-left-color: rgba(8, 145, 178, 0.62);
+  background: linear-gradient(120deg, rgba(8, 145, 178, 0.14) 0%, rgba(255, 255, 255, 0.92) 62%, rgba(255, 255, 255, 0.98) 100%);
   color: #475569;
+}
+
+.light .auth-status::before {
+  background: rgba(8, 145, 178, 0.88);
+  box-shadow: 0 0 8px rgba(8, 145, 178, 0.3);
 }
 
 .light .auth-status.is-success {
   color: #166534;
   border-color: rgba(34, 197, 94, 0.28);
+  border-left-color: rgba(34, 197, 94, 0.62);
   background: rgba(220, 252, 231, 0.75);
 }
 
 .light .auth-status.is-error {
   color: #9f1239;
   border-color: rgba(251, 113, 133, 0.28);
+  border-left-color: rgba(244, 63, 94, 0.62);
   background: rgba(255, 228, 230, 0.75);
+}
+
+.header-avatar-image {
+  display: block;
+}
+
+.booking-submit-status {
+  border-color: rgba(148, 163, 184, 0.25);
+  background: rgba(8, 14, 15, 0.5);
+  color: rgba(148, 163, 184, 0.95);
+}
+
+.booking-submit-status.is-success {
+  color: rgba(34, 197, 94, 0.98);
+  border-color: rgba(34, 197, 94, 0.34);
+  background: rgba(21, 46, 29, 0.58);
+}
+
+.booking-submit-status.is-error {
+  color: rgba(251, 113, 133, 0.98);
+  border-color: rgba(251, 113, 133, 0.34);
+  background: rgba(60, 21, 31, 0.6);
+}
+
+.profile-empty-state {
+  background: linear-gradient(120deg, rgba(19, 236, 236, 0.1) 0%, rgba(8, 14, 15, 0.45) 60%, rgba(8, 14, 15, 0.66) 100%);
+}
+
+.profile-appointment-card {
+  background: linear-gradient(135deg, rgba(19, 236, 236, 0.14) 0%, rgba(19, 236, 236, 0.05) 45%, rgba(8, 15, 15, 0.56) 100%);
+}
+
+.appointment-status-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.34rem 0.72rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.appointment-status-chip--upcoming {
+  color: #05212a;
+  background: #13ecec;
+  box-shadow: 0 0 14px rgba(19, 236, 236, 0.28);
+}
+
+.appointment-status-chip--cancelled {
+  color: rgba(251, 113, 133, 0.98);
+  background: rgba(251, 113, 133, 0.14);
+  border: 1px solid rgba(251, 113, 133, 0.3);
+}
+
+.appointment-status-chip--completed {
+  color: rgba(148, 163, 184, 0.95);
+  background: rgba(148, 163, 184, 0.14);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.profile-cancel-btn {
+  border: 1px solid rgba(251, 113, 133, 0.34);
+  background: rgba(60, 21, 31, 0.45);
+  color: rgba(251, 113, 133, 0.98);
+  border-radius: 0.72rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.profile-cancel-btn:hover {
+  background: rgba(60, 21, 31, 0.62);
+  border-color: rgba(251, 113, 133, 0.55);
+  transform: translateY(-1px);
+}
+
+.profile-cancel-btn:focus-visible {
+  outline: none;
+  border-color: rgba(251, 113, 133, 0.75);
+  box-shadow: 0 0 0 3px rgba(251, 113, 133, 0.2);
+}
+
+.light .booking-submit-status {
+  border-color: rgba(15, 23, 42, 0.16);
+  background: linear-gradient(120deg, rgba(8, 145, 178, 0.13) 0%, rgba(255, 255, 255, 0.92) 62%, rgba(255, 255, 255, 0.98) 100%);
+  color: #475569;
+}
+
+.light .booking-submit-status.is-success {
+  color: #166534;
+  border-color: rgba(34, 197, 94, 0.28);
+  background: rgba(220, 252, 231, 0.75);
+}
+
+.light .booking-submit-status.is-error {
+  color: #9f1239;
+  border-color: rgba(251, 113, 133, 0.28);
+  background: rgba(255, 228, 230, 0.75);
+}
+
+.light .profile-empty-state {
+  background: linear-gradient(120deg, rgba(8, 145, 178, 0.12) 0%, rgba(255, 255, 255, 0.92) 60%, rgba(255, 255, 255, 0.98) 100%);
+}
+
+.light .profile-appointment-card {
+  background: linear-gradient(135deg, rgba(19, 236, 236, 0.12) 0%, rgba(19, 236, 236, 0.05) 45%, rgba(255, 255, 255, 0.92) 100%);
+}
+
+.light .appointment-status-chip--upcoming {
+  color: #05212a;
+  background: #13ecec;
+}
+
+.light .appointment-status-chip--cancelled {
+  color: #9f1239;
+  background: rgba(251, 113, 133, 0.16);
+  border-color: rgba(251, 113, 133, 0.24);
+}
+
+.light .appointment-status-chip--completed {
+  color: #475569;
+  background: rgba(100, 116, 139, 0.15);
+  border-color: rgba(100, 116, 139, 0.24);
+}
+
+.light .profile-cancel-btn {
+  color: #9f1239;
+  background: rgba(251, 113, 133, 0.1);
+  border-color: rgba(251, 113, 133, 0.24);
+}
+
+.light .profile-cancel-btn:hover {
+  background: rgba(251, 113, 133, 0.16);
+  border-color: rgba(251, 113, 133, 0.32);
 }
 
 
