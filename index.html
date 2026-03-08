@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>Physical Therapy Clinic | Premium Recovery</title>
+<script>
+(() => {
+  const root = document.documentElement;
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  root.classList.toggle('dark', prefersDark);
+  root.classList.toggle('light', !prefersDark);
+})();
+</script>
 <link href="./assets/css/fonts.css" rel="stylesheet">
 <link href="./assets/css/tailwind.css" rel="stylesheet">
 <link href="./assets/css/custom.css" rel="stylesheet">

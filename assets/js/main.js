@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeToggle = document.getElementById('theme-toggle');
   const themeToggleMobile = document.getElementById('theme-toggle-mobile');
   const themeIconUses = document.querySelectorAll('[data-theme-icon-use]');
+  const systemThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
   const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
   const mobileMenuClose = document.getElementById('mobile-menu-close');
@@ -236,6 +237,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  const applySystemTheme = () => {
+    const isDark = systemThemeQuery.matches;
+    html.classList.toggle('dark', isDark);
+    html.classList.toggle('light', !isDark);
+  };
+
   const syncThemeIcon = () => {
     if (themeIconUses.length === 0) {
       return;
@@ -254,12 +261,27 @@ document.addEventListener('DOMContentLoaded', () => {
     syncThemeIcon();
   };
 
+  applySystemTheme();
+
   if (themeToggle) {
     themeToggle.addEventListener('click', toggleTheme);
   }
   if (themeToggleMobile) {
     themeToggleMobile.addEventListener('click', toggleTheme);
   }
+
+  if (typeof systemThemeQuery.addEventListener === 'function') {
+    systemThemeQuery.addEventListener('change', () => {
+      applySystemTheme();
+      syncThemeIcon();
+    });
+  } else if (typeof systemThemeQuery.addListener === 'function') {
+    systemThemeQuery.addListener(() => {
+      applySystemTheme();
+      syncThemeIcon();
+    });
+  }
+
   syncThemeIcon();
 
   if (header) {
