@@ -14,19 +14,35 @@
   ).toLowerCase();
 
   const isBookingPage = page === 'booking';
+  const isLoginPage = page === 'login';
   const bookHref = headerSlot?.dataset.bookHref || (isBookingPage ? '#appointment' : './booking.html');
+  const loginHref = './login.html';
+  const useHomeAnchors = isBookingPage || isLoginPage;
   const navLinks = {
-    services: isBookingPage ? './index.html#services' : '#services',
-    about: isBookingPage ? './index.html#about' : '#about',
-    team: isBookingPage ? './index.html#team' : '#team',
-    insurance: isBookingPage ? './index.html#insurance' : '#insurance',
+    services: useHomeAnchors ? './index.html#services' : '#services',
+    about: useHomeAnchors ? './index.html#about' : '#about',
+    team: useHomeAnchors ? './index.html#team' : '#team',
+    insurance: useHomeAnchors ? './index.html#insurance' : '#insurance',
   };
+  const patientPortalHref = isBookingPage ? '#appointment' : './booking.html#appointment';
   const homeHref = './index.html';
+  const desktopSignInButton = isLoginPage
+    ? ''
+    : `<a class="hidden md:inline-flex relative group overflow-hidden px-4 md:px-5 py-2 md:py-2.5 rounded-full text-slate-200 border border-white/10 hover:border-primary/35 hover:text-primary text-xs md:text-sm font-bold transition-all bg-white/[0.02] refractive-border rotating-border-container" href="${loginHref}">
+<span class="relative z-10">Sign In</span>
+<div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
+</a>`;
   const desktopBookNowButton = isBookingPage
     ? ''
     : `<a class="hidden md:inline-flex relative group overflow-hidden bg-primary px-4 md:px-6 py-2 md:py-2.5 rounded-full text-background-dark font-bold text-xs md:text-sm transition-all shadow-[0_4px_15px_rgba(19,236,236,0.2)]" href="${bookHref}">
 <span class="relative z-10">Book Now</span>
 <div class="absolute inset-0 bg-white/30 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
+</a>`;
+  const mobileSignInButton = isLoginPage
+    ? ''
+    : `<a class="relative group overflow-hidden glass-panel border border-white/10 px-6 py-4 rounded-2xl text-slate-100 font-black text-sm transition-all text-center" href="${loginHref}">
+<span class="relative z-10">Sign In</span>
+<div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </a>`;
   const mobileBookNowButton = isBookingPage
     ? ''
@@ -78,6 +94,7 @@ ${iconSprite}
 <button aria-controls="mobile-menu-panel" aria-expanded="false" aria-label="Open menu" class="md:hidden size-9 sm:size-10 rounded-full glass-panel flex items-center justify-center text-slate-300 hover:text-primary transition-all" id="mobile-menu-toggle" type="button">
 <svg aria-hidden="true" class="ms-icon text-xl"><use href="#menu"></use></svg>
 </button>
+${desktopSignInButton}
 ${desktopBookNowButton}
 </div>
 </nav>
@@ -102,6 +119,7 @@ ${desktopBookNowButton}
 <span class="text-sm font-semibold">Theme</span></span>
 <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </button>
+${mobileSignInButton}
 ${mobileBookNowButton}
 </div>
 </aside>`;
@@ -134,7 +152,7 @@ ${mobileBookNowButton}
 <ul class="space-y-4">
 <li><a class="text-slate-400 hover:text-primary transition-colors font-medium text-sm" href="${navLinks.services}">Our Services</a></li>
 <li><a class="text-slate-400 hover:text-primary transition-colors font-medium text-sm" href="${navLinks.team}">Find a Therapist</a></li>
-<li><a class="text-slate-400 hover:text-primary transition-colors font-medium text-sm" href="#appointment">Patient Portal</a></li>
+<li><a class="text-slate-400 hover:text-primary transition-colors font-medium text-sm" href="${patientPortalHref}">Patient Portal</a></li>
 <li><a class="text-slate-400 hover:text-primary transition-colors font-medium text-sm" href="${navLinks.insurance}">Insurance Info</a></li>
 </ul>
 </div>

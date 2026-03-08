@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const progressFill = document.getElementById('booking-progress-fill');
   const progressStep = document.getElementById('booking-progress-step');
   const storageKey = 'pt-clinic-booking-service';
+  const userProfileKey = 'pt-clinic-user-profile';
+  const patientNameInput = document.getElementById('patient-name');
+  const patientEmailInput = document.getElementById('patient-email');
   let suppressCardClick = false;
 
   if (!serviceTrack || serviceCards.length === 0) {
@@ -26,6 +29,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (progressStep) {
       progressStep.textContent = hasSelectedService ? 'Step 1 of 3' : 'Step 0 of 3';
+    }
+  };
+
+  const hydratePatientProfile = () => {
+    let profile;
+    try {
+      profile = JSON.parse(localStorage.getItem(userProfileKey) || 'null');
+    } catch {
+      profile = null;
+    }
+
+    if (!profile || typeof profile !== 'object') {
+      return;
+    }
+
+    if (patientNameInput && !patientNameInput.value && typeof profile.fullName === 'string') {
+      patientNameInput.value = profile.fullName;
+    }
+
+    if (patientEmailInput && !patientEmailInput.value && typeof profile.email === 'string') {
+      patientEmailInput.value = profile.email;
     }
   };
 
@@ -300,5 +324,6 @@ document.addEventListener('DOMContentLoaded', () => {
   serviceTrack.addEventListener('scroll', syncScrollerUi, { passive: true });
   window.addEventListener('resize', syncScrollerUi, { passive: true });
 
+  hydratePatientProfile();
   syncScrollerUi();
 });
