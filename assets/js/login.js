@@ -3,6 +3,9 @@ import {
   GoogleAuthProvider,
   OAuthProvider,
   browserLocalPersistence,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
   getAuth,
   getRedirectResult,
   onAuthStateChanged,
@@ -10,6 +13,7 @@ import {
   signInWithPopup,
   signInWithRedirect,
   signOut,
+  updateProfile,
 } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js';
 
 const statusEl = document.getElementById('auth-status');
@@ -20,7 +24,18 @@ const signedInName = document.getElementById('signed-in-name');
 const signedInEmail = document.getElementById('signed-in-email');
 const signedInAvatar = document.getElementById('signed-in-avatar');
 const signOutBtn = document.getElementById('sign-out-btn');
+const emailAuthWrap = document.getElementById('email-auth-wrap');
+const emailAuthForm = document.getElementById('email-auth-form');
+const emailAuthNameWrap = document.getElementById('email-auth-name-wrap');
+const emailAuthName = document.getElementById('email-auth-name');
+const emailAuthEmail = document.getElementById('email-auth-email');
+const emailAuthPassword = document.getElementById('email-auth-password');
+const emailAuthSubmit = document.getElementById('email-auth-submit');
+const emailAuthModeCopy = document.getElementById('email-auth-mode-copy');
+const emailAuthModeButtons = Array.from(document.querySelectorAll('[data-email-auth-mode]'));
+const emailResetBtn = document.getElementById('email-reset-btn');
 const userStorageKey = 'pt-clinic-user-profile';
+let emailAuthMode = 'signin';
 
 const nextParam = new URLSearchParams(window.location.search).get('next');
 const continueHref = (typeof nextParam === 'string' && /^\.?\/?[a-zA-Z0-9/_#?&=.-]*$/.test(nextParam) && !nextParam.startsWith('//'))
@@ -51,6 +66,78 @@ const setButtonsDisabled = (disabled) => {
     button.disabled = disabled;
     button.classList.toggle('is-loading', disabled);
   });
+};
+
+const setEmailAuthMode = (mode) => {
+  emailAuthMode = mode === 'signup' ? 'signup' : 'signin';
+
+  const isSignUp = emailAuthMode === 'signup';
+  if (emailAuthNameWrap) {
+    emailAuthNameWrap.classList.toggle('hidden', !isSignUp);
+  }
+  if (emailAuthSubmit) {
+    emailAuthSubmit.querySelector('span').textContent = isSignUp
+      ? 'Create Account with Email'
+      : 'Sign In with Email';
+  }
+  if (emailAuthModeCopy) {
+    emailAuthModeCopy.textContent = isSignUp
+      ? 'Create a new patient account with your email.'
+      : 'Sign in with your clinic email and password.';
+  }
+  if (emailAuthPassword) {
+    emailAuthPassword.autocomplete = isSignUp ? 'new-password' : 'current-password';
+  }
+
+  emailAuthModeButtons.forEach((button) => {
+    const isActive = button.dataset.emailAuthMode === emailAuthMode;
+    button.classList.toggle('is-active', isActive);
+    button.setAttribute('aria-selected', String(isActive));
+  });
+};
+
+const setEmailControlsDisabled = (disabled) => {
+  if (emailAuthForm) {
+    Array.from(emailAuthForm.elements).forEach((element) => {
+      if (!(element instanceof HTMLElement)) return;
+      element.toggleAttribute('disabled', disabled);
+    });
+  }
+  if (emailResetBtn) {
+    emailResetBtn.disabled = disabled;
+  }
+};
+
+const setAuthControlsDisabled = (disabled) => {
+  setButtonsDisabled(disabled);
+  setEmailControlsDisabled(disabled);
+};
+
+const getEmailAuthErrorMessage = (errorCode, mode) => {
+  if (errorCode === 'auth/invalid-email') {
+    return 'Please enter a valid email address.';
+  }
+  if (errorCode === 'auth/missing-password') {
+    return 'Please enter your password.';
+  }
+  if (errorCode === 'auth/weak-password') {
+    return 'Password must be at least 6 characters.';
+  }
+  if (errorCode === 'auth/email-already-in-use') {
+    return 'This email is already registered. Switch to Sign In.';
+  }
+  if (errorCode === 'auth/invalid-credential' || errorCode === 'auth/user-not-found' || errorCode === 'auth/wrong-password') {
+    return 'Invalid email or password.';
+  }
+  if (errorCode === 'auth/too-many-requests') {
+    return 'Too many attempts. Please try again in a few minutes.';
+  }
+  if (errorCode === 'auth/network-request-failed') {
+    return 'Network error. Check your connection and retry.';
+  }
+  return mode === 'signup'
+    ? 'Unable to create account. Please retry.'
+    : 'Unable to sign in with email. Please retry.';
 };
 
 const persistUserProfile = (profile) => {
@@ -153,11 +240,13 @@ const renderSignedInState = (user) => {
 
   signedInPanel.classList.remove('hidden');
   providerButtonsWrap?.classList.add('hidden');
+  emailAuthWrap?.classList.add('hidden');
 };
 
 const renderSignedOutState = () => {
   signedInPanel?.classList.add('hidden');
   providerButtonsWrap?.classList.remove('hidden');
+  emailAuthWrap?.classList.remove('hidden');
 };
 
 const fetchFirebaseConfig = async () => {
@@ -176,6 +265,8 @@ const fetchFirebaseConfig = async () => {
 };
 
 const start = async () => {
+  setEmailAuthMode('signin');
+
   setStatus('Loading secure sign-in...', 'muted');
 
   let firebaseConfig;
@@ -183,7 +274,7 @@ const start = async () => {
     firebaseConfig = await fetchFirebaseConfig();
   } catch (error) {
     setStatus(error instanceof Error ? error.message : 'Unable to initialize auth.', 'error');
-    setButtonsDisabled(true);
+    setAuthControlsDisabled(true);
     return;
   }
 
@@ -232,7 +323,7 @@ const start = async () => {
   });
 
   signOutBtn?.addEventListener('click', async () => {
-    setButtonsDisabled(true);
+    setAuthControlsDisabled(true);
     try {
       await signOut(auth);
       renderSignedOutState();
@@ -240,7 +331,7 @@ const start = async () => {
     } catch {
       setStatus('Could not sign out. Please retry.', 'error');
     } finally {
-      setButtonsDisabled(false);
+      setAuthControlsDisabled(false);
     }
   });
 
@@ -272,7 +363,7 @@ const start = async () => {
 
       const label = authLabel[providerName] || 'provider';
       setStatus(`Opening ${label} sign-in...`, 'muted');
-      setButtonsDisabled(true);
+      setAuthControlsDisabled(true);
 
       try {
         const provider = buildProvider(providerName);
@@ -296,12 +387,90 @@ const start = async () => {
           setStatus(`Could not sign in with ${label}. Check provider setup in Firebase console.`, 'error');
         }
       } finally {
-        setButtonsDisabled(false);
+        setAuthControlsDisabled(false);
       }
     });
   });
 
-  setStatus('Choose a provider to continue.', 'info');
+  emailAuthModeButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      setEmailAuthMode(button.dataset.emailAuthMode || 'signin');
+    });
+  });
+
+  emailAuthForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const email = (emailAuthEmail?.value || '').trim().toLowerCase();
+    const password = emailAuthPassword?.value || '';
+    const fullName = (emailAuthName?.value || '').trim();
+    const isSignUp = emailAuthMode === 'signup';
+
+    if (!email) {
+      setStatus('Please enter your email address.', 'error');
+      return;
+    }
+    if (!password || password.length < 6) {
+      setStatus('Password must be at least 6 characters.', 'error');
+      return;
+    }
+    if (isSignUp && !fullName) {
+      setStatus('Please enter your full name.', 'error');
+      return;
+    }
+
+    setStatus(isSignUp ? 'Creating your account...' : 'Signing you in...', 'muted');
+    setAuthControlsDisabled(true);
+
+    try {
+      let credential;
+      if (isSignUp) {
+        credential = await createUserWithEmailAndPassword(auth, email, password);
+        if (fullName) {
+          await updateProfile(credential.user, { displayName: fullName });
+        }
+        await credential.user.reload();
+      } else {
+        credential = await signInWithEmailAndPassword(auth, email, password);
+      }
+
+      const activeUser = auth.currentUser || credential.user;
+      renderSignedInState(activeUser);
+      await ensureSynced(activeUser, 'password');
+      if (emailAuthPassword) {
+        emailAuthPassword.value = '';
+      }
+      setStatus(isSignUp ? 'Account created and signed in successfully.' : 'Signed in successfully.', 'success');
+    } catch (error) {
+      const errorCode = typeof error?.code === 'string' ? error.code : '';
+      setStatus(getEmailAuthErrorMessage(errorCode, isSignUp ? 'signup' : 'signin'), 'error');
+    } finally {
+      setAuthControlsDisabled(false);
+    }
+  });
+
+  emailResetBtn?.addEventListener('click', async () => {
+    const email = (emailAuthEmail?.value || '').trim().toLowerCase();
+    if (!email) {
+      setStatus('Enter your email first, then click reset password.', 'muted');
+      return;
+    }
+
+    setStatus('Sending password reset email...', 'muted');
+    setAuthControlsDisabled(true);
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setStatus('Password reset email sent. Check your inbox.', 'success');
+    } catch (error) {
+      const errorCode = typeof error?.code === 'string' ? error.code : '';
+      setStatus(getEmailAuthErrorMessage(errorCode, 'signin'), 'error');
+    } finally {
+      setAuthControlsDisabled(false);
+    }
+  });
+
+  setStatus('Choose a provider or sign in with email.', 'info');
 };
 
 void start();

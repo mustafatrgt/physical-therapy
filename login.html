@@ -84,6 +84,40 @@ Sign in once with your Google, Outlook, or Apple account. Your profile is create
 </button>
 </div>
 
+<div class="auth-divider mt-7">
+<span>or use email and password</span>
+</div>
+
+<div class="space-y-4 mt-4" id="email-auth-wrap">
+<div class="auth-mode-switch" role="tablist" aria-label="Email auth mode">
+<button class="auth-mode-btn is-active" data-email-auth-mode="signin" id="email-auth-mode-signin" role="tab" aria-selected="true" type="button">Sign In</button>
+<button class="auth-mode-btn" data-email-auth-mode="signup" id="email-auth-mode-signup" role="tab" aria-selected="false" type="button">Create Account</button>
+</div>
+
+<p class="auth-mode-copy text-xs text-slate-400" id="email-auth-mode-copy">Sign in with your clinic email and password.</p>
+
+<form class="space-y-3" id="email-auth-form" novalidate>
+<div class="hidden" id="email-auth-name-wrap">
+<label class="auth-field-label" for="email-auth-name">Full Name</label>
+<input autocomplete="name" class="auth-input" id="email-auth-name" maxlength="120" placeholder="John Doe" type="text">
+</div>
+<div>
+<label class="auth-field-label" for="email-auth-email">Email Address</label>
+<input autocomplete="email" class="auth-input" id="email-auth-email" placeholder="john@example.com" type="email" required>
+</div>
+<div>
+<label class="auth-field-label" for="email-auth-password">Password</label>
+<input autocomplete="current-password" class="auth-input" id="email-auth-password" minlength="6" placeholder="••••••••" type="password" required>
+</div>
+<button class="relative group overflow-hidden bg-primary w-full px-5 py-3 rounded-xl text-background-dark font-black text-sm transition-all shadow-[0_10px_24px_rgba(19,236,236,0.2)] disabled:opacity-60 disabled:pointer-events-none" id="email-auth-submit" type="submit">
+<span class="relative z-10">Sign In with Email</span>
+<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
+</button>
+</form>
+
+<button class="auth-reset-btn" id="email-reset-btn" type="button">Forgot your password?</button>
+</div>
+
 <div class="mt-6 auth-status" id="auth-status" role="status" aria-live="polite">
 Ready to sign in.
 </div>
