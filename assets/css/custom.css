@@ -242,6 +242,112 @@ body.menu-open {
   opacity: 0.26;
 }
 
+.appointment-cta-wrap {
+  padding-top: 3.5rem;
+  padding-bottom: 6rem;
+}
+
+.appointment-cta-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 3rem;
+  padding: 2.5rem;
+}
+
+.appointment-cta-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.75rem;
+}
+
+.appointment-cta-copy {
+  max-width: 100%;
+}
+
+.appointment-cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-width: 210px;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  background: #13ecec;
+  color: #071014;
+  font-size: 1.125rem;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 20px 40px rgba(19, 236, 236, 0.18);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.appointment-cta-button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 24px 46px rgba(19, 236, 236, 0.24);
+}
+
+.appointment-cta-glow {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.appointment-cta-glow-left {
+  top: -5rem;
+  left: -5rem;
+  width: 18rem;
+  height: 18rem;
+  background: rgba(19, 236, 236, 0.2);
+  filter: blur(90px);
+}
+
+.appointment-cta-glow-right {
+  right: -6rem;
+  bottom: -6rem;
+  width: 20rem;
+  height: 20rem;
+  background: rgba(34, 211, 238, 0.12);
+  filter: blur(110px);
+}
+
+@media (min-width: 1024px) {
+  .appointment-cta-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2.25rem;
+  }
+
+  .appointment-cta-copy {
+    max-width: 68%;
+  }
+}
+
+@media (max-width: 1023px) {
+  .appointment-cta-card {
+    border-radius: 2.25rem;
+  }
+
+  .appointment-cta-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .appointment-cta-wrap {
+    padding-top: 2.5rem;
+    padding-bottom: 4.5rem;
+  }
+
+  .appointment-cta-card {
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+  }
+}
+
 @keyframes rotate-border {
   to {
     --angle: 360deg;
