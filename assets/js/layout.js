@@ -28,15 +28,51 @@
   const patientPortalHref = profileHref;
   const homeHref = '/';
   const userStorageKey = 'pt-clinic-user-profile';
-  const parseFirebaseAuthUserFallback = () => {
+  const authStateEventName = 'pt:auth-changed';
+  const firebaseStorageKeyPrefix = 'firebase:authUser:';
+  const escapeHtml = (value) => String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+  const normalizeProfile = (candidate) => {
+    if (!candidate || typeof candidate !== 'object') {
+      return null;
+    }
+
+    const providers = Array.isArray(candidate.providers)
+      ? candidate.providers.filter((item) => typeof item === 'string' && item.trim().length > 0)
+      : [];
+
+    const normalized = {
+      fullName: typeof candidate.fullName === 'string' ? candidate.fullName.trim() : '',
+      email: typeof candidate.email === 'string' ? candidate.email.trim() : '',
+      avatarUrl: typeof candidate.avatarUrl === 'string' ? candidate.avatarUrl.trim() : '',
+      firebaseUid: typeof candidate.firebaseUid === 'string' ? candidate.firebaseUid.trim() : '',
+      provider: typeof candidate.provider === 'string' ? candidate.provider.trim() : '',
+      providers,
+    };
+
+    if (!normalized.fullName && !normalized.email && !normalized.firebaseUid) {
+      return null;
+    }
+
+    if (!normalized.provider && providers.length > 0) {
+      normalized.provider = providers[0];
+    }
+
+    return normalized;
+  };
+  const parseFirebaseAuthUserFallbackFromStorage = (storage) => {
     try {
-      for (let index = 0; index < localStorage.length; index += 1) {
-        const key = localStorage.key(index);
-        if (!key || !key.startsWith('firebase:authUser:')) {
+      for (let index = 0; index < storage.length; index += 1) {
+        const key = storage.key(index);
+        if (!key || !key.startsWith(firebaseStorageKeyPrefix)) {
           continue;
         }
 
-        const raw = localStorage.getItem(key);
+        const raw = storage.getItem(key);
         if (!raw) {
           continue;
         }
@@ -52,14 +88,14 @@
             .filter((providerId) => typeof providerId === 'string' && providerId.length > 0)
           : [];
 
-        return {
+        return normalizeProfile({
           fullName: parsed.displayName || parsed.email || 'PT Clinic Patient',
           email: parsed.email || '',
           avatarUrl: parsed.photoURL || '',
           firebaseUid: parsed.uid || '',
           provider: providers[0] || 'unknown',
           providers,
-        };
+        });
       }
     } catch {
       return null;
@@ -67,64 +103,95 @@
 
     return null;
   };
-
+  const parseFirebaseAuthUserFallback = () => {
+    const localProfile = parseFirebaseAuthUserFallbackFromStorage(localStorage);
+    if (localProfile) {
+      return localProfile;
+    }
+    return parseFirebaseAuthUserFallbackFromStorage(sessionStorage);
+  };
   const readProfile = () => {
     try {
       const raw = localStorage.getItem(userStorageKey);
       if (raw) {
-        const parsed = JSON.parse(raw);
-        if (parsed && typeof parsed === 'object') {
+        const parsed = normalizeProfile(JSON.parse(raw));
+        if (parsed) {
           return parsed;
         }
       }
-
-      const fallbackProfile = parseFirebaseAuthUserFallback();
-      if (fallbackProfile) {
-        localStorage.setItem(userStorageKey, JSON.stringify(fallbackProfile));
-        return fallbackProfile;
-      }
-
-      return null;
     } catch {
+      // fall through
+    }
+
+    const fallbackProfile = parseFirebaseAuthUserFallback();
+    if (fallbackProfile) {
+      try {
+        localStorage.setItem(userStorageKey, JSON.stringify(fallbackProfile));
+      } catch {
+        // Ignore storage issues.
+      }
+      return fallbackProfile;
+    }
+
+    return null;
+  };
+  const persistProfile = (profile) => {
+    const normalized = normalizeProfile(profile);
+    if (!normalized) {
       return null;
     }
+
+    try {
+      localStorage.setItem(userStorageKey, JSON.stringify(normalized));
+    } catch {
+      // Ignore storage issues.
+    }
+
+    return normalized;
   };
-  const escapeHtml = (value) => String(value ?? '')
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#39;');
-  const userProfile = readProfile();
-  const isSignedIn = Boolean(userProfile && (userProfile.email || userProfile.fullName || userProfile.firebaseUid));
-  const avatarUrl = userProfile?.avatarUrl || './assets/images/team-alex.webp';
-  const displayName = userProfile?.fullName || userProfile?.email || 'Patient Profile';
-  const safeDisplayName = escapeHtml(displayName);
-  const firstName = String(displayName).trim().split(/\s+/)[0] || 'there';
-  const safeFirstName = escapeHtml(firstName);
-  const displayInitial = safeDisplayName.trim().charAt(0).toUpperCase() || 'P';
-  const desktopProfileButton = isSignedIn
-    ? `<a class="hidden md:inline-flex items-center justify-center size-10 rounded-full border border-primary/30 bg-white/[0.04] hover:border-primary/50 transition-all overflow-hidden refractive-border rotating-border-container" href="${profileHref}" aria-label="Open profile" title="${safeDisplayName}">
-<img class="header-avatar-image size-full object-cover" src="${escapeHtml(avatarUrl)}" alt="${safeDisplayName}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
-<span class="header-avatar-fallback hidden items-center justify-center size-full bg-primary/20 text-primary text-sm font-black">${displayInitial}</span>
-</a>`
-    : '';
-  const mobileProfileIntro = isSignedIn
-    ? `<a class="mobile-menu-profile-link glass-panel border border-white/10 rounded-2xl px-4 py-3 inline-flex items-center gap-3 refractive-border bg-white/[0.02]" href="${profileHref}">
-<span class="inline-flex size-10 rounded-full overflow-hidden border border-primary/30 bg-white/[0.04]">
-<img class="header-avatar-image size-full object-cover" src="${escapeHtml(avatarUrl)}" alt="${safeDisplayName}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
-<span class="header-avatar-fallback hidden items-center justify-center size-full bg-primary/20 text-primary text-xs font-black">${displayInitial}</span>
-</span>
-<span class="text-slate-100 text-sm font-bold tracking-wide">Hi ${safeFirstName},</span>
-</a>`
-    : `<a class="mobile-menu-profile-link glass-panel border border-white/10 rounded-2xl px-4 py-3 inline-flex items-center gap-3 refractive-border bg-white/[0.02]" href="${loginHref}">
-<span class="inline-flex size-10 rounded-full items-center justify-center border border-primary/30 bg-primary/10 text-primary font-black text-sm">P</span>
-<span class="text-slate-100 text-sm font-bold tracking-wide">Hi there,</span>
-</a>`;
+  const clearProfile = () => {
+    try {
+      localStorage.removeItem(userStorageKey);
+    } catch {
+      // Ignore storage issues.
+    }
+  };
+  const clearFirebaseAuthCache = () => {
+    [localStorage, sessionStorage].forEach((storage) => {
+      try {
+        const keysToDelete = [];
+        for (let index = 0; index < storage.length; index += 1) {
+          const key = storage.key(index);
+          if (key && key.startsWith(firebaseStorageKeyPrefix)) {
+            keysToDelete.push(key);
+          }
+        }
+        keysToDelete.forEach((key) => storage.removeItem(key));
+      } catch {
+        // Ignore storage issues.
+      }
+    });
+  };
+  const isSignedInProfile = (profile) => Boolean(profile && (profile.email || profile.fullName || profile.firebaseUid));
+  const getDisplayName = (profile) => profile?.fullName || profile?.email || 'Patient Profile';
+  const getFirstName = (profile) => {
+    const name = getDisplayName(profile).trim();
+    return name.split(/\s+/)[0] || 'there';
+  };
+  const getInitial = (profile) => {
+    const source = getDisplayName(profile).trim();
+    return source.charAt(0).toUpperCase() || 'P';
+  };
   const desktopSignInButton = isLoginPage
     ? ''
-    : `<a class="hidden md:inline-flex relative group overflow-hidden px-4 md:px-5 py-2 md:py-2.5 rounded-full text-slate-200 border border-white/10 hover:border-primary/35 hover:text-primary text-xs md:text-sm font-bold transition-all bg-white/[0.02] refractive-border rotating-border-container" href="${loginHref}">
+    : `<a class="relative group overflow-hidden px-4 md:px-5 py-2 md:py-2.5 rounded-full text-slate-200 border border-white/10 hover:border-primary/35 hover:text-primary text-xs md:text-sm font-bold transition-all bg-white/[0.02] refractive-border rotating-border-container" href="${loginHref}">
 <span class="relative z-10">Sign In</span>
+<div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
+</a>`;
+  const mobileSignInButton = isLoginPage
+    ? ''
+    : `<a class="relative group overflow-hidden glass-panel border border-white/10 px-6 py-4 rounded-2xl text-slate-100 font-black text-sm transition-all text-center w-full" href="${loginHref}">
+<span class="relative z-10">Sign In / Login</span>
 <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </a>`;
   const desktopBookNowButton = isBookingPage
@@ -132,12 +199,6 @@
     : `<a class="hidden md:inline-flex relative group overflow-hidden bg-primary px-4 md:px-6 py-2 md:py-2.5 rounded-full text-background-dark font-bold text-xs md:text-sm transition-all shadow-[0_4px_15px_rgba(19,236,236,0.2)]" href="${bookHref}">
 <span class="relative z-10">Book Now</span>
 <div class="absolute inset-0 bg-white/30 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
-</a>`;
-  const mobileSignInButton = isLoginPage || isSignedIn
-    ? ''
-    : `<a class="relative group overflow-hidden glass-panel border border-white/10 px-6 py-4 rounded-2xl text-slate-100 font-black text-sm transition-all text-center" href="${loginHref}">
-<span class="relative z-10">Sign In</span>
-<div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </a>`;
   const mobileBookNowButton = isBookingPage
     ? ''
@@ -189,7 +250,7 @@ ${iconSprite}
 <button aria-controls="mobile-menu-panel" aria-expanded="false" aria-label="Open menu" class="md:hidden size-9 sm:size-10 rounded-full glass-panel flex items-center justify-center text-slate-300 hover:text-primary transition-all" id="mobile-menu-toggle" type="button">
 <svg aria-hidden="true" class="ms-icon text-xl"><use href="#menu"></use></svg>
 </button>
-${isSignedIn ? desktopProfileButton : desktopSignInButton}
+<div class="hidden md:block" id="header-auth-desktop"></div>
 ${desktopBookNowButton}
 </div>
 </nav>
@@ -198,7 +259,7 @@ ${desktopBookNowButton}
 <aside aria-hidden="true" class="fixed top-0 right-0 z-50 h-full w-[88%] max-w-sm translate-x-full transition-transform duration-300 md:hidden" id="mobile-menu-panel">
 <div class="h-full glass-panel border-l border-primary/20 p-6 flex flex-col">
 <div class="flex items-center justify-between mb-10">
-${mobileProfileIntro}
+<div id="mobile-menu-auth-intro"></div>
 <button aria-label="Close menu" class="size-10 rounded-full glass-panel flex items-center justify-center text-slate-300 hover:text-primary transition-all group relative overflow-hidden refractive-border rotating-border-container bg-white/[0.02]" id="mobile-menu-close" type="button">
 <span class="relative z-10 flex items-center justify-center"><svg aria-hidden="true" class="ms-icon text-xl"><use href="#close"></use></svg></span>
 <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
@@ -225,7 +286,7 @@ ${mobileProfileIntro}
 <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </a>
 </div>
-${mobileSignInButton}
+<div class="mt-6" id="mobile-menu-auth-actions"></div>
 ${mobileBookNowButton}
 </div>
 </aside>`;
@@ -292,11 +353,212 @@ ${mobileBookNowButton}
 </div>
 </footer>`;
 
+  const buildAvatarMarkup = (profile, options = {}) => {
+    const safeName = escapeHtml(getDisplayName(profile));
+    const safeInitial = escapeHtml(getInitial(profile));
+    const avatarUrl = profile?.avatarUrl ? escapeHtml(profile.avatarUrl) : '';
+    const imageClass = options.imageClass || 'size-full object-cover';
+    const fallbackClass = options.fallbackClass || 'items-center justify-center size-full bg-primary/20 text-primary font-black';
+
+    return `
+<span class="inline-flex rounded-full overflow-hidden border border-primary/30 bg-white/[0.04] ${options.wrapperClass || ''}">
+${avatarUrl
+    ? `<img class="header-avatar-image ${imageClass}" src="${avatarUrl}" alt="${safeName}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';">`
+    : ''}
+<span class="header-avatar-fallback ${avatarUrl ? 'hidden' : 'inline-flex'} ${fallbackClass}">${safeInitial}</span>
+</span>`;
+  };
+
+  const getDesktopAuthMarkup = (profile) => {
+    if (!isSignedInProfile(profile)) {
+      return desktopSignInButton;
+    }
+
+    const safeName = escapeHtml(getDisplayName(profile));
+    const safeEmail = escapeHtml(profile?.email || 'No email available');
+
+    return `
+<div class="header-auth-dropdown-root">
+<button aria-expanded="false" aria-haspopup="menu" aria-label="Open profile menu" class="header-auth-trigger" id="header-auth-trigger" type="button">
+${buildAvatarMarkup(profile, {
+    wrapperClass: 'size-10',
+    fallbackClass: 'items-center justify-center size-full bg-primary/20 text-primary text-sm font-black',
+  })}
+</button>
+<div class="header-auth-dropdown hidden" id="header-auth-dropdown-menu" role="menu">
+<div class="header-auth-dropdown-user">
+<p class="header-auth-dropdown-name">${safeName}</p>
+<p class="header-auth-dropdown-email">${safeEmail}</p>
+</div>
+<a class="header-auth-dropdown-link" href="${profileHref}" role="menuitem">Profile</a>
+<button class="header-auth-dropdown-link is-logout" data-header-logout type="button">Log out</button>
+</div>
+</div>`;
+  };
+
+  const getMobileIntroMarkup = (profile) => {
+    if (isSignedInProfile(profile)) {
+      return `
+<a class="mobile-menu-profile-link glass-panel border border-white/10 rounded-2xl px-4 py-3 inline-flex items-center gap-3 refractive-border bg-white/[0.02]" href="${profileHref}">
+${buildAvatarMarkup(profile, {
+    wrapperClass: 'size-10',
+    fallbackClass: 'items-center justify-center size-full bg-primary/20 text-primary text-xs font-black',
+  })}
+<span class="text-slate-100 text-sm font-bold tracking-wide">Hi ${escapeHtml(getFirstName(profile))},</span>
+</a>`;
+    }
+
+    return `<a class="mobile-menu-profile-link glass-panel border border-white/10 rounded-2xl px-4 py-3 inline-flex items-center gap-3 refractive-border bg-white/[0.02]" href="${loginHref}">
+<span class="inline-flex size-10 rounded-full items-center justify-center border border-primary/30 bg-primary/10 text-primary font-black text-sm">P</span>
+<span class="text-slate-100 text-sm font-bold tracking-wide">Hi there,</span>
+</a>`;
+  };
+
+  const getMobileActionsMarkup = (profile) => {
+    if (!isSignedInProfile(profile)) {
+      return mobileSignInButton;
+    }
+
+    return `
+<div class="grid grid-cols-2 gap-3">
+<a class="relative group overflow-hidden glass-panel border border-white/10 px-4 py-3 rounded-xl text-slate-100 font-black text-xs tracking-[0.08em] uppercase transition-all text-center" href="${profileHref}">
+<span class="relative z-10">Profile</span>
+<div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
+</a>
+<button class="relative group overflow-hidden glass-panel border border-white/10 px-4 py-3 rounded-xl text-rose-200 hover:text-rose-300 font-black text-xs tracking-[0.08em] uppercase transition-all text-center" data-header-logout type="button">
+<span class="relative z-10">Log out</span>
+<div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
+</button>
+</div>`;
+  };
+
+  const dispatchAuthStateEvent = (profile) => {
+    window.dispatchEvent(new CustomEvent(authStateEventName, {
+      detail: {
+        user: profile || null,
+      },
+    }));
+  };
+
+  let onDocumentAuthClickBound = false;
+  let onDocumentAuthKeydownBound = false;
+
+  const closeDesktopAuthDropdown = () => {
+    const trigger = document.getElementById('header-auth-trigger');
+    const dropdown = document.getElementById('header-auth-dropdown-menu');
+
+    if (!dropdown || dropdown.classList.contains('hidden')) {
+      return;
+    }
+
+    dropdown.classList.add('hidden');
+    trigger?.setAttribute('aria-expanded', 'false');
+  };
+
+  const syncHeaderAuthUI = (incomingProfile = undefined) => {
+    const profile = incomingProfile === undefined ? readProfile() : normalizeProfile(incomingProfile);
+    const desktopSlot = document.getElementById('header-auth-desktop');
+    const mobileIntroSlot = document.getElementById('mobile-menu-auth-intro');
+    const mobileActionsSlot = document.getElementById('mobile-menu-auth-actions');
+
+    if (desktopSlot) {
+      desktopSlot.innerHTML = getDesktopAuthMarkup(profile);
+    }
+    if (mobileIntroSlot) {
+      mobileIntroSlot.innerHTML = getMobileIntroMarkup(profile);
+    }
+    if (mobileActionsSlot) {
+      mobileActionsSlot.innerHTML = getMobileActionsMarkup(profile);
+    }
+
+    const trigger = document.getElementById('header-auth-trigger');
+    const dropdown = document.getElementById('header-auth-dropdown-menu');
+    if (trigger && dropdown) {
+      trigger.addEventListener('click', (event) => {
+        event.preventDefault();
+        const shouldOpen = dropdown.classList.contains('hidden');
+        closeDesktopAuthDropdown();
+        dropdown.classList.toggle('hidden', !shouldOpen);
+        trigger.setAttribute('aria-expanded', String(shouldOpen));
+      });
+    }
+
+    const logoutButtons = Array.from(document.querySelectorAll('[data-header-logout]'));
+    logoutButtons.forEach((button) => {
+      button.addEventListener('click', async (event) => {
+        event.preventDefault();
+        button.setAttribute('disabled', 'true');
+        button.classList.add('opacity-70');
+
+        try {
+          if (typeof window.__ptClinicSignOut === 'function') {
+            await window.__ptClinicSignOut();
+          }
+        } catch {
+          // Continue with local fallback cleanup.
+        } finally {
+          clearFirebaseAuthCache();
+          clearProfile();
+          closeDesktopAuthDropdown();
+          syncHeaderAuthUI(null);
+          dispatchAuthStateEvent(null);
+          document.getElementById('mobile-menu-close')?.click();
+        }
+      });
+    });
+
+    if (!onDocumentAuthClickBound) {
+      onDocumentAuthClickBound = true;
+      document.addEventListener('click', (event) => {
+        const root = document.querySelector('.header-auth-dropdown-root');
+        if (!root || !(event.target instanceof Node) || root.contains(event.target)) {
+          return;
+        }
+        closeDesktopAuthDropdown();
+      });
+    }
+
+    if (!onDocumentAuthKeydownBound) {
+      onDocumentAuthKeydownBound = true;
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          closeDesktopAuthDropdown();
+        }
+      });
+    }
+  };
+
+  window.setHeaderAuthUser = (profile) => {
+    const normalized = persistProfile(profile);
+    syncHeaderAuthUI(normalized);
+    dispatchAuthStateEvent(normalized);
+    return normalized;
+  };
+
+  window.clearHeaderAuthUser = () => {
+    clearProfile();
+    clearFirebaseAuthCache();
+    syncHeaderAuthUI(null);
+    dispatchAuthStateEvent(null);
+  };
+
   if (headerSlot) {
     headerSlot.innerHTML = headerHtml;
+    syncHeaderAuthUI();
   }
 
   if (footerSlot) {
     footerSlot.innerHTML = footerHtml;
   }
+
+  window.addEventListener('storage', (event) => {
+    if (event.key === userStorageKey || (typeof event.key === 'string' && event.key.startsWith(firebaseStorageKeyPrefix))) {
+      syncHeaderAuthUI();
+    }
+  });
+
+  window.addEventListener(authStateEventName, (event) => {
+    const nextProfile = normalizeProfile(event?.detail?.user);
+    syncHeaderAuthUI(nextProfile);
+  });
 })();

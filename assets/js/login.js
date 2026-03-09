@@ -163,9 +163,18 @@ const persistUserProfile = (profile) => {
   } catch {
     // Ignore storage issues in restricted browser contexts.
   }
+
+  if (typeof window.setHeaderAuthUser === 'function') {
+    window.setHeaderAuthUser(profile);
+  }
 };
 
 const clearPersistedProfile = () => {
+  if (typeof window.clearHeaderAuthUser === 'function') {
+    window.clearHeaderAuthUser();
+    return;
+  }
+
   try {
     localStorage.removeItem(userStorageKey);
   } catch {
@@ -356,6 +365,10 @@ const start = async () => {
   } catch {
     // Persistence can fail in strict privacy contexts; continue with session fallback.
   }
+
+  window.__ptClinicSignOut = async () => {
+    await signOut(auth);
+  };
 
   let syncingUser = false;
 
