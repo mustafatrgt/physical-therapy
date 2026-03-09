@@ -1526,6 +1526,16 @@ html.light {
 }
 
 @media (max-width: 767px) {
+  body.menu-open #main-header nav {
+    filter: blur(8px) saturate(0.9);
+    opacity: 0.55;
+    transition: filter 0.25s ease, opacity 0.25s ease;
+  }
+
+  body.menu-open #main-header {
+    pointer-events: none;
+  }
+
   #mobile-menu-overlay {
     background: linear-gradient(120deg, rgba(8, 14, 15, 0.62) 0%, rgba(8, 14, 15, 0.72) 100%);
   }
@@ -1565,7 +1575,8 @@ html.light {
 }
 
 .light #mobile-menu-panel h3,
-.light #mobile-menu-panel .mobile-menu-link {
+.light #mobile-menu-panel .mobile-menu-link,
+.light #mobile-menu-panel .mobile-menu-profile-link span {
   color: #0f172a;
 }
 

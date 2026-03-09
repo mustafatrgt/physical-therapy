@@ -100,6 +100,8 @@
   const avatarUrl = userProfile?.avatarUrl || './assets/images/team-alex.webp';
   const displayName = userProfile?.fullName || userProfile?.email || 'Patient Profile';
   const safeDisplayName = escapeHtml(displayName);
+  const firstName = String(displayName).trim().split(/\s+/)[0] || 'there';
+  const safeFirstName = escapeHtml(firstName);
   const displayInitial = safeDisplayName.trim().charAt(0).toUpperCase() || 'P';
   const desktopProfileButton = isSignedIn
     ? `<a class="hidden md:inline-flex items-center justify-center size-10 rounded-full border border-primary/30 bg-white/[0.04] hover:border-primary/50 transition-all overflow-hidden refractive-border rotating-border-container" href="${profileHref}" aria-label="Open profile" title="${safeDisplayName}">
@@ -107,15 +109,18 @@
 <span class="header-avatar-fallback hidden items-center justify-center size-full bg-primary/20 text-primary text-sm font-black">${displayInitial}</span>
 </a>`
     : '';
-  const mobileProfileLink = isSignedIn
-    ? `<a class="mobile-menu-link flex items-center gap-3 text-xl font-black leading-tight text-white" href="${profileHref}">
-<span class="inline-flex size-8 rounded-full overflow-hidden border border-primary/30 bg-white/[0.04]">
+  const mobileProfileIntro = isSignedIn
+    ? `<a class="mobile-menu-profile-link glass-panel border border-white/10 rounded-2xl px-4 py-3 inline-flex items-center gap-3 refractive-border bg-white/[0.02]" href="${profileHref}">
+<span class="inline-flex size-10 rounded-full overflow-hidden border border-primary/30 bg-white/[0.04]">
 <img class="header-avatar-image size-full object-cover" src="${escapeHtml(avatarUrl)}" alt="${safeDisplayName}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
 <span class="header-avatar-fallback hidden items-center justify-center size-full bg-primary/20 text-primary text-xs font-black">${displayInitial}</span>
 </span>
-<span>Profile</span>
+<span class="text-slate-100 text-sm font-bold tracking-wide">Hi ${safeFirstName},</span>
 </a>`
-    : '';
+    : `<a class="mobile-menu-profile-link glass-panel border border-white/10 rounded-2xl px-4 py-3 inline-flex items-center gap-3 refractive-border bg-white/[0.02]" href="${loginHref}">
+<span class="inline-flex size-10 rounded-full items-center justify-center border border-primary/30 bg-primary/10 text-primary font-black text-sm">P</span>
+<span class="text-slate-100 text-sm font-bold tracking-wide">Hi there,</span>
+</a>`;
   const desktopSignInButton = isLoginPage
     ? ''
     : `<a class="hidden md:inline-flex relative group overflow-hidden px-4 md:px-5 py-2 md:py-2.5 rounded-full text-slate-200 border border-white/10 hover:border-primary/35 hover:text-primary text-xs md:text-sm font-bold transition-all bg-white/[0.02] refractive-border rotating-border-container" href="${loginHref}">
@@ -193,7 +198,7 @@ ${desktopBookNowButton}
 <aside aria-hidden="true" class="fixed top-0 right-0 z-50 h-full w-[88%] max-w-sm translate-x-full transition-transform duration-300 md:hidden" id="mobile-menu-panel">
 <div class="h-full glass-panel border-l border-primary/20 p-6 flex flex-col">
 <div class="flex items-center justify-between mb-10">
-<h3 class="text-xl font-extrabold tracking-tight text-white">PT CLINIC</h3>
+${mobileProfileIntro}
 <button aria-label="Close menu" class="size-10 rounded-full glass-panel flex items-center justify-center text-slate-300 hover:text-primary transition-all group relative overflow-hidden refractive-border rotating-border-container bg-white/[0.02]" id="mobile-menu-close" type="button">
 <span class="relative z-10 flex items-center justify-center"><svg aria-hidden="true" class="ms-icon text-xl"><use href="#close"></use></svg></span>
 <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
@@ -204,13 +209,22 @@ ${desktopBookNowButton}
 <a class="mobile-menu-link text-3xl font-black leading-tight text-white" href="${navLinks.about}">About</a>
 <a class="mobile-menu-link text-3xl font-black leading-tight text-white" href="${navLinks.team}">Team</a>
 <a class="mobile-menu-link text-3xl font-black leading-tight text-white" href="${navLinks.insurance}">Insurance</a>
-${mobileProfileLink}
 </nav>
 <button aria-label="Toggle theme" class="mt-8 h-11 w-fit px-4 rounded-full glass-panel flex items-center gap-2 text-slate-200 hover:text-primary transition-all group relative overflow-hidden refractive-border bg-white/[0.02] rotating-border-container" id="theme-toggle-mobile" type="button">
 <span class="relative z-10 flex items-center gap-2"><svg aria-hidden="true" class="ms-icon text-xl" id="theme-toggle-icon-mobile"><use data-theme-icon-use href="#dark_mode"></use></svg>
 <span class="text-sm font-semibold">Theme</span></span>
 <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </button>
+<div class="mt-6 flex items-center gap-4">
+<a class="size-12 rounded-xl glass-panel flex items-center justify-center text-slate-300 hover:text-primary transition-all group relative overflow-hidden refractive-border bg-white/[0.02] rotating-border-container" href="#" aria-label="X (Twitter)">
+<span class="relative z-10 flex items-center justify-center"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></span>
+<div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
+</a>
+<a class="size-12 rounded-xl glass-panel flex items-center justify-center text-slate-300 hover:text-primary transition-all group relative overflow-hidden refractive-border bg-white/[0.02] rotating-border-container" href="#" aria-label="Instagram">
+<span class="relative z-10 flex items-center justify-center"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></span>
+<div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
+</a>
+</div>
 ${mobileSignInButton}
 ${mobileBookNowButton}
 </div>
