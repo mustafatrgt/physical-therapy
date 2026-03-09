@@ -598,7 +598,7 @@ document.addEventListener('DOMContentLoaded', () => {
     bookingConfirmed = true;
     refreshProgress();
 
-    const profilePath = profile ? './profile.html' : './login.html?next=./profile.html';
+    const profilePath = profile ? '/profile' : '/login?next=/profile';
     showSubmitStatus(
       `Booking confirmed. <a class="underline underline-offset-4" href="${profilePath}">Manage in profile</a>.`,
       'success',

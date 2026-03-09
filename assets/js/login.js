@@ -40,9 +40,9 @@ let emailAuthMode = 'signin';
 const nextParam = new URLSearchParams(window.location.search).get('next');
 const continueHref = (typeof nextParam === 'string' && /^\.?\/?[a-zA-Z0-9/_#?&=.-]*$/.test(nextParam) && !nextParam.startsWith('//'))
   ? nextParam
-  : './booking.html';
+  : '/booking';
 
-const continueLink = signedInPanel?.querySelector('a[href="./booking.html"]');
+const continueLink = document.getElementById('signed-in-continue-link');
 if (continueLink) {
   continueLink.setAttribute('href', continueHref);
 }

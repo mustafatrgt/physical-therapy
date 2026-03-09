@@ -1,0 +1,10 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/login.html", "destination": "/login", "permanent": true },
+    { "source": "/booking.html", "destination": "/booking", "permanent": true },
+    { "source": "/profile.html", "destination": "/profile", "permanent": true }
+  ]
+}

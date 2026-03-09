@@ -411,6 +411,8 @@ body.menu-open {
   position: relative;
   isolation: isolate;
   flex: 0 0 min(86vw, 320px);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
   border: 1px solid rgba(19, 236, 236, 0.1);
   overflow: hidden;
   background: linear-gradient(135deg, rgba(19, 236, 236, 0.13) 0%, rgba(19, 236, 236, 0.035) 48%, rgba(8, 15, 15, 0.56) 100%);
@@ -1280,6 +1282,19 @@ body.menu-open {
 }
 
 @media (max-width: 767px) {
+  .service-scroll-track {
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 0.35rem;
+    scroll-padding-right: 0.35rem;
+    padding-right: 0.35rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .booking-service-card {
+    flex-basis: calc(100% - 0.35rem);
+    max-width: calc(100% - 0.35rem);
+  }
+
   .appointment-cta-wrap {
     padding-top: 2.5rem;
     padding-bottom: 4.5rem;
@@ -1501,14 +1516,23 @@ body.menu-open {
 }
 
 @media (max-width: 767px) {
+  #mobile-menu-panel {
+    top: 0.45rem;
+    bottom: 0.45rem;
+    height: auto;
+    padding-right: 0.35rem;
+  }
+
   #mobile-menu-overlay {
     background: linear-gradient(120deg, rgba(8, 14, 15, 0.62) 0%, rgba(8, 14, 15, 0.72) 100%);
   }
 
   #mobile-menu-panel .glass-panel {
+    border-radius: 2rem 0 0 2rem;
     background: linear-gradient(128deg, rgba(19, 236, 236, 0.12) 0%, rgba(8, 14, 15, 0.84) 48%, rgba(8, 14, 15, 0.94) 100%);
     border-left-color: rgba(19, 236, 236, 0.28);
     box-shadow: inset 0 0 0 1px rgba(19, 236, 236, 0.08);
+    overflow: hidden;
   }
 
   .header-scrolled {

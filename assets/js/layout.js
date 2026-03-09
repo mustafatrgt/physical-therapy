@@ -15,18 +15,18 @@
 
   const isBookingPage = page === 'booking';
   const isLoginPage = page === 'login';
-  const bookHref = headerSlot?.dataset.bookHref || (isBookingPage ? '#appointment' : './booking.html');
-  const loginHref = './login.html';
-  const profileHref = './profile.html';
+  const bookHref = headerSlot?.dataset.bookHref || (isBookingPage ? '#appointment' : '/booking');
+  const loginHref = '/login';
+  const profileHref = '/profile';
   const useHomeAnchors = isBookingPage || isLoginPage || page === 'profile';
   const navLinks = {
-    services: useHomeAnchors ? './index.html#services' : '#services',
-    about: useHomeAnchors ? './index.html#about' : '#about',
-    team: useHomeAnchors ? './index.html#team' : '#team',
-    insurance: useHomeAnchors ? './index.html#insurance' : '#insurance',
+    services: useHomeAnchors ? '/#services' : '#services',
+    about: useHomeAnchors ? '/#about' : '#about',
+    team: useHomeAnchors ? '/#team' : '#team',
+    insurance: useHomeAnchors ? '/#insurance' : '#insurance',
   };
   const patientPortalHref = profileHref;
-  const homeHref = './index.html';
+  const homeHref = '/';
   const userStorageKey = 'pt-clinic-user-profile';
   const parseFirebaseAuthUserFallback = () => {
     try {
@@ -217,8 +217,8 @@ ${mobileBookNowButton}
 
   const footerHtml = `
 <footer class="mt-40 border-t border-white/5 bg-background-dark/50 backdrop-blur-3xl"${footerIdAttr}>
-<div class="max-w-7xl mx-auto px-6 py-24">
-<div class="grid grid-cols-1 lg:grid-cols-4 gap-16 mb-24" data-stagger-reveal data-stagger-step="130">
+<div class="max-w-7xl mx-auto px-6 pt-14 pb-10 md:pt-20 md:pb-12">
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-10 md:gap-14 mb-12 md:mb-16" data-stagger-reveal data-stagger-step="130">
 <div class="col-span-1 lg:col-span-1">
 <div class="flex items-center gap-3 mb-8">
 <div class="size-10 bg-primary rounded-xl flex items-center justify-center">
@@ -266,9 +266,9 @@ ${mobileBookNowButton}
 </ul>
 </div>
 </div>
-<div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-<p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em]">&copy; 2026 PHYSICAL THERAPY CLINIC. ALL RIGHTS RESERVED.</p>
-<p class="text-slate-500 text-xs font-semibold tracking-wide">Created by Mustafa Turgut</p>
+<div class="pt-8 md:pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6">
+<p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em] text-center md:text-left leading-relaxed">&copy; 2026 PHYSICAL THERAPY CLINIC. ALL RIGHTS RESERVED.</p>
+<p class="text-slate-500 text-xs font-semibold tracking-wide text-center">Created by Mustafa Turgut</p>
 <div class="flex gap-8">
 <a class="text-slate-500 hover:text-white transition-colors text-[10px] font-black uppercase tracking-widest" href="#">Privacy</a>
 <a class="text-slate-500 hover:text-white transition-colors text-[10px] font-black uppercase tracking-widest" href="#">Terms</a>
