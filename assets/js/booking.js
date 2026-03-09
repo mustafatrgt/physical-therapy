@@ -302,11 +302,14 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const activateButton = (buttons, activeButton, selectedShadowClass) => {
+    const neutralTextClasses = ['text-slate-100', 'text-slate-200', 'text-slate-300', 'text-slate-400', 'text-slate-500', 'text-slate-600'];
+
     buttons.forEach((button) => {
       button.className = button.dataset.baseClass || button.className;
       button.classList.remove('bg-primary', 'text-background-dark', 'font-black', selectedShadowClass);
 
       if (button === activeButton) {
+        button.classList.remove(...neutralTextClasses);
         button.classList.add('bg-primary', 'text-background-dark', 'font-black', selectedShadowClass);
       }
     });
