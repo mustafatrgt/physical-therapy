@@ -23,6 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroTyping = document.getElementById('hero-typing');
   const smartVideos = Array.from(document.querySelectorAll('[data-smart-video]'))
     .filter((video) => video instanceof HTMLVideoElement);
+  const runWhenIdle = (callback, timeout = 1200) => {
+    if (typeof window.requestIdleCallback === 'function') {
+      window.requestIdleCallback(callback, { timeout });
+      return;
+    }
+    window.setTimeout(callback, 16);
+  };
 
   const readCounterConfig = (element) => {
     const end = Number.parseFloat(element.dataset.countUp ?? '0');
@@ -99,52 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (phrases.length === 0) {
       return;
     }
-
-    const updateHeroTypingWidth = () => {
-      const measure = document.createElement('span');
-      const computed = window.getComputedStyle(heroTyping);
-
-      measure.style.position = 'absolute';
-      measure.style.visibility = 'hidden';
-      measure.style.whiteSpace = 'nowrap';
-      measure.style.pointerEvents = 'none';
-      measure.style.fontFamily = computed.fontFamily;
-      measure.style.fontSize = computed.fontSize;
-      measure.style.fontWeight = computed.fontWeight;
-      measure.style.letterSpacing = computed.letterSpacing;
-      measure.style.textTransform = computed.textTransform;
-      measure.style.lineHeight = computed.lineHeight;
-
-      document.body.appendChild(measure);
-
-      let maxWidth = 0;
-      phrases.forEach((phrase) => {
-        measure.textContent = phrase;
-        maxWidth = Math.max(maxWidth, Math.ceil(measure.getBoundingClientRect().width));
-      });
-
-      measure.remove();
-
-      if (maxWidth > 0) {
-        const fontSize = Number.parseFloat(computed.fontSize) || 16;
-        const caretReserve = Math.ceil(fontSize * 0.42);
-        heroTyping.style.width = `${maxWidth + caretReserve}px`;
-      }
-    };
-
-    updateHeroTypingWidth();
-
-    let typingResizeTimer = null;
-    window.addEventListener(
-      'resize',
-      () => {
-        if (typingResizeTimer) {
-          window.clearTimeout(typingResizeTimer);
-        }
-        typingResizeTimer = window.setTimeout(updateHeroTypingWidth, 120);
-      },
-      { passive: true }
-    );
 
     if (reducedMotion || phrases.length === 1) {
       heroTyping.textContent = phrases[0];
@@ -486,81 +447,85 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  initHeroTyping(reducedMotion);
+  runWhenIdle(() => {
+    initHeroTyping(reducedMotion);
+  }, 1400);
 
   if (smartVideos.length > 0) {
-    let videoPlaybackReady = document.readyState === 'complete';
+    runWhenIdle(() => {
+      let videoPlaybackReady = document.readyState === 'complete';
 
-    const shouldPlayVideo = (video) => (
-      !reducedMotion
-      && videoPlaybackReady
-      && document.visibilityState === 'visible'
-      && video.dataset.inView === 'true'
-    );
-
-    const syncVideoPlayback = (video) => {
-      if (shouldPlayVideo(video)) {
-        const playPromise = video.play();
-        if (playPromise && typeof playPromise.catch === 'function') {
-          playPromise.catch(() => {});
-        }
-      } else {
-        video.pause();
-      }
-    };
-
-    const syncAllVideos = () => {
-      smartVideos.forEach((video) => {
-        syncVideoPlayback(video);
-      });
-    };
-
-    smartVideos.forEach((video) => {
-      video.dataset.inView = 'false';
-      video.pause();
-    });
-
-    if ('IntersectionObserver' in window) {
-      const videoObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!(entry.target instanceof HTMLVideoElement)) {
-              return;
-            }
-            entry.target.dataset.inView = entry.isIntersecting ? 'true' : 'false';
-            syncVideoPlayback(entry.target);
-          });
-        },
-        {
-          threshold: 0.3,
-          rootMargin: '0px 0px -8% 0px',
-        }
+      const shouldPlayVideo = (video) => (
+        !reducedMotion
+        && videoPlaybackReady
+        && document.visibilityState === 'visible'
+        && video.dataset.inView === 'true'
       );
 
+      const syncVideoPlayback = (video) => {
+        if (shouldPlayVideo(video)) {
+          const playPromise = video.play();
+          if (playPromise && typeof playPromise.catch === 'function') {
+            playPromise.catch(() => {});
+          }
+        } else {
+          video.pause();
+        }
+      };
+
+      const syncAllVideos = () => {
+        smartVideos.forEach((video) => {
+          syncVideoPlayback(video);
+        });
+      };
+
       smartVideos.forEach((video) => {
-        videoObserver.observe(video);
+        video.dataset.inView = 'false';
+        video.pause();
       });
-    } else {
-      smartVideos.forEach((video) => {
-        video.dataset.inView = 'true';
+
+      if ('IntersectionObserver' in window) {
+        const videoObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!(entry.target instanceof HTMLVideoElement)) {
+                return;
+              }
+              entry.target.dataset.inView = entry.isIntersecting ? 'true' : 'false';
+              syncVideoPlayback(entry.target);
+            });
+          },
+          {
+            threshold: 0.3,
+            rootMargin: '0px 0px -8% 0px',
+          }
+        );
+
+        smartVideos.forEach((video) => {
+          videoObserver.observe(video);
+        });
+      } else {
+        smartVideos.forEach((video) => {
+          video.dataset.inView = 'true';
+        });
+      }
+
+      const onPageLoaded = () => {
+        videoPlaybackReady = true;
+        syncAllVideos();
+      };
+
+      if (videoPlaybackReady) {
+        syncAllVideos();
+      } else {
+        window.addEventListener('load', onPageLoaded, { once: true });
+      }
+
+      document.addEventListener('visibilitychange', syncAllVideos);
+      window.addEventListener('pagehide', () => {
+        smartVideos.forEach((video) => video.pause());
       });
-    }
-
-    const onPageLoaded = () => {
-      videoPlaybackReady = true;
-      syncAllVideos();
-    };
-
-    if (videoPlaybackReady) {
-      syncAllVideos();
-    } else {
-      window.addEventListener('load', onPageLoaded, { once: true });
-    }
-
-    document.addEventListener('visibilitychange', syncAllVideos);
-    window.addEventListener('pagehide', () => {
-      smartVideos.forEach((video) => video.pause());
-    });
+    }, 1800);
   }
 
   const revealStaggerContainer = (container) => {

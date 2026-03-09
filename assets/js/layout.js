@@ -30,6 +30,13 @@
   const userStorageKey = 'pt-clinic-user-profile';
   const authStateEventName = 'pt:auth-changed';
   const firebaseStorageKeyPrefix = 'firebase:authUser:';
+  const runWhenIdle = (callback, timeout = 1200) => {
+    if (typeof window.requestIdleCallback === 'function') {
+      window.requestIdleCallback(callback, { timeout });
+      return;
+    }
+    window.setTimeout(callback, 16);
+  };
   const escapeHtml = (value) => String(value ?? '')
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
@@ -593,7 +600,10 @@ ${buildAvatarMarkup(profile, {
     syncHeaderAuthUI();
   }
 
-  if (footerSlot) {
+  const renderFooter = () => {
+    if (!footerSlot) {
+      return;
+    }
     footerSlot.innerHTML = footerHtml;
     const newsletterForm = document.getElementById('footer-newsletter-form');
     const newsletterInput = document.getElementById('footer-newsletter-email');
@@ -619,6 +629,10 @@ ${buildAvatarMarkup(profile, {
         newsletterForm.reset();
       }
     });
+  };
+
+  if (footerSlot) {
+    runWhenIdle(renderFooter, 1800);
   }
 
   window.addEventListener('storage', (event) => {

@@ -405,6 +405,31 @@ document.addEventListener('DOMContentLoaded', () => {
   let trackDragStartX = 0;
   let trackStartScroll = 0;
   let trackMoved = false;
+  const removeTrackDragListeners = () => {
+    window.removeEventListener('mousemove', onTrackDragMove);
+    window.removeEventListener('mouseup', onTrackDragEnd);
+  };
+
+  const onTrackDragMove = (event) => {
+    if (!trackDragActive) {
+      return;
+    }
+
+    const deltaX = event.clientX - trackDragStartX;
+    if (Math.abs(deltaX) > trackDragThreshold) {
+      trackMoved = true;
+    }
+
+    if (trackMoved) {
+      event.preventDefault();
+      serviceTrack.scrollLeft = trackStartScroll - (deltaX * trackDragSpeed);
+      syncScrollerUi();
+    }
+  };
+
+  const onTrackDragEnd = () => {
+    endTrackDrag();
+  };
 
   const endTrackDrag = () => {
     if (!trackDragActive) {
@@ -413,6 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     serviceTrack.classList.remove('is-dragging');
     trackDragActive = false;
+    removeTrackDragListeners();
 
     if (trackMoved) {
       suppressCardClick = true;
@@ -434,26 +460,9 @@ document.addEventListener('DOMContentLoaded', () => {
     trackStartScroll = serviceTrack.scrollLeft;
     trackMoved = false;
     serviceTrack.classList.add('is-dragging');
+    window.addEventListener('mousemove', onTrackDragMove, { passive: false });
+    window.addEventListener('mouseup', onTrackDragEnd, { passive: true });
   });
-
-  window.addEventListener('mousemove', (event) => {
-    if (!trackDragActive) {
-      return;
-    }
-
-    const deltaX = event.clientX - trackDragStartX;
-    if (Math.abs(deltaX) > trackDragThreshold) {
-      trackMoved = true;
-    }
-
-    if (trackMoved) {
-      event.preventDefault();
-      serviceTrack.scrollLeft = trackStartScroll - (deltaX * trackDragSpeed);
-      syncScrollerUi();
-    }
-  });
-
-  window.addEventListener('mouseup', endTrackDrag);
   serviceTrack.addEventListener('mouseleave', () => {
     if (trackDragActive && trackMoved) {
       endTrackDrag();

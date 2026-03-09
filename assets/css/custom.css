@@ -75,6 +75,8 @@ body.menu-open {
 
 #hero-typing {
   display: inline-block;
+  width: 16ch;
+  max-width: 100%;
   white-space: nowrap;
   min-width: 1ch;
   vertical-align: baseline;
