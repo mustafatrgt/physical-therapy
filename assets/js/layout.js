@@ -194,8 +194,9 @@ ${desktopBookNowButton}
 <div class="h-full glass-panel border-l border-primary/20 p-6 flex flex-col">
 <div class="flex items-center justify-between mb-10">
 <h3 class="text-xl font-extrabold tracking-tight text-white">PT CLINIC</h3>
-<button aria-label="Close menu" class="size-10 rounded-full glass-panel flex items-center justify-center text-slate-300 hover:text-primary" id="mobile-menu-close" type="button">
-<svg aria-hidden="true" class="ms-icon text-xl"><use href="#close"></use></svg>
+<button aria-label="Close menu" class="size-10 rounded-full glass-panel flex items-center justify-center text-slate-300 hover:text-primary transition-all group relative overflow-hidden refractive-border rotating-border-container bg-white/[0.02]" id="mobile-menu-close" type="button">
+<span class="relative z-10 flex items-center justify-center"><svg aria-hidden="true" class="ms-icon text-xl"><use href="#close"></use></svg></span>
+<div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </button>
 </div>
 <nav class="flex flex-col gap-6">

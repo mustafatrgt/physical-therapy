@@ -308,6 +308,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let menuWasOpen = false;
   let lastFocusedElement = null;
+  let lockedScrollY = 0;
+
+  const lockPageScroll = () => {
+    lockedScrollY = window.scrollY || window.pageYOffset || 0;
+    html.classList.add('menu-open');
+    body.classList.add('menu-open');
+    body.style.position = 'fixed';
+    body.style.top = `-${lockedScrollY}px`;
+    body.style.left = '0';
+    body.style.right = '0';
+    body.style.width = '100%';
+  };
+
+  const unlockPageScroll = () => {
+    html.classList.remove('menu-open');
+    body.classList.remove('menu-open');
+    body.style.position = '';
+    body.style.top = '';
+    body.style.left = '';
+    body.style.right = '';
+    body.style.width = '';
+    if (lockedScrollY > 0) {
+      window.scrollTo(0, lockedScrollY);
+    }
+    lockedScrollY = 0;
+  };
 
   const setMenuState = (open) => {
     if (!mobileMenuPanel || !mobileMenuOverlay || !mobileMenuToggle) {
@@ -321,7 +347,11 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileMenuPanel.setAttribute('aria-hidden', String(!open));
     mobileMenuOverlay.setAttribute('aria-hidden', String(!open));
     mobileMenuToggle.setAttribute('aria-expanded', String(open));
-    body.classList.toggle('menu-open', open);
+    if (open) {
+      lockPageScroll();
+    } else {
+      unlockPageScroll();
+    }
 
     if (open) {
       lastFocusedElement = document.activeElement;

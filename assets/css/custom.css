@@ -9,8 +9,14 @@ main {
   overflow-x: clip;
 }
 
+html.menu-open,
 body.menu-open {
   overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body.menu-open {
+  touch-action: none;
 }
 
 .ms-icon {
@@ -61,6 +67,10 @@ body.menu-open {
 .light body {
   background-color: #f0f4f8;
   color: #1e293b;
+}
+
+html.light {
+  background-color: #f0f4f8;
 }
 
 .light #hero-typing::after {
@@ -1516,23 +1526,28 @@ body.menu-open {
 }
 
 @media (max-width: 767px) {
-  #mobile-menu-panel {
-    top: 0.45rem;
-    bottom: 0.45rem;
-    height: auto;
-    padding-right: 0.35rem;
-  }
-
   #mobile-menu-overlay {
     background: linear-gradient(120deg, rgba(8, 14, 15, 0.62) 0%, rgba(8, 14, 15, 0.72) 100%);
   }
 
-  #mobile-menu-panel .glass-panel {
+  #mobile-menu-panel > .glass-panel {
     border-radius: 2rem 0 0 2rem;
     background: linear-gradient(128deg, rgba(19, 236, 236, 0.12) 0%, rgba(8, 14, 15, 0.84) 48%, rgba(8, 14, 15, 0.94) 100%);
     border-left-color: rgba(19, 236, 236, 0.28);
     box-shadow: inset 0 0 0 1px rgba(19, 236, 236, 0.08);
     overflow: hidden;
+  }
+
+  #mobile-menu-close,
+  #theme-toggle-mobile {
+    border-radius: 999px !important;
+  }
+
+  #mobile-menu-close:focus-visible,
+  #theme-toggle-mobile:focus-visible {
+    outline: none;
+    border-color: rgba(19, 236, 236, 0.55);
+    box-shadow: 0 0 0 2px rgba(19, 236, 236, 0.26);
   }
 
   .header-scrolled {
@@ -1544,7 +1559,7 @@ body.menu-open {
   background: rgba(15, 23, 42, 0.28);
 }
 
-.light #mobile-menu-panel .glass-panel {
+.light #mobile-menu-panel > .glass-panel {
   background: rgba(255, 255, 255, 0.96);
   border-left-color: rgba(19, 236, 236, 0.35);
 }
