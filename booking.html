@@ -3,21 +3,89 @@
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta name="description" content="Book your physical therapy session with PT Clinic. Select your service, pick date and time, and confirm your appointment in minutes.">
-<title>Physical Therapy Clinic | Premium Appointment Booking</title>
+<title>Book a Physical Therapy Appointment | PT Clinic</title>
+<meta name="description" content="Book a physical therapy appointment online. Choose a treatment, select date and time, and confirm your PT session in under 2 minutes with PT Clinic.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://physical-therapy.vercel.app/booking">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PT Clinic">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Book a Physical Therapy Appointment | PT Clinic">
+<meta property="og:description" content="Choose your service, select date and time, and confirm your physical therapy booking in minutes.">
+<meta property="og:url" content="https://physical-therapy.vercel.app/booking">
+<meta property="og:image" content="https://physical-therapy.vercel.app/assets/images/hero-therapy-1152.webp">
+<meta property="og:image:alt" content="Patient receiving guided physical therapy treatment">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Book a Physical Therapy Appointment | PT Clinic">
+<meta name="twitter:description" content="Choose your service, select date and time, and confirm your physical therapy booking in minutes.">
+<meta name="twitter:image" content="https://physical-therapy.vercel.app/assets/images/hero-therapy-1152.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://physical-therapy.vercel.app/booking#webpage",
+      "url": "https://physical-therapy.vercel.app/booking",
+      "name": "Book a Physical Therapy Appointment | PT Clinic",
+      "description": "Book a physical therapy appointment online by selecting service, date, and time.",
+      "isPartOf": {
+        "@id": "https://physical-therapy.vercel.app/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://physical-therapy.vercel.app/booking#breadcrumb"
+      },
+      "potentialAction": {
+        "@type": "ReserveAction",
+        "name": "Book Physical Therapy Session",
+        "target": "https://physical-therapy.vercel.app/booking#appointment"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://physical-therapy.vercel.app/booking#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://physical-therapy.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Booking",
+          "item": "https://physical-therapy.vercel.app/booking"
+        }
+      ]
+    }
+  ]
+}
+</script>
 <script>
 (() => {
   const root = document.documentElement;
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  root.classList.toggle('dark', prefersDark);
-  root.classList.toggle('light', !prefersDark);
+  const themeStorageKey = 'pt-clinic-theme-preference';
+  let storedTheme = null;
+
+  try {
+    const raw = localStorage.getItem(themeStorageKey);
+    if (raw === 'dark' || raw === 'light') {
+      storedTheme = raw;
+    }
+  } catch {
+    // Ignore storage access issues.
+  }
+
+  const resolvedTheme = storedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  root.classList.toggle('dark', resolvedTheme === 'dark');
+  root.classList.toggle('light', resolvedTheme !== 'dark');
 })();
 </script>
 <link href="./assets/css/fonts.css" rel="stylesheet">
 <link href="./assets/css/tailwind.css" rel="stylesheet">
 <link href="./assets/css/custom.css" rel="stylesheet">
 <link rel="preload" href="/assets/fonts/plus-jakarta-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/plus-jakarta-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
@@ -26,13 +94,13 @@
 <link rel="manifest" href="/site.webmanifest">
 </head>
 <body class="bg-background-dark text-slate-100 font-display selection:bg-primary/30" data-page="booking">
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div id="site-header-slot" data-page="booking" data-book-href="#appointment"></div>
-<div id="mouse-spotlight"></div>
 <div class="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 liquid-blob"></div>
 <div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 liquid-blob"></div>
 <div class="fixed top-[30%] right-[10%] w-[30%] h-[30%] rounded-full bg-primary/5 liquid-blob"></div>
 
-<main class="relative max-w-7xl mx-auto px-6 pt-40 pb-24">
+<main class="relative max-w-7xl mx-auto px-6 pt-24 md:pt-40 pb-24" id="main-content" tabindex="-1">
 <section class="flex flex-col gap-8 items-center text-center fade-in-load reveal-up">
 <div class="space-y-4">
 <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight text-white">Book Your <span class="text-transparent bg-clip-text bg-gradient-to-br from-primary via-cyan-400 to-blue-500">Therapy</span></h1>
@@ -49,7 +117,7 @@
 </div>
 </section>
 
-<section class="flex flex-col gap-8 py-12 reveal-left" id="services">
+<section class="flex flex-col gap-8 py-12 reveal-left defer-render" id="services">
 <div class="flex items-center gap-3">
 <div class="size-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">1</div>
 <h2 class="text-2xl font-bold text-white">Select Your Service</h2>
@@ -136,11 +204,11 @@
 </button>
 </div>
 </div>
-<div aria-label="Service scroll navigation" class="service-scroll-nav" id="service-scroll-nav">
+<div aria-label="Service scroll navigation" class="service-scroll-nav" id="service-scroll-nav" role="group">
 <button aria-label="Drag to scroll services" class="service-scroll-nav-thumb" id="service-scroll-thumb" type="button"></button>
 </div>
 
-<div class="glass-panel rounded-3xl p-6 refractive-border bg-white/[0.02] max-w-xl">
+<div aria-live="polite" class="glass-panel rounded-3xl p-6 refractive-border bg-white/[0.02] max-w-xl">
 <p class="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-2">Selected Service</p>
 <p class="text-xl font-bold text-white" id="selected-service-label">Not selected</p>
 <p class="text-slate-400 mt-1" id="selected-service-price"></p>
@@ -152,7 +220,7 @@
 </div>
 </section>
 
-<section class="grid grid-cols-1 lg:grid-cols-2 gap-8 py-8 reveal-right" id="about">
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-8 py-8 reveal-right defer-render" id="about">
 <div class="flex flex-col gap-6">
 <div class="flex items-center gap-3">
 <div class="size-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">2</div>
@@ -160,7 +228,7 @@
 </div>
 <div class="glass-panel p-8 rounded-[2rem] refractive-border rotating-border-container">
 <div class="flex items-center justify-between mb-6">
-<h4 class="font-bold text-white" id="booking-month-label">October 2026</h4>
+<h3 class="font-bold text-white" id="booking-month-label">October 2026</h3>
 <div class="flex items-center gap-2">
 <button aria-label="Previous month" class="size-9 rounded-lg border border-white/10 text-slate-300 hover:text-primary hover:border-primary/30 hover:bg-primary/10 transition-all flex items-center justify-center" type="button">
 <svg aria-hidden="true" class="ms-icon text-[18px] -scale-x-100"><use href="#arrow_forward"></use></svg>
@@ -196,7 +264,7 @@
 <button class="h-10 rounded-lg text-slate-300 hover:bg-primary/10 transition-all" type="button">17</button>
 <button class="h-10 rounded-lg text-slate-300 hover:bg-primary/10 transition-all" type="button">18</button>
 </div>
-<h4 class="font-bold text-white mb-6">Available Slots</h4>
+<h3 class="font-bold text-white mb-6">Available Slots</h3>
 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="booking-slot-grid">
 <button class="py-3.5 px-4 rounded-xl border border-white/5 text-slate-300 text-sm font-bold hover:bg-primary/10 hover:border-primary/20 transition-all" type="button">09:00 AM</button>
 <button class="py-3.5 px-4 rounded-xl border border-white/5 text-slate-300 text-sm font-bold hover:bg-primary/10 hover:border-primary/20 transition-all" type="button">10:30 AM</button>
@@ -213,28 +281,28 @@
 </div>
 </section>
 
-<section class="flex flex-col gap-8 py-8 reveal-up" id="appointment">
+<section class="flex flex-col gap-8 py-8 reveal-up defer-render" id="appointment">
 <div class="flex items-center gap-3">
 <div class="size-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">3</div>
 <h2 class="text-2xl font-bold text-white">Patient Information</h2>
 </div>
 <div class="glass-panel p-8 md:p-10 rounded-[2.5rem] refractive-border rotating-border-container max-w-4xl">
-<form class="booking-form grid grid-cols-1 md:grid-cols-2 gap-6">
+<form class="booking-form grid grid-cols-1 md:grid-cols-2 gap-6" id="booking-patient-form" novalidate>
 <div class="flex flex-col gap-2">
 <label class="booking-label text-[10px] font-black uppercase tracking-widest" for="patient-name">Full Name</label>
-<input class="booking-field bg-white/5 border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-primary/50 transition-all placeholder:text-slate-600" id="patient-name" placeholder="John Doe" type="text">
+<input autocomplete="name" class="booking-field bg-white/5 border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-primary/50 transition-all placeholder:text-slate-600" id="patient-name" name="patient_name" placeholder="John Doe" required type="text">
 </div>
 <div class="flex flex-col gap-2">
 <label class="booking-label text-[10px] font-black uppercase tracking-widest" for="patient-email">Email Address</label>
-<input class="booking-field bg-white/5 border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-primary/50 transition-all placeholder:text-slate-600" id="patient-email" placeholder="john@example.com" type="email">
+<input autocomplete="email" class="booking-field bg-white/5 border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-primary/50 transition-all placeholder:text-slate-600" id="patient-email" name="patient_email" placeholder="john@example.com" required type="email">
 </div>
 <div class="flex flex-col gap-2">
 <label class="booking-label text-[10px] font-black uppercase tracking-widest" for="patient-phone">Phone Number</label>
-<input class="booking-field bg-white/5 border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-primary/50 transition-all placeholder:text-slate-600" id="patient-phone" placeholder="+1 (555) 000-0000" type="tel">
+<input autocomplete="tel" class="booking-field bg-white/5 border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-primary/50 transition-all placeholder:text-slate-600" id="patient-phone" name="patient_phone" placeholder="+1 (555) 000-0000" required type="tel">
 </div>
 <div class="flex flex-col gap-2">
 <label class="booking-label text-[10px] font-black uppercase tracking-widest" for="patient-specialist">Preferred Specialist (Optional)</label>
-<select class="booking-field bg-white/5 border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-primary/50 transition-all" id="patient-specialist">
+<select class="booking-field bg-white/5 border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-primary/50 transition-all" id="patient-specialist" name="patient_specialist">
 <option class="bg-background-dark">No Preference</option>
 <option class="bg-background-dark">Dr. Alex Rivera</option>
 <option class="bg-background-dark">Dr. Sarah Jenkins</option>
@@ -243,17 +311,17 @@
 </div>
 <div class="flex flex-col gap-2 md:col-span-2">
 <label class="booking-label text-[10px] font-black uppercase tracking-widest" for="injury-details">Injury Details</label>
-<textarea class="booking-field bg-white/5 border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-primary/50 transition-all placeholder:text-slate-600" id="injury-details" placeholder="Briefly describe your symptoms or injury..." rows="4"></textarea>
+<textarea class="booking-field bg-white/5 border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-primary/50 transition-all placeholder:text-slate-600" id="injury-details" name="injury_details" placeholder="Briefly describe your symptoms or injury..." rows="4"></textarea>
 </div>
 </form>
 </div>
 
 <div class="flex flex-col items-center gap-6 py-8">
-<button class="relative group overflow-hidden bg-primary px-12 py-5 rounded-2xl text-background-dark font-black text-lg transition-all hover:scale-105 shadow-[0_20px_40px_rgba(19,236,236,0.15)]" id="confirm-booking-btn" type="button">
+<button class="relative group overflow-hidden bg-primary px-12 py-5 rounded-2xl text-background-dark font-black text-lg transition-all hover:scale-105 shadow-[0_20px_40px_rgba(19,236,236,0.15)]" form="booking-patient-form" id="confirm-booking-btn" type="submit">
 <span class="relative z-10">Confirm Booking</span>
 <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </button>
-<div class="booking-submit-status hidden text-sm font-semibold text-center max-w-xl w-full px-5 py-3 rounded-2xl border border-primary/25 bg-primary/10 text-primary" id="booking-submit-status" role="status" aria-live="polite"></div>
+<div aria-atomic="true" class="booking-submit-status hidden text-sm font-semibold text-center max-w-xl w-full px-5 py-3 rounded-2xl border border-primary/25 bg-primary/10 text-primary" id="booking-submit-status" role="status" aria-live="polite"></div>
 <p class="text-slate-500 text-[10px] font-black uppercase tracking-widest text-center">By clicking confirm, you agree to our Terms of Service</p>
 </div>
 </section>

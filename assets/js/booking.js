@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const timeButtons = Array.from(slotGrid?.querySelectorAll('button') || []);
 
   const confirmBookingBtn = document.getElementById('confirm-booking-btn');
+  const bookingForm = document.getElementById('booking-patient-form');
   const submitStatus = document.getElementById('booking-submit-status');
 
   const patientNameInput = document.getElementById('patient-name');
@@ -80,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     submitStatus.classList.remove('hidden', 'is-error', 'is-success', 'is-info');
+    submitStatus.setAttribute('role', tone === 'error' ? 'alert' : 'status');
     if (tone === 'error') {
       submitStatus.classList.add('is-error');
     } else if (tone === 'success') {
@@ -106,6 +108,20 @@ document.addEventListener('DOMContentLoaded', () => {
     submitStatus.classList.add('hidden');
     submitStatus.classList.remove('is-error', 'is-success', 'is-info');
     submitStatus.textContent = '';
+  };
+
+  const clearFieldState = (field) => {
+    if (!(field instanceof HTMLElement)) {
+      return;
+    }
+    field.removeAttribute('aria-invalid');
+  };
+
+  const invalidateField = (field) => {
+    if (!(field instanceof HTMLElement)) {
+      return;
+    }
+    field.setAttribute('aria-invalid', 'true');
   };
 
   const setProgress = (stepNumber) => {
@@ -282,6 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const saveBaseClasses = (buttons) => {
     buttons.forEach((button) => {
+      button.setAttribute('aria-pressed', 'false');
       const baseClass = button.className
         .replace(/\bbg-primary\b/g, '')
         .replace(/\btext-background-dark\b/g, '')
@@ -307,6 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
     buttons.forEach((button) => {
       button.className = button.dataset.baseClass || button.className;
       button.classList.remove('bg-primary', 'text-background-dark', 'font-black', selectedShadowClass);
+      button.setAttribute('aria-pressed', String(button === activeButton));
 
       if (button === activeButton) {
         button.classList.remove(...neutralTextClasses);
@@ -510,6 +528,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     scrollThumb.addEventListener('pointerup', endThumbDrag);
     scrollThumb.addEventListener('pointercancel', endThumbDrag);
+    scrollThumb.addEventListener('keydown', (event) => {
+      const maxScroll = maxScrollableDistance();
+      if (maxScroll <= 0) {
+        return;
+      }
+
+      const step = Math.max(60, Math.round(serviceTrack.clientWidth * 0.22));
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        serviceTrack.scrollBy({ left: step, behavior: 'smooth' });
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        serviceTrack.scrollBy({ left: -step, behavior: 'smooth' });
+      } else if (event.key === 'Home') {
+        event.preventDefault();
+        serviceTrack.scrollTo({ left: 0, behavior: 'smooth' });
+      } else if (event.key === 'End') {
+        event.preventDefault();
+        serviceTrack.scrollTo({ left: maxScroll, behavior: 'smooth' });
+      }
+    });
 
     scrollNav.addEventListener('pointerdown', (event) => {
       if (event.target === scrollThumb || event.button !== 0) {
@@ -554,6 +593,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const specialist = patientSpecialistInput?.value?.trim() || 'No Preference';
     const injuryDetails = injuryDetailsInput?.value?.trim() || '';
 
+    [patientNameInput, patientEmailInput, patientPhoneInput].forEach((field) => clearFieldState(field));
+
     if (!serviceName) {
       showSubmitStatus('Please select a service before confirming your booking.', 'error');
       return;
@@ -566,11 +607,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!patientName) {
       showSubmitStatus('Please enter your full name.', 'error');
+      invalidateField(patientNameInput);
+      patientNameInput?.focus();
       return;
     }
 
     if (!patientEmail || !patientEmail.includes('@')) {
       showSubmitStatus('Please enter a valid email address.', 'error');
+      invalidateField(patientEmailInput);
+      patientEmailInput?.focus();
+      return;
+    }
+
+    if (patientPhone.length < 7) {
+      showSubmitStatus('Please enter a valid phone number.', 'error');
+      invalidateField(patientPhoneInput);
+      patientPhoneInput?.focus();
       return;
     }
 
@@ -609,7 +661,18 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   };
 
-  confirmBookingBtn?.addEventListener('click', confirmBooking);
+  bookingForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    confirmBooking();
+  });
+
+  confirmBookingBtn?.addEventListener('click', (event) => {
+    if (bookingForm) {
+      return;
+    }
+    event.preventDefault();
+    confirmBooking();
+  });
 
   [patientNameInput, patientEmailInput, patientPhoneInput, patientSpecialistInput, injuryDetailsInput].forEach((field) => {
     field?.addEventListener('input', () => {

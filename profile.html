@@ -3,21 +3,84 @@
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta name="description" content="Manage your PT Clinic profile, view upcoming sessions, and update or cancel therapy appointments from one dashboard.">
-<title>Physical Therapy Clinic | Patient Profile</title>
+<title>Patient Profile &amp; Appointments | PT Clinic</title>
+<meta name="description" content="Access your PT Clinic patient profile to review upcoming sessions, manage appointment details, and cancel bookings when needed.">
+<meta name="robots" content="noindex, follow, max-image-preview:large">
+<link rel="canonical" href="https://physical-therapy.vercel.app/profile">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PT Clinic">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Patient Profile & Appointments | PT Clinic">
+<meta property="og:description" content="Manage your therapy sessions and appointment details from your PT Clinic patient dashboard.">
+<meta property="og:url" content="https://physical-therapy.vercel.app/profile">
+<meta property="og:image" content="https://physical-therapy.vercel.app/assets/images/hero-therapy-1152.webp">
+<meta property="og:image:alt" content="PT Clinic patient profile and appointments dashboard">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Patient Profile & Appointments | PT Clinic">
+<meta name="twitter:description" content="Manage your therapy sessions and appointment details from your PT Clinic patient dashboard.">
+<meta name="twitter:image" content="https://physical-therapy.vercel.app/assets/images/hero-therapy-1152.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfilePage",
+      "@id": "https://physical-therapy.vercel.app/profile#webpage",
+      "url": "https://physical-therapy.vercel.app/profile",
+      "name": "Patient Profile & Appointments | PT Clinic",
+      "description": "Patient dashboard for managing therapy appointments.",
+      "isPartOf": {
+        "@id": "https://physical-therapy.vercel.app/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://physical-therapy.vercel.app/profile#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://physical-therapy.vercel.app/profile#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://physical-therapy.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Profile",
+          "item": "https://physical-therapy.vercel.app/profile"
+        }
+      ]
+    }
+  ]
+}
+</script>
 <script>
 (() => {
   const root = document.documentElement;
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  root.classList.toggle('dark', prefersDark);
-  root.classList.toggle('light', !prefersDark);
+  const themeStorageKey = 'pt-clinic-theme-preference';
+  let storedTheme = null;
+
+  try {
+    const raw = localStorage.getItem(themeStorageKey);
+    if (raw === 'dark' || raw === 'light') {
+      storedTheme = raw;
+    }
+  } catch {
+    // Ignore storage access issues.
+  }
+
+  const resolvedTheme = storedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  root.classList.toggle('dark', resolvedTheme === 'dark');
+  root.classList.toggle('light', resolvedTheme !== 'dark');
 })();
 </script>
 <link href="./assets/css/fonts.css" rel="stylesheet">
 <link href="./assets/css/tailwind.css" rel="stylesheet">
 <link href="./assets/css/custom.css" rel="stylesheet">
 <link rel="preload" href="/assets/fonts/plus-jakarta-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/plus-jakarta-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
@@ -26,13 +89,13 @@
 <link rel="manifest" href="/site.webmanifest">
 </head>
 <body class="bg-background-dark text-slate-100 font-display selection:bg-primary/30" data-page="profile">
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div id="site-header-slot" data-page="profile" data-book-href="/booking#appointment"></div>
-<div id="mouse-spotlight"></div>
 <div class="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 liquid-blob"></div>
 <div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 liquid-blob"></div>
 <div class="fixed top-[30%] right-[10%] w-[30%] h-[30%] rounded-full bg-primary/5 liquid-blob"></div>
 
-<main class="relative max-w-7xl mx-auto px-6 pt-40 pb-24">
+<main class="relative max-w-7xl mx-auto px-6 pt-24 md:pt-40 pb-24" id="main-content" tabindex="-1">
 <section class="glass-panel rounded-[2.5rem] p-8 md:p-12 refractive-border rotating-border-container reveal-up">
 <p class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-primary text-[10px] font-black tracking-[0.2em] uppercase mb-6">
 <span class="size-2 rounded-full bg-primary shadow-[0_0_12px_rgba(19,236,236,0.6)]"></span>
@@ -53,7 +116,7 @@ Patient Dashboard
 </div>
 </section>
 
-<section class="hidden mt-8 space-y-8" id="profile-content">
+<section class="hidden mt-8 space-y-8 defer-render" id="profile-content">
 <div class="glass-panel rounded-3xl p-8 md:p-10 refractive-border rotating-border-container reveal-left">
 <div class="flex flex-col md:flex-row md:items-center gap-6 md:justify-between">
 <div class="flex items-center gap-4 min-w-0">
@@ -108,7 +171,7 @@ Patient Dashboard
 </a>
 </div>
 </div>
-<div class="space-y-4" id="appointments-list"></div>
+<div aria-live="polite" class="space-y-4" id="appointments-list"></div>
 </div>
 </section>
 </main>

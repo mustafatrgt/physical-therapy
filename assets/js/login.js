@@ -64,6 +64,7 @@ const setStatus = (message, tone = 'info') => {
   if (!statusEl) return;
 
   statusEl.textContent = message;
+  statusEl.setAttribute('role', tone === 'error' ? 'alert' : 'status');
   statusEl.classList.remove('is-error', 'is-success', 'is-muted');
   if (tone === 'error') {
     statusEl.classList.add('is-error');
@@ -92,6 +93,12 @@ const setEmailAuthMode = (mode) => {
   if (emailAuthNameWrap) {
     emailAuthNameWrap.classList.toggle('hidden', !isSignUp);
   }
+  if (emailAuthName) {
+    emailAuthName.toggleAttribute('required', isSignUp);
+    if (!isSignUp) {
+      emailAuthName.removeAttribute('aria-invalid');
+    }
+  }
   if (emailAuthSubmit) {
     emailAuthSubmit.querySelector('span').textContent = isSignUp
       ? 'Create Account with Email'
@@ -109,7 +116,7 @@ const setEmailAuthMode = (mode) => {
   emailAuthModeButtons.forEach((button) => {
     const isActive = button.dataset.emailAuthMode === emailAuthMode;
     button.classList.toggle('is-active', isActive);
-    button.setAttribute('aria-selected', String(isActive));
+    button.setAttribute('aria-pressed', String(isActive));
   });
 };
 
@@ -468,6 +475,20 @@ const start = async () => {
     button.addEventListener('click', () => {
       setEmailAuthMode(button.dataset.emailAuthMode || 'signin');
     });
+
+    button.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+        return;
+      }
+
+      event.preventDefault();
+      const direction = event.key === 'ArrowRight' ? 1 : -1;
+      const index = emailAuthModeButtons.indexOf(button);
+      const nextIndex = (index + direction + emailAuthModeButtons.length) % emailAuthModeButtons.length;
+      const nextButton = emailAuthModeButtons[nextIndex];
+      setEmailAuthMode(nextButton?.dataset.emailAuthMode || 'signin');
+      nextButton?.focus();
+    });
   });
 
   emailAuthForm?.addEventListener('submit', async (event) => {
@@ -478,16 +499,28 @@ const start = async () => {
     const fullName = (emailAuthName?.value || '').trim();
     const isSignUp = emailAuthMode === 'signup';
 
+    [emailAuthName, emailAuthEmail, emailAuthPassword].forEach((field) => {
+      if (field instanceof HTMLElement) {
+        field.removeAttribute('aria-invalid');
+      }
+    });
+
     if (!email) {
       setStatus('Please enter your email address.', 'error');
+      emailAuthEmail?.setAttribute('aria-invalid', 'true');
+      emailAuthEmail?.focus();
       return;
     }
     if (!password || password.length < 6) {
       setStatus('Password must be at least 6 characters.', 'error');
+      emailAuthPassword?.setAttribute('aria-invalid', 'true');
+      emailAuthPassword?.focus();
       return;
     }
     if (isSignUp && !fullName) {
       setStatus('Please enter your full name.', 'error');
+      emailAuthName?.setAttribute('aria-invalid', 'true');
+      emailAuthName?.focus();
       return;
     }
 

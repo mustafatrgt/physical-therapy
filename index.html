@@ -3,22 +3,100 @@
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta name="description" content="PT Clinic offers personalized physical therapy, sports injury rehab, post-surgical recovery, and guided care plans with expert therapists.">
-<title>Physical Therapy Clinic | Premium Recovery</title>
+<title>Physical Therapy Clinic | Sports Injury &amp; Rehab Care</title>
+<meta name="description" content="Physical therapy clinic for orthopedic rehab, sports injury treatment, post-surgical recovery, and chronic pain care. Book expert sessions online in minutes.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://physical-therapy.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PT Clinic">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Physical Therapy Clinic | Sports Injury & Rehab Care">
+<meta property="og:description" content="Physical therapy clinic for orthopedic rehab, sports injury treatment, post-surgical recovery, and chronic pain care.">
+<meta property="og:url" content="https://physical-therapy.vercel.app/">
+<meta property="og:image" content="https://physical-therapy.vercel.app/assets/images/hero-therapy-1152.webp">
+<meta property="og:image:alt" content="Physical therapist assisting a patient with knee rehabilitation">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Physical Therapy Clinic | Sports Injury & Rehab Care">
+<meta name="twitter:description" content="Physical therapy clinic for orthopedic rehab, sports injury treatment, post-surgical recovery, and chronic pain care.">
+<meta name="twitter:image" content="https://physical-therapy.vercel.app/assets/images/hero-therapy-1152.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MedicalClinic",
+      "@id": "https://physical-therapy.vercel.app/#organization",
+      "name": "PT Clinic",
+      "url": "https://physical-therapy.vercel.app/",
+      "logo": "https://physical-therapy.vercel.app/assets/favicon/favicon-512x512.png",
+      "image": "https://physical-therapy.vercel.app/assets/images/hero-therapy-1152.webp",
+      "description": "Personalized physical therapy, sports injury rehab, post-surgical recovery, and chronic pain management.",
+      "telephone": "+1-555-000-1234",
+      "email": "hello@ptclinic.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Wellness Way",
+        "addressLocality": "Metro City",
+        "addressCountry": "US"
+      },
+      "medicalSpecialty": "Physiotherapy"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://physical-therapy.vercel.app/#website",
+      "url": "https://physical-therapy.vercel.app/",
+      "name": "PT Clinic",
+      "publisher": {
+        "@id": "https://physical-therapy.vercel.app/#organization"
+      },
+      "inLanguage": "en-US"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://physical-therapy.vercel.app/#webpage",
+      "url": "https://physical-therapy.vercel.app/",
+      "name": "Physical Therapy Clinic | Sports Injury & Rehab Care",
+      "description": "Physical therapy clinic for orthopedic rehab, sports injury treatment, post-surgical recovery, and chronic pain care.",
+      "isPartOf": {
+        "@id": "https://physical-therapy.vercel.app/#website"
+      }
+    }
+  ]
+}
+</script>
 <script>
 (() => {
   const root = document.documentElement;
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  root.classList.toggle('dark', prefersDark);
-  root.classList.toggle('light', !prefersDark);
+  const themeStorageKey = 'pt-clinic-theme-preference';
+  let storedTheme = null;
+
+  try {
+    const raw = localStorage.getItem(themeStorageKey);
+    if (raw === 'dark' || raw === 'light') {
+      storedTheme = raw;
+    }
+  } catch {
+    // Ignore storage access issues.
+  }
+
+  const resolvedTheme = storedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  root.classList.toggle('dark', resolvedTheme === 'dark');
+  root.classList.toggle('light', resolvedTheme !== 'dark');
 })();
 </script>
 <link href="./assets/css/fonts.css" rel="stylesheet">
 <link href="./assets/css/tailwind.css" rel="stylesheet">
 <link href="./assets/css/custom.css" rel="stylesheet">
 <link rel="preload" href="/assets/fonts/plus-jakarta-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/plus-jakarta-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/plus-jakarta-800.woff2" as="font" type="font/woff2" crossorigin>
+<link
+  rel="preload"
+  as="image"
+  href="/assets/images/hero-therapy-1152.avif"
+  imagesrcset="/assets/images/hero-therapy-768.avif 768w, /assets/images/hero-therapy-1152.avif 1152w, /assets/images/hero-therapy.avif 1600w"
+  imagesizes="(max-width: 767px) 88vw, (max-width: 1279px) 46vw, 640px"
+  fetchpriority="high"
+>
 <link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
@@ -27,17 +105,18 @@
 <link rel="manifest" href="/site.webmanifest">
 </head>
 <body class="bg-background-dark text-slate-100 font-display selection:bg-primary/30">
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div id="site-header-slot" data-page="home" data-book-href="/booking"></div>
 <div id="mouse-spotlight"></div>
 <div class="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 liquid-blob"></div>
 <div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 liquid-blob"></div>
 <div class="fixed top-[30%] right-[10%] w-[30%] h-[30%] rounded-full bg-primary/5 liquid-blob"></div>
-<main class="relative">
+<main class="relative" id="main-content" tabindex="-1">
 <!-- Liquid Core Glows -->
 <div class="absolute top-0 left-1/4 size-[600px] liquid-glow -z-10 opacity-50 blur-3xl"></div>
 <div class="absolute top-1/2 right-0 size-[800px] liquid-glow -z-10 opacity-30 blur-3xl"></div>
 <!-- Hero Section -->
-<section class="max-w-7xl mx-auto px-6 pt-40 pb-32 fade-in-load">
+<section class="max-w-7xl mx-auto px-6 pt-24 md:pt-40 pb-24 md:pb-32 fade-in-load">
 <div class="grid lg:grid-cols-2 gap-20 items-center">
 <div class="space-y-10">
 <div class="premium-badge inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-primary text-[10px] font-black tracking-[0.2em] uppercase">
@@ -54,11 +133,11 @@
                 At PT Clinic, we redefine recovery through biological precision and specialized care tailored to your unique lifestyle.
             </p>
 <div class="grid grid-cols-2 gap-3 sm:flex sm:flex-row sm:items-center sm:gap-6 w-full sm:w-auto">
-<a class="relative group overflow-hidden bg-primary px-4 sm:px-10 py-4 sm:py-5 rounded-2xl text-background-dark font-black text-base sm:text-lg transition-all hover:scale-105 shadow-[0_20px_40px_rgba(19,236,236,0.15)] w-full text-center" href="/booking">
+<a class="relative group overflow-hidden bg-primary px-4 sm:px-10 py-3 sm:py-5 rounded-xl sm:rounded-2xl text-background-dark font-black text-sm sm:text-lg transition-all hover:scale-105 shadow-[0_20px_40px_rgba(19,236,236,0.15)] w-full text-center leading-tight" href="/booking">
 <span class="relative z-10">Book Appointment</span>
 <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </a>
-<button class="group relative overflow-hidden glass-panel rounded-2xl px-4 sm:px-10 py-4 sm:py-5 refractive-border bg-white/[0.02] rotating-border-container transition-all font-bold text-white text-base sm:text-lg w-full"><span class="relative z-10">Meet Our Team</span><div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div></button>
+<a class="group relative overflow-hidden glass-panel rounded-xl sm:rounded-2xl px-4 sm:px-10 py-3 sm:py-5 refractive-border bg-white/[0.02] rotating-border-container transition-all font-bold text-white text-sm sm:text-lg w-full leading-tight text-center" href="#team-members"><span class="relative z-10">Meet Our Team</span><div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div></a>
 </div>
 </div>
 <div class="relative">
@@ -77,10 +156,11 @@
   sizes="(max-width: 767px) 88vw, (max-width: 1279px) 46vw, 640px"
 >
 <img
-  alt="Therapy Session"
+  alt="Physical therapist assisting a patient with guided knee rehabilitation"
   class="w-full h-full object-cover"
-  decoding="async"
+  decoding="sync"
   fetchpriority="high"
+  loading="eager"
   src="./assets/images/hero-therapy-1152.webp"
   srcset="./assets/images/hero-therapy-768.webp 768w, ./assets/images/hero-therapy-1152.webp 1152w, ./assets/images/hero-therapy.webp 1600w"
   sizes="(max-width: 767px) 88vw, (max-width: 1279px) 46vw, 640px"
@@ -123,7 +203,7 @@
 </div>
 </section>
 <!-- Services Section -->
-<section class="max-w-7xl mx-auto px-6 py-24 border-t border-white/5 relative overflow-hidden" id="services">
+<section class="max-w-7xl mx-auto px-6 py-24 border-t border-white/5 relative overflow-hidden defer-render" id="services">
 <div class="text-center mb-16 reveal-right">
 <h2 class="text-3xl lg:text-5xl font-extrabold text-white mb-4">Helping You <span class="text-primary">Move Better</span>
 </h2>
@@ -144,7 +224,7 @@
 </div>
 <h3 class="text-xl font-bold text-white mb-3">Orthopedic PT</h3>
 <p class="text-slate-400 text-sm leading-relaxed mb-6">Expert care for bone, joint, and muscle injuries to restore your mobility.</p>
-<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
+<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="/booking#appointment">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
 </div>
 <div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
 <div class="how-step-icon size-12 rounded-full bg-primary/20 text-primary flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(19,236,236,0.2)] relative overflow-hidden">
@@ -157,7 +237,7 @@
 </div>
 <h3 class="text-xl font-bold text-white mb-3">Sports Injury Rehab</h3>
 <p class="text-slate-400 text-sm leading-relaxed mb-6">Specialized programs for athletes to return to peak performance safely.</p>
-<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
+<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="/booking#appointment">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
 </div>
 <div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
 <div class="how-step-icon size-12 rounded-full bg-primary/20 text-primary flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(19,236,236,0.2)] relative overflow-hidden">
@@ -169,7 +249,7 @@
 </div>
 <h3 class="text-xl font-bold text-white mb-3">Post-Surgical Rehab</h3>
 <p class="text-slate-400 text-sm leading-relaxed mb-6">Optimized recovery protocols following surgeries to ensure best outcomes.</p>
-<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
+<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="/booking#appointment">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
 </div>
 <div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
 <div class="how-step-icon size-12 rounded-full bg-primary/20 text-primary flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(19,236,236,0.2)] relative overflow-hidden">
@@ -180,7 +260,7 @@
 </div>
 <h3 class="text-xl font-bold text-white mb-3">Chronic Pain Management</h3>
 <p class="text-slate-400 text-sm leading-relaxed mb-6">Innovative techniques to reduce persistent pain and improve daily life.</p>
-<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
+<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="/booking#appointment">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
 </div>
 <div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
 <div class="how-step-icon size-12 rounded-full bg-primary/20 text-primary flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(19,236,236,0.2)] relative overflow-hidden">
@@ -194,7 +274,7 @@
 </div>
 <h3 class="text-xl font-bold text-white mb-3">Manual Therapy</h3>
 <p class="text-slate-400 text-sm leading-relaxed mb-6">Hands-on techniques including joint mobilization and soft tissue work.</p>
-<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
+<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="/booking#appointment">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
 </div>
 <div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
 <div class="how-step-icon size-12 rounded-full bg-primary/20 text-primary flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(19,236,236,0.2)] relative overflow-hidden">
@@ -206,12 +286,12 @@
 </div>
 <h3 class="text-xl font-bold text-white mb-3">Balance Training</h3>
 <p class="text-slate-400 text-sm leading-relaxed mb-6">Fall prevention and stability exercises for all ages and mobility levels.</p>
-<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
+<a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="/booking#appointment">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
 </div>
 </div>
 </section>
 <!-- How It Works & Conditions -->
-<section class="max-w-7xl mx-auto px-6 py-24 reveal-left" id="about">
+<section class="max-w-7xl mx-auto px-6 py-24 reveal-left defer-render-tall" id="about">
 <div class="grid lg:grid-cols-2 gap-20">
 <div>
 <h2 class="text-3xl font-extrabold text-white mb-10">Common <span class="text-primary">Conditions</span> We Treat</h2>
@@ -220,7 +300,7 @@
 <div class="aspect-square rounded-[2rem] overflow-hidden relative">
 <video class="w-full h-full object-cover" data-smart-video loop muted playsinline preload="none" aria-label="Knee exercise rehabilitation video">
 <source src="./assets/images/diz-egzersizi.webm" type="video/webm" />
-<track kind="captions" srclang="en" label="English captions" src="./assets/videos/diz-egzersizi.en.vtt" default>
+<track kind="captions" srclang="en" label="English captions" src="./assets/videos/diz-egzersizi.en.vtt">
 </video>
 <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-background-dark/30 via-transparent to-transparent"></div>
 </div>
@@ -326,7 +406,7 @@
 </div>
 </section>
 <!-- Testimonials -->
-<section class="max-w-7xl mx-auto px-6 py-24 reveal-right">
+<section class="max-w-7xl mx-auto px-6 py-24 reveal-right defer-render" aria-label="Patient testimonials">
 <div class="text-center mb-16">
 <h2 class="text-4xl font-extrabold text-white mb-4">Patient <span class="text-primary">Success Stories</span>
 </h2>
@@ -343,7 +423,7 @@
 </div>
 <p class="text-slate-300 text-lg mb-8">"After my ACL surgery, I was worried I'd never run again. The team at PT Clinic was incredible. Their personalized approach helped me regain strength faster than I expected. I'm back on the trails now!"</p>
 <div class="flex items-center gap-4">
-<div class="size-12 rounded-full bg-slate-700 bg-cover bg-center" data-alt="Female patient portrait" style="background-image: url('./assets/images/testimonial-sarah.webp')"></div>
+<div class="size-12 rounded-full bg-slate-700 bg-cover bg-center" role="img" aria-label="Portrait of Sarah, a recovered runner" style="background-image: url('./assets/images/testimonial-sarah.webp')"></div>
 <div>
 <p class="text-white font-bold">Sarah M.</p>
 <p class="text-slate-500 text-sm">Recovered Runner</p>
@@ -361,7 +441,7 @@
 </div>
 <p class="text-slate-300 text-lg mb-8">"Chronic back pain was affecting my work and sleep for years. Manual therapy and a consistent exercise plan changed everything. Professional, caring, and truly life-changing care."</p>
 <div class="flex items-center gap-4">
-<div class="size-12 rounded-full bg-slate-700 bg-cover bg-center" data-alt="Male patient portrait" style="background-image: url('./assets/images/testimonial-michael.webp')"></div>
+<div class="size-12 rounded-full bg-slate-700 bg-cover bg-center" role="img" aria-label="Portrait of Michael, a software engineer patient" style="background-image: url('./assets/images/testimonial-michael.webp')"></div>
 <div>
 <p class="text-white font-bold">Michael R.</p>
 <p class="text-slate-500 text-sm">Software Engineer</p>
@@ -371,19 +451,19 @@
 </div>
 </section>
 <!-- Team Section -->
-<section class="max-w-7xl mx-auto px-6 py-24 reveal-left relative" id="team">
+<section class="max-w-7xl mx-auto px-6 py-24 reveal-left relative defer-render" id="team">
 <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
 <div>
 <h2 class="text-4xl font-extrabold text-white mb-4">Meet Our <span class="text-primary">Team</span>
 </h2>
 <p class="text-slate-400 max-w-xl">World-class therapists dedicated to your health and performance.</p>
 </div>
-<button class="group relative overflow-hidden glass-panel rounded-full px-8 py-4 refractive-border bg-white/[0.02] rotating-border-container transition-all font-bold">
+<a class="group relative overflow-hidden glass-panel rounded-full px-8 py-4 refractive-border bg-white/[0.02] rotating-border-container transition-all font-bold" href="#team-members">
 <span class="relative z-10 flex items-center gap-2">View Full Team <svg aria-hidden="true" class="ms-icon"><use href="#expand_more"></use></svg></span>
 <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
-</button>
+</a>
 </div>
-<div class="grid md:grid-cols-4 gap-6" data-stagger-reveal data-stagger-step="120">
+<div class="grid md:grid-cols-4 gap-6" data-stagger-reveal data-stagger-step="120" id="team-members">
 <!-- Team Member 1 -->
 <div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
 <div class="aspect-[4/5] rounded-2xl overflow-hidden mb-6 group-hover:grayscale-0 transition-all duration-500"><img alt="Dr. Alex Rivera" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110" decoding="async" loading="lazy" src="./assets/images/team-alex.webp"></div>
@@ -411,10 +491,10 @@
 </div>
 </section>
 <!-- Insurance -->
-<section class="max-w-7xl mx-auto px-6 py-32 reveal-right relative" id="insurance">
+<section class="max-w-7xl mx-auto px-6 py-32 reveal-right relative defer-render-tall" id="insurance">
 <div class="glass-panel rounded-[3rem] p-12 md:p-20 refractive-border rotating-border-container overflow-hidden">
 <div class="absolute inset-0 -z-10 opacity-[0.03]">
-<img alt="Modern Office Background" class="w-full h-full object-cover" decoding="async" loading="lazy" src="./assets/images/bg-office.webp">
+<img alt="" class="w-full h-full object-cover" decoding="async" loading="lazy" src="./assets/images/bg-office.webp">
 </div>
 <div class="absolute top-0 right-0 w-96 h-96 bg-primary/5 blur-[100px] animate-pulse-glow"></div>
 <div class="relative z-10 text-center mb-16">
@@ -425,31 +505,31 @@
 <div class="grid grid-cols-2 md:grid-cols-5 gap-8" data-stagger-reveal data-stagger-step="110">
 <div class="group h-24 glass-panel rounded-2xl flex items-center justify-center border border-white/5 hover:border-primary/30 transition-all duration-500">
 <div class="absolute inset-0 -z-10 opacity-[0.03]">
-<img alt="Modern Office Background" class="w-full h-full object-cover" decoding="async" loading="lazy" src="./assets/images/bg-office.webp">
+<img alt="" class="w-full h-full object-cover" decoding="async" loading="lazy" src="./assets/images/bg-office.webp">
 </div>
 <span class="text-slate-500 group-hover:text-primary font-black text-xl tracking-tighter opacity-50 group-hover:opacity-100 transition-all">AETNA</span>
 </div>
 <div class="group h-24 glass-panel rounded-2xl flex items-center justify-center border border-white/5 hover:border-primary/30 transition-all duration-500">
 <div class="absolute inset-0 -z-10 opacity-[0.03]">
-<img alt="Modern Office Background" class="w-full h-full object-cover" decoding="async" loading="lazy" src="./assets/images/bg-office.webp">
+<img alt="" class="w-full h-full object-cover" decoding="async" loading="lazy" src="./assets/images/bg-office.webp">
 </div>
 <span class="text-slate-500 group-hover:text-primary font-black text-xl tracking-tighter opacity-50 group-hover:opacity-100 transition-all">BCBS</span>
 </div>
 <div class="group h-24 glass-panel rounded-2xl flex items-center justify-center border border-white/5 hover:border-primary/30 transition-all duration-500">
 <div class="absolute inset-0 -z-10 opacity-[0.03]">
-<img alt="Modern Office Background" class="w-full h-full object-cover" decoding="async" loading="lazy" src="./assets/images/bg-office.webp">
+<img alt="" class="w-full h-full object-cover" decoding="async" loading="lazy" src="./assets/images/bg-office.webp">
 </div>
 <span class="text-slate-500 group-hover:text-primary font-black text-xl tracking-tighter opacity-50 group-hover:opacity-100 transition-all">CIGNA</span>
 </div>
 <div class="group h-24 glass-panel rounded-2xl flex items-center justify-center border border-white/5 hover:border-primary/30 transition-all duration-500">
 <div class="absolute inset-0 -z-10 opacity-[0.03]">
-<img alt="Modern Office Background" class="w-full h-full object-cover" decoding="async" loading="lazy" src="./assets/images/bg-office.webp">
+<img alt="" class="w-full h-full object-cover" decoding="async" loading="lazy" src="./assets/images/bg-office.webp">
 </div>
 <span class="text-slate-500 group-hover:text-primary font-black text-xl tracking-tighter opacity-50 group-hover:opacity-100 transition-all">UNITED</span>
 </div>
 <div class="group h-24 glass-panel rounded-2xl flex items-center justify-center border border-white/5 hover:border-primary/30 transition-all duration-500">
 <div class="absolute inset-0 -z-10 opacity-[0.03]">
-<img alt="Modern Office Background" class="w-full h-full object-cover" decoding="async" loading="lazy" src="./assets/images/bg-office.webp">
+<img alt="" class="w-full h-full object-cover" decoding="async" loading="lazy" src="./assets/images/bg-office.webp">
 </div>
 <span class="text-slate-500 group-hover:text-primary font-black text-xl tracking-tighter opacity-50 group-hover:opacity-100 transition-all">HUMANA</span>
 </div>
@@ -460,7 +540,7 @@
 </div>
 </section>
 <!-- Appointment CTA -->
-<section class="max-w-7xl mx-auto px-6 reveal-up appointment-cta-wrap">
+<section class="max-w-7xl mx-auto px-6 reveal-up appointment-cta-wrap defer-render">
 <div class="glass-panel refractive-border rotating-border-container always-border-glow appointment-cta-card">
 <div class="appointment-cta-glow appointment-cta-glow-left"></div>
 <div class="appointment-cta-glow appointment-cta-glow-right"></div>

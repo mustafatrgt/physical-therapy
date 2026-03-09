@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Private or non-public routes
+Disallow: /api/
+
+Sitemap: https://physical-therapy.vercel.app/sitemap.xml

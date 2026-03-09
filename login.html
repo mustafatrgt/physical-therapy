@@ -3,21 +3,84 @@
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta name="description" content="Sign in to PT Clinic with Google, Outlook, Apple, or email to manage your therapy bookings and patient profile securely.">
-<title>Physical Therapy Clinic | Sign In</title>
+<title>Patient Login | PT Clinic</title>
+<meta name="description" content="Sign in to your PT Clinic account with Google, Outlook, Apple, or email to manage appointments and your patient profile.">
+<meta name="robots" content="noindex, follow, max-image-preview:large">
+<link rel="canonical" href="https://physical-therapy.vercel.app/login">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PT Clinic">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Patient Login | PT Clinic">
+<meta property="og:description" content="Securely sign in to manage your therapy bookings and patient profile at PT Clinic.">
+<meta property="og:url" content="https://physical-therapy.vercel.app/login">
+<meta property="og:image" content="https://physical-therapy.vercel.app/assets/images/hero-therapy-1152.webp">
+<meta property="og:image:alt" content="PT Clinic patient portal login">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Patient Login | PT Clinic">
+<meta name="twitter:description" content="Securely sign in to manage your therapy bookings and patient profile at PT Clinic.">
+<meta name="twitter:image" content="https://physical-therapy.vercel.app/assets/images/hero-therapy-1152.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://physical-therapy.vercel.app/login#webpage",
+      "url": "https://physical-therapy.vercel.app/login",
+      "name": "Patient Login | PT Clinic",
+      "description": "Secure login page for PT Clinic patients.",
+      "isPartOf": {
+        "@id": "https://physical-therapy.vercel.app/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://physical-therapy.vercel.app/login#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://physical-therapy.vercel.app/login#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://physical-therapy.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Login",
+          "item": "https://physical-therapy.vercel.app/login"
+        }
+      ]
+    }
+  ]
+}
+</script>
 <script>
 (() => {
   const root = document.documentElement;
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  root.classList.toggle('dark', prefersDark);
-  root.classList.toggle('light', !prefersDark);
+  const themeStorageKey = 'pt-clinic-theme-preference';
+  let storedTheme = null;
+
+  try {
+    const raw = localStorage.getItem(themeStorageKey);
+    if (raw === 'dark' || raw === 'light') {
+      storedTheme = raw;
+    }
+  } catch {
+    // Ignore storage access issues.
+  }
+
+  const resolvedTheme = storedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  root.classList.toggle('dark', resolvedTheme === 'dark');
+  root.classList.toggle('light', resolvedTheme !== 'dark');
 })();
 </script>
 <link href="./assets/css/fonts.css" rel="stylesheet">
 <link href="./assets/css/tailwind.css" rel="stylesheet">
 <link href="./assets/css/custom.css" rel="stylesheet">
 <link rel="preload" href="/assets/fonts/plus-jakarta-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/plus-jakarta-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
@@ -26,13 +89,13 @@
 <link rel="manifest" href="/site.webmanifest">
 </head>
 <body class="bg-background-dark text-slate-100 font-display selection:bg-primary/30" data-page="login">
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div id="site-header-slot" data-page="login" data-book-href="/booking"></div>
-<div id="mouse-spotlight"></div>
 <div class="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 liquid-blob"></div>
 <div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 liquid-blob"></div>
 <div class="fixed top-[30%] right-[10%] w-[30%] h-[30%] rounded-full bg-primary/5 liquid-blob"></div>
 
-<main class="relative max-w-7xl mx-auto px-6 pt-40 pb-24">
+<main class="relative max-w-7xl mx-auto px-6 pt-24 md:pt-40 pb-24" id="main-content" tabindex="-1">
 <section class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start fade-in-load">
 <div class="glass-panel rounded-[2.5rem] p-8 md:p-12 refractive-border rotating-border-container flex flex-col reveal-left self-start">
 <div>
@@ -103,9 +166,9 @@ Sign in once with your Google, Outlook, or Apple account. Your profile is create
 </div>
 
 <div class="space-y-4 mt-4" id="email-auth-wrap">
-<div class="auth-mode-switch" role="tablist" aria-label="Email auth mode">
-<button class="auth-mode-btn is-active" data-email-auth-mode="signin" id="email-auth-mode-signin" role="tab" aria-selected="true" type="button">Sign In</button>
-<button class="auth-mode-btn" data-email-auth-mode="signup" id="email-auth-mode-signup" role="tab" aria-selected="false" type="button">Create Account</button>
+<div aria-label="Email auth mode" class="auth-mode-switch" role="group">
+<button aria-pressed="true" class="auth-mode-btn is-active" data-email-auth-mode="signin" id="email-auth-mode-signin" type="button">Sign In</button>
+<button aria-pressed="false" class="auth-mode-btn" data-email-auth-mode="signup" id="email-auth-mode-signup" type="button">Create Account</button>
 </div>
 
 <p class="auth-mode-copy text-xs text-slate-400" id="email-auth-mode-copy">Sign in with your clinic email and password.</p>
@@ -113,15 +176,16 @@ Sign in once with your Google, Outlook, or Apple account. Your profile is create
 <form class="space-y-3" id="email-auth-form" novalidate>
 <div class="hidden" id="email-auth-name-wrap">
 <label class="auth-field-label" for="email-auth-name">Full Name</label>
-<input autocomplete="name" class="auth-input" id="email-auth-name" maxlength="120" placeholder="John Doe" type="text">
+<input autocomplete="name" class="auth-input" id="email-auth-name" maxlength="120" name="full_name" placeholder="John Doe" type="text">
 </div>
 <div>
 <label class="auth-field-label" for="email-auth-email">Email Address</label>
-<input autocomplete="email" class="auth-input" id="email-auth-email" placeholder="john@example.com" type="email" required>
+<input autocomplete="email" class="auth-input" id="email-auth-email" name="email" placeholder="john@example.com" type="email" required>
 </div>
 <div>
 <label class="auth-field-label" for="email-auth-password">Password</label>
-<input autocomplete="current-password" class="auth-input" id="email-auth-password" minlength="6" placeholder="••••••••" type="password" required>
+<input aria-describedby="email-auth-password-help" autocomplete="current-password" class="auth-input" id="email-auth-password" minlength="6" name="password" placeholder="••••••••" type="password" required>
+<p class="text-[11px] text-slate-500 mt-2" id="email-auth-password-help">Use at least 6 characters.</p>
 </div>
 <button class="relative group overflow-hidden bg-primary w-full px-5 py-3 rounded-xl text-background-dark font-black text-sm transition-all shadow-[0_10px_24px_rgba(19,236,236,0.2)] disabled:opacity-60 disabled:pointer-events-none" id="email-auth-submit" type="submit">
 <span class="relative z-10">Sign In with Email</span>
@@ -132,7 +196,7 @@ Sign in once with your Google, Outlook, or Apple account. Your profile is create
 <button class="auth-reset-btn" id="email-reset-btn" type="button">Forgot your password?</button>
 </div>
 
-<div class="mt-6 auth-status" id="auth-status" role="status" aria-live="polite">
+<div aria-atomic="true" class="mt-6 auth-status" id="auth-status" role="status" aria-live="polite">
 Ready to sign in.
 </div>
 

@@ -184,14 +184,14 @@
   };
   const desktopSignInButton = isLoginPage
     ? ''
-    : `<a class="relative group overflow-hidden px-4 md:px-5 py-2 md:py-2.5 rounded-full text-slate-200 border border-white/10 hover:border-primary/35 hover:text-primary text-xs md:text-sm font-bold transition-all bg-white/[0.02] refractive-border rotating-border-container" href="${loginHref}">
+    : `<a class="relative inline-flex items-center justify-center group overflow-hidden glass-panel px-4 md:px-5 py-2 md:py-2.5 rounded-full text-slate-300 hover:border-primary/35 hover:text-primary text-xs md:text-sm font-bold transition-all bg-white/[0.02] refractive-border rotating-border-container" href="${loginHref}">
 <span class="relative z-10">Sign In</span>
 <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </a>`;
   const mobileSignInButton = isLoginPage
     ? ''
     : `<a class="relative group overflow-hidden glass-panel border border-white/10 px-6 py-4 rounded-2xl text-slate-100 font-black text-sm transition-all text-center w-full" href="${loginHref}">
-<span class="relative z-10">Sign In / Login</span>
+<span class="relative z-10 text-sm font-semibold">Sign In / Login</span>
 <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </a>`;
   const desktopBookNowButton = isBookingPage
@@ -229,7 +229,7 @@
   const headerHtml = `
 ${iconSprite}
 <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-2 sm:px-4 md:px-6 py-3 md:py-4" id="main-header">
-<nav class="max-w-7xl mx-auto glass-panel rounded-full px-3 sm:px-4 md:px-8 py-2.5 md:py-4 flex items-center justify-between gap-2 refractive-border">
+<nav aria-label="Primary" class="max-w-7xl mx-auto glass-panel rounded-full px-3 sm:px-4 md:px-8 py-2.5 md:py-4 flex items-center justify-between gap-2 refractive-border">
 <a class="flex items-center gap-2 sm:gap-3 min-w-0" href="${homeHref}" aria-label="Go to homepage">
 <div class="size-8 md:size-10 bg-primary rounded-lg md:rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(19,236,236,0.3)]">
 <svg aria-hidden="true" class="ms-icon text-background-dark text-2xl font-bold"><use href="#architecture"></use></svg>
@@ -256,8 +256,9 @@ ${desktopBookNowButton}
 </nav>
 </header>
 <div aria-hidden="true" class="fixed inset-0 z-40 bg-background-dark/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 md:hidden" id="mobile-menu-overlay"></div>
-<aside inert class="fixed top-0 right-0 z-50 h-full w-[88%] max-w-sm translate-x-full pointer-events-none transition-transform duration-300 md:hidden" id="mobile-menu-panel">
+<aside aria-hidden="true" aria-labelledby="mobile-menu-heading" aria-modal="true" inert class="fixed top-0 right-0 z-50 h-full w-[88%] max-w-sm translate-x-full pointer-events-none transition-transform duration-300 md:hidden" id="mobile-menu-panel" role="dialog">
 <div class="h-full glass-panel border-l border-primary/20 p-6 flex flex-col">
+<h2 class="visually-hidden" id="mobile-menu-heading">Site menu</h2>
 <div class="flex items-center justify-between mb-10">
 <div id="mobile-menu-auth-intro"></div>
 <button aria-label="Close menu" class="size-10 rounded-full glass-panel flex items-center justify-center text-slate-300 hover:text-primary transition-all group relative overflow-hidden refractive-border rotating-border-container bg-white/[0.02]" id="mobile-menu-close" type="button">
@@ -265,7 +266,7 @@ ${desktopBookNowButton}
 <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </button>
 </div>
-<nav class="flex flex-col gap-6">
+<nav aria-label="Mobile" class="flex flex-col gap-6">
 <a class="mobile-menu-link text-3xl font-black leading-tight text-white" href="${navLinks.services}">Services</a>
 <a class="mobile-menu-link text-3xl font-black leading-tight text-white" href="${navLinks.about}">About</a>
 <a class="mobile-menu-link text-3xl font-black leading-tight text-white" href="${navLinks.team}">Team</a>
@@ -277,11 +278,11 @@ ${desktopBookNowButton}
 <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </button>
 <div class="mt-6 flex items-center gap-4">
-<a class="size-12 rounded-xl glass-panel flex items-center justify-center text-slate-300 hover:text-primary transition-all group relative overflow-hidden refractive-border bg-white/[0.02] rotating-border-container" href="#" aria-label="X (Twitter)">
+<a class="size-12 rounded-xl glass-panel flex items-center justify-center text-slate-300 hover:text-primary transition-all group relative overflow-hidden refractive-border bg-white/[0.02] rotating-border-container" href="https://x.com/ptclinic" rel="noopener noreferrer" target="_blank" aria-label="X (Twitter)">
 <span class="relative z-10 flex items-center justify-center"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></span>
 <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </a>
-<a class="size-12 rounded-xl glass-panel flex items-center justify-center text-slate-300 hover:text-primary transition-all group relative overflow-hidden refractive-border bg-white/[0.02] rotating-border-container" href="#" aria-label="Instagram">
+<a class="size-12 rounded-xl glass-panel flex items-center justify-center text-slate-300 hover:text-primary transition-all group relative overflow-hidden refractive-border bg-white/[0.02] rotating-border-container" href="https://instagram.com/ptclinic" rel="noopener noreferrer" target="_blank" aria-label="Instagram">
 <span class="relative z-10 flex items-center justify-center"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></span>
 <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </a>
@@ -304,11 +305,11 @@ ${mobileBookNowButton}
 </div>
 <p class="text-slate-400 leading-relaxed mb-10 font-medium">Redefining rehabilitation through precision science and specialized human care.</p>
 <div class="flex gap-4">
-<a class="size-12 rounded-xl glass-panel flex items-center justify-center text-slate-400 hover:text-primary transition-all group relative overflow-hidden refractive-border bg-white/[0.02] rotating-border-container" href="#" aria-label="X (Twitter)">
+<a class="size-12 rounded-xl glass-panel flex items-center justify-center text-slate-400 hover:text-primary transition-all group relative overflow-hidden refractive-border bg-white/[0.02] rotating-border-container" href="https://x.com/ptclinic" rel="noopener noreferrer" target="_blank" aria-label="X (Twitter)">
 <span class="relative z-10 flex items-center justify-center"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></span>
 <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </a>
-<a class="size-12 rounded-xl glass-panel flex items-center justify-center text-slate-400 hover:text-primary transition-all group relative overflow-hidden refractive-border bg-white/[0.02] rotating-border-container" href="#" aria-label="Instagram">
+<a class="size-12 rounded-xl glass-panel flex items-center justify-center text-slate-400 hover:text-primary transition-all group relative overflow-hidden refractive-border bg-white/[0.02] rotating-border-container" href="https://instagram.com/ptclinic" rel="noopener noreferrer" target="_blank" aria-label="Instagram">
 <span class="relative z-10 flex items-center justify-center"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></span>
 <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </a>
@@ -326,12 +327,14 @@ ${mobileBookNowButton}
 <div>
 <h3 class="text-white font-bold mb-8">Newsletter</h3>
 <p class="text-slate-400 text-sm mb-6">Stay updated with the latest in recovery science.</p>
-<div class="relative group">
-<input class="booking-field footer-newsletter-field w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-primary/50 transition-all" placeholder="Your email" type="email">
-<button class="absolute right-2 top-2 bottom-2 bg-primary px-4 rounded-lg text-background-dark" aria-label="Submit email">
+<form class="relative group" id="footer-newsletter-form" novalidate>
+<label class="visually-hidden" for="footer-newsletter-email">Email address</label>
+<input autocomplete="email" class="booking-field footer-newsletter-field w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-primary/50 transition-all" id="footer-newsletter-email" name="newsletter_email" placeholder="Your email" required type="email">
+<button class="absolute right-2 top-2 bottom-2 bg-primary px-4 rounded-lg text-background-dark" aria-label="Submit email" type="submit">
 <svg aria-hidden="true" class="ms-icon text-xl"><use href="#arrow_forward"></use></svg>
 </button>
-</div>
+</form>
+<p aria-live="polite" class="text-slate-500 text-xs mt-3" id="footer-newsletter-status"></p>
 </div>
 <div>
 <h3 class="text-white font-bold mb-8">Contact</h3>
@@ -346,8 +349,8 @@ ${mobileBookNowButton}
 <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em] text-center md:text-left leading-relaxed">&copy; 2026 PHYSICAL THERAPY CLINIC. ALL RIGHTS RESERVED.</p>
 <p class="text-slate-500 text-xs font-semibold tracking-wide text-center">Created by Mustafa Turgut</p>
 <div class="flex gap-8">
-<a class="text-slate-500 hover:text-white transition-colors text-[10px] font-black uppercase tracking-widest" href="#">Privacy</a>
-<a class="text-slate-500 hover:text-white transition-colors text-[10px] font-black uppercase tracking-widest" href="#">Terms</a>
+<a class="text-slate-500 hover:text-white transition-colors text-[10px] font-black uppercase tracking-widest" href="/privacy">Privacy</a>
+<a class="text-slate-500 hover:text-white transition-colors text-[10px] font-black uppercase tracking-widest" href="/terms">Terms</a>
 </div>
 </div>
 </div>
@@ -379,18 +382,18 @@ ${avatarUrl
 
     return `
 <div class="header-auth-dropdown-root">
-<button aria-expanded="false" aria-haspopup="menu" aria-label="Open profile menu" class="header-auth-trigger" id="header-auth-trigger" type="button">
+<button aria-controls="header-auth-dropdown-menu" aria-expanded="false" aria-haspopup="true" aria-label="Open profile menu" class="header-auth-trigger" id="header-auth-trigger" type="button">
 ${buildAvatarMarkup(profile, {
     wrapperClass: 'size-10',
     fallbackClass: 'items-center justify-center size-full bg-primary/20 text-primary text-sm font-black',
   })}
 </button>
-<div class="header-auth-dropdown hidden" id="header-auth-dropdown-menu" role="menu">
+<div aria-hidden="true" aria-label="Profile menu" class="header-auth-dropdown hidden" id="header-auth-dropdown-menu">
 <div class="header-auth-dropdown-user">
 <p class="header-auth-dropdown-name">${safeName}</p>
 <p class="header-auth-dropdown-email">${safeEmail}</p>
 </div>
-<a class="header-auth-dropdown-link" href="${profileHref}" role="menuitem">Profile</a>
+<a class="header-auth-dropdown-link" href="${profileHref}">Profile</a>
 <button class="header-auth-dropdown-link is-logout" data-header-logout type="button">Log out</button>
 </div>
 </div>`;
@@ -408,15 +411,15 @@ ${buildAvatarMarkup(profile, {
 </a>`;
     }
 
-    return `<a class="mobile-menu-profile-link glass-panel border border-white/10 rounded-2xl px-4 py-3 inline-flex items-center gap-3 refractive-border bg-white/[0.02]" href="${loginHref}">
-<span class="inline-flex size-10 rounded-full items-center justify-center border border-primary/30 bg-primary/10 text-primary font-black text-sm">P</span>
-<span class="text-slate-100 text-sm font-bold tracking-wide">Hi there,</span>
+    return `<a class="mobile-menu-profile-link h-11 w-fit px-4 rounded-full glass-panel flex items-center gap-2 text-slate-200 hover:text-primary transition-all group relative overflow-hidden refractive-border bg-white/[0.02] rotating-border-container" href="${loginHref}">
+<span class="relative z-10 text-sm font-semibold">Sign In / Login</span>
+<div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
 </a>`;
   };
 
   const getMobileActionsMarkup = (profile) => {
     if (!isSignedInProfile(profile)) {
-      return mobileSignInButton;
+      return '';
     }
 
     return `
@@ -443,7 +446,16 @@ ${buildAvatarMarkup(profile, {
   let onDocumentAuthClickBound = false;
   let onDocumentAuthKeydownBound = false;
 
-  const closeDesktopAuthDropdown = () => {
+  const getDesktopAuthDropdownFocusable = () => {
+    const dropdown = document.getElementById('header-auth-dropdown-menu');
+    if (!dropdown) {
+      return [];
+    }
+    return Array.from(dropdown.querySelectorAll('a[href], button:not([disabled])'))
+      .filter((element) => element instanceof HTMLElement);
+  };
+
+  const closeDesktopAuthDropdown = ({ returnFocus = false } = {}) => {
     const trigger = document.getElementById('header-auth-trigger');
     const dropdown = document.getElementById('header-auth-dropdown-menu');
 
@@ -452,7 +464,22 @@ ${buildAvatarMarkup(profile, {
     }
 
     dropdown.classList.add('hidden');
+    dropdown.setAttribute('aria-hidden', 'true');
     trigger?.setAttribute('aria-expanded', 'false');
+    if (returnFocus && trigger instanceof HTMLElement) {
+      trigger.focus();
+    }
+  };
+
+  const openDesktopAuthDropdown = () => {
+    const trigger = document.getElementById('header-auth-trigger');
+    const dropdown = document.getElementById('header-auth-dropdown-menu');
+    if (!trigger || !dropdown) {
+      return;
+    }
+    dropdown.classList.remove('hidden');
+    dropdown.setAttribute('aria-hidden', 'false');
+    trigger.setAttribute('aria-expanded', 'true');
   };
 
   const syncHeaderAuthUI = (incomingProfile = undefined) => {
@@ -476,10 +503,29 @@ ${buildAvatarMarkup(profile, {
     if (trigger && dropdown) {
       trigger.addEventListener('click', (event) => {
         event.preventDefault();
-        const shouldOpen = dropdown.classList.contains('hidden');
-        closeDesktopAuthDropdown();
-        dropdown.classList.toggle('hidden', !shouldOpen);
-        trigger.setAttribute('aria-expanded', String(shouldOpen));
+        if (dropdown.classList.contains('hidden')) {
+          openDesktopAuthDropdown();
+        } else {
+          closeDesktopAuthDropdown();
+        }
+      });
+
+      trigger.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openDesktopAuthDropdown();
+          getDesktopAuthDropdownFocusable()[0]?.focus();
+        }
+        if (event.key === 'Escape') {
+          closeDesktopAuthDropdown({ returnFocus: true });
+        }
+      });
+
+      dropdown.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          closeDesktopAuthDropdown({ returnFocus: true });
+        }
       });
     }
 
@@ -549,6 +595,30 @@ ${buildAvatarMarkup(profile, {
 
   if (footerSlot) {
     footerSlot.innerHTML = footerHtml;
+    const newsletterForm = document.getElementById('footer-newsletter-form');
+    const newsletterInput = document.getElementById('footer-newsletter-email');
+    const newsletterStatus = document.getElementById('footer-newsletter-status');
+    newsletterForm?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!(newsletterInput instanceof HTMLInputElement)) {
+        return;
+      }
+      if (!newsletterInput.value || !newsletterInput.checkValidity()) {
+        if (newsletterStatus) {
+          newsletterStatus.textContent = 'Please enter a valid email address.';
+        }
+        newsletterInput.setAttribute('aria-invalid', 'true');
+        newsletterInput.focus();
+        return;
+      }
+      newsletterInput.removeAttribute('aria-invalid');
+      if (newsletterStatus) {
+        newsletterStatus.textContent = 'Thanks. You are subscribed to clinic updates.';
+      }
+      if (newsletterForm instanceof HTMLFormElement) {
+        newsletterForm.reset();
+      }
+    });
   }
 
   window.addEventListener('storage', (event) => {
