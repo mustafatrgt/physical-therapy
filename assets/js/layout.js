@@ -234,7 +234,7 @@ ${iconSprite}
 <div class="size-8 md:size-10 bg-primary rounded-lg md:rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(19,236,236,0.3)]">
 <svg aria-hidden="true" class="ms-icon text-background-dark text-2xl font-bold"><use href="#architecture"></use></svg>
 </div>
-<h2 class="brand-title text-slate-100 text-sm sm:text-base md:text-xl font-extrabold tracking-tighter truncate max-w-[124px] sm:max-w-none">PT CLINIC</h2>
+<span class="brand-title text-slate-100 text-sm sm:text-base md:text-xl font-extrabold tracking-tighter truncate max-w-[124px] sm:max-w-none">PT CLINIC</span>
 </a>
 <div class="hidden md:flex items-center gap-10">
 <a class="text-slate-300 hover:text-primary transition-colors text-sm font-semibold tracking-wide" href="${navLinks.services}">Services</a>
@@ -256,7 +256,7 @@ ${desktopBookNowButton}
 </nav>
 </header>
 <div aria-hidden="true" class="fixed inset-0 z-40 bg-background-dark/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 md:hidden" id="mobile-menu-overlay"></div>
-<aside aria-hidden="true" class="fixed top-0 right-0 z-50 h-full w-[88%] max-w-sm translate-x-full transition-transform duration-300 md:hidden" id="mobile-menu-panel">
+<aside inert class="fixed top-0 right-0 z-50 h-full w-[88%] max-w-sm translate-x-full pointer-events-none transition-transform duration-300 md:hidden" id="mobile-menu-panel">
 <div class="h-full glass-panel border-l border-primary/20 p-6 flex flex-col">
 <div class="flex items-center justify-between mb-10">
 <div id="mobile-menu-auth-intro"></div>
@@ -300,7 +300,7 @@ ${mobileBookNowButton}
 <div class="size-10 bg-primary rounded-xl flex items-center justify-center">
 <svg aria-hidden="true" class="ms-icon text-background-dark text-2xl font-bold"><use href="#architecture"></use></svg>
 </div>
-<h2 class="text-white text-2xl font-black tracking-tighter">PT CLINIC</h2>
+<span class="text-white text-2xl font-black tracking-tighter">PT CLINIC</span>
 </div>
 <p class="text-slate-400 leading-relaxed mb-10 font-medium">Redefining rehabilitation through precision science and specialized human care.</p>
 <div class="flex gap-4">
@@ -315,7 +315,7 @@ ${mobileBookNowButton}
 </div>
 </div>
 <div>
-<h4 class="text-white font-bold mb-8">Quick Links</h4>
+<h3 class="text-white font-bold mb-8">Quick Links</h3>
 <ul class="space-y-4">
 <li><a class="text-slate-400 hover:text-primary transition-colors font-medium text-sm" href="${navLinks.services}">Our Services</a></li>
 <li><a class="text-slate-400 hover:text-primary transition-colors font-medium text-sm" href="${navLinks.team}">Find a Therapist</a></li>
@@ -324,7 +324,7 @@ ${mobileBookNowButton}
 </ul>
 </div>
 <div>
-<h4 class="text-white font-bold mb-8">Newsletter</h4>
+<h3 class="text-white font-bold mb-8">Newsletter</h3>
 <p class="text-slate-400 text-sm mb-6">Stay updated with the latest in recovery science.</p>
 <div class="relative group">
 <input class="booking-field footer-newsletter-field w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-sm text-white focus:outline-none focus:border-primary/50 transition-all" placeholder="Your email" type="email">
@@ -334,7 +334,7 @@ ${mobileBookNowButton}
 </div>
 </div>
 <div>
-<h4 class="text-white font-bold mb-8">Contact</h4>
+<h3 class="text-white font-bold mb-8">Contact</h3>
 <ul class="space-y-4">
 <li class="flex gap-4"><svg aria-hidden="true" class="ms-icon text-primary"><use href="#location_on"></use></svg><span class="text-slate-400 text-sm">123 Wellness Way, Metro City</span></li>
 <li class="flex gap-4"><svg aria-hidden="true" class="ms-icon text-primary"><use href="#call"></use></svg><span class="text-slate-400 text-sm">(555) 000-1234</span></li>

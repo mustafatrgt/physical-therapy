@@ -342,9 +342,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     menuWasOpen = open;
     mobileMenuPanel.classList.toggle('translate-x-full', !open);
+    mobileMenuPanel.classList.toggle('pointer-events-none', !open);
+    mobileMenuPanel.toggleAttribute('inert', !open);
     mobileMenuOverlay.classList.toggle('opacity-0', !open);
     mobileMenuOverlay.classList.toggle('pointer-events-none', !open);
-    mobileMenuPanel.setAttribute('aria-hidden', String(!open));
     mobileMenuOverlay.setAttribute('aria-hidden', String(!open));
     mobileMenuToggle.setAttribute('aria-expanded', String(open));
     if (open) {

@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta name="description" content="PT Clinic offers personalized physical therapy, sports injury rehab, post-surgical recovery, and guided care plans with expert therapists.">
 <title>Physical Therapy Clinic | Premium Recovery</title>
 <script>
 (() => {
@@ -15,6 +16,9 @@
 <link href="./assets/css/fonts.css" rel="stylesheet">
 <link href="./assets/css/tailwind.css" rel="stylesheet">
 <link href="./assets/css/custom.css" rel="stylesheet">
+<link rel="preload" href="/assets/fonts/plus-jakarta-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/plus-jakarta-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/plus-jakarta-800.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
@@ -36,7 +40,7 @@
 <section class="max-w-7xl mx-auto px-6 pt-40 pb-32 fade-in-load">
 <div class="grid lg:grid-cols-2 gap-20 items-center">
 <div class="space-y-10">
-<div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-primary text-[10px] font-black tracking-[0.2em] uppercase">
+<div class="premium-badge inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-primary text-[10px] font-black tracking-[0.2em] uppercase">
 <span class="relative flex h-2 w-2">
 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
 <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
@@ -62,8 +66,27 @@
 <div class="glass-panel p-4 rounded-[2.5rem] refractive-border rotating-border-container always-border-glow floating-animation relative overflow-hidden">
 <div class="aspect-[4/5] rounded-[2rem] overflow-hidden relative">
 <picture class="block w-full h-full">
-<source srcset="./assets/images/hero-therapy.avif" type="image/avif">
-<img alt="Therapy Session" class="w-full h-full object-cover" decoding="async" fetchpriority="high" src="./assets/images/hero-therapy.webp">
+<source
+  type="image/avif"
+  srcset="./assets/images/hero-therapy-768.avif 768w, ./assets/images/hero-therapy-1152.avif 1152w, ./assets/images/hero-therapy.avif 1600w"
+  sizes="(max-width: 767px) 88vw, (max-width: 1279px) 46vw, 640px"
+>
+<source
+  type="image/webp"
+  srcset="./assets/images/hero-therapy-768.webp 768w, ./assets/images/hero-therapy-1152.webp 1152w, ./assets/images/hero-therapy.webp 1600w"
+  sizes="(max-width: 767px) 88vw, (max-width: 1279px) 46vw, 640px"
+>
+<img
+  alt="Therapy Session"
+  class="w-full h-full object-cover"
+  decoding="async"
+  fetchpriority="high"
+  src="./assets/images/hero-therapy-1152.webp"
+  srcset="./assets/images/hero-therapy-768.webp 768w, ./assets/images/hero-therapy-1152.webp 1152w, ./assets/images/hero-therapy.webp 1600w"
+  sizes="(max-width: 767px) 88vw, (max-width: 1279px) 46vw, 640px"
+  width="1600"
+  height="2000"
+>
 </picture>
 <div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 via-transparent to-transparent"></div>
 <div class="absolute bottom-8 left-8 right-8 glass-panel p-6 rounded-2xl flex items-center justify-between">
@@ -82,19 +105,19 @@
 <section class="max-w-7xl mx-auto px-6 mb-32">
 <div class="grid grid-cols-2 md:grid-cols-4 gap-6 stagger-grid" data-stagger-reveal data-stagger-step="170">
 <div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<h3 class="text-4xl font-extrabold text-white mb-2" data-count-up="4.9" data-decimals="1" data-duration="950" data-suffix="/5">0.0/5</h3>
+<p class="text-4xl font-extrabold text-white mb-2" data-count-up="4.9" data-decimals="1" data-duration="950" data-suffix="/5">0.0/5</p>
 <p class="text-slate-400 text-sm font-medium">Patient Rating</p>
 </div>
 <div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<h3 class="text-4xl font-extrabold text-white mb-2" data-count-up="15" data-duration="900" data-suffix="+">0+</h3>
+<p class="text-4xl font-extrabold text-white mb-2" data-count-up="15" data-duration="900" data-suffix="+">0+</p>
 <p class="text-slate-400 text-sm font-medium">Licensed Therapists</p>
 </div>
 <div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<h3 class="text-4xl font-extrabold text-white mb-2" data-count-up="20" data-duration="900" data-suffix="+">0+</h3>
+<p class="text-4xl font-extrabold text-white mb-2" data-count-up="20" data-duration="900" data-suffix="+">0+</p>
 <p class="text-slate-400 text-sm font-medium">Insurance Partners</p>
 </div>
 <div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
-<h3 class="text-4xl font-extrabold text-white mb-2" data-count-up="100" data-duration="1000" data-suffix="%">0%</h3>
+<p class="text-4xl font-extrabold text-white mb-2" data-count-up="100" data-duration="1000" data-suffix="%">0%</p>
 <p class="text-slate-400 text-sm font-medium">Dedicated Care</p>
 </div>
 </div>
@@ -119,7 +142,7 @@
 </svg>
 <span class="how-step-breath absolute inset-0 rounded-full border-2 border-primary/80"></span>
 </div>
-<h4 class="text-xl font-bold text-white mb-3">Orthopedic PT</h4>
+<h3 class="text-xl font-bold text-white mb-3">Orthopedic PT</h3>
 <p class="text-slate-400 text-sm leading-relaxed mb-6">Expert care for bone, joint, and muscle injuries to restore your mobility.</p>
 <a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
 </div>
@@ -132,7 +155,7 @@
 </svg>
 <span class="how-step-breath absolute inset-0 rounded-full border-2 border-primary/80"></span>
 </div>
-<h4 class="text-xl font-bold text-white mb-3">Sports Injury Rehab</h4>
+<h3 class="text-xl font-bold text-white mb-3">Sports Injury Rehab</h3>
 <p class="text-slate-400 text-sm leading-relaxed mb-6">Specialized programs for athletes to return to peak performance safely.</p>
 <a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
 </div>
@@ -144,7 +167,7 @@
 </svg>
 <span class="how-step-breath absolute inset-0 rounded-full border-2 border-primary/80"></span>
 </div>
-<h4 class="text-xl font-bold text-white mb-3">Post-Surgical Rehab</h4>
+<h3 class="text-xl font-bold text-white mb-3">Post-Surgical Rehab</h3>
 <p class="text-slate-400 text-sm leading-relaxed mb-6">Optimized recovery protocols following surgeries to ensure best outcomes.</p>
 <a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
 </div>
@@ -155,7 +178,7 @@
 </svg>
 <span class="how-step-breath absolute inset-0 rounded-full border-2 border-primary/80"></span>
 </div>
-<h4 class="text-xl font-bold text-white mb-3">Chronic Pain Management</h4>
+<h3 class="text-xl font-bold text-white mb-3">Chronic Pain Management</h3>
 <p class="text-slate-400 text-sm leading-relaxed mb-6">Innovative techniques to reduce persistent pain and improve daily life.</p>
 <a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
 </div>
@@ -169,7 +192,7 @@
 </svg>
 <span class="how-step-breath absolute inset-0 rounded-full border-2 border-primary/80"></span>
 </div>
-<h4 class="text-xl font-bold text-white mb-3">Manual Therapy</h4>
+<h3 class="text-xl font-bold text-white mb-3">Manual Therapy</h3>
 <p class="text-slate-400 text-sm leading-relaxed mb-6">Hands-on techniques including joint mobilization and soft tissue work.</p>
 <a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
 </div>
@@ -181,7 +204,7 @@
 </svg>
 <span class="how-step-breath absolute inset-0 rounded-full border-2 border-primary/80"></span>
 </div>
-<h4 class="text-xl font-bold text-white mb-3">Balance Training</h4>
+<h3 class="text-xl font-bold text-white mb-3">Balance Training</h3>
 <p class="text-slate-400 text-sm leading-relaxed mb-6">Fall prevention and stability exercises for all ages and mobility levels.</p>
 <a class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2" href="#">Learn More <svg aria-hidden="true" class="ms-icon text-[16px]"><use href="#arrow_forward"></use></svg></a>
 </div>
@@ -191,12 +214,13 @@
 <section class="max-w-7xl mx-auto px-6 py-24 reveal-left" id="about">
 <div class="grid lg:grid-cols-2 gap-20">
 <div>
-<h3 class="text-3xl font-extrabold text-white mb-10">Common <span class="text-primary">Conditions</span> We Treat</h3>
+<h2 class="text-3xl font-extrabold text-white mb-10">Common <span class="text-primary">Conditions</span> We Treat</h2>
 <div class="mb-10" data-stagger-reveal data-stagger-step="90">
 <div class="glass-panel p-4 rounded-[2.5rem] refractive-border rotating-border-container always-border-glow relative overflow-hidden">
 <div class="aspect-square rounded-[2rem] overflow-hidden relative">
 <video class="w-full h-full object-cover" data-smart-video loop muted playsinline preload="none" aria-label="Knee exercise rehabilitation video">
 <source src="./assets/images/diz-egzersizi.webm" type="video/webm" />
+<track kind="captions" srclang="en" label="English captions" src="./assets/videos/diz-egzersizi.en.vtt" default>
 </video>
 <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-background-dark/30 via-transparent to-transparent"></div>
 </div>
@@ -238,8 +262,8 @@
 </div>
 </div>
 <div>
-<h3 class="text-3xl font-extrabold text-white mb-10">How It <span class="text-primary">Works</span>
-</h3>
+<h2 class="text-3xl font-extrabold text-white mb-10">How It <span class="text-primary">Works</span>
+</h2>
 <div class="space-y-6" data-stagger-reveal data-stagger-step="150">
 <div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all flex items-start gap-6">
 <div class="how-step-icon size-12 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(19,236,236,0.2)] relative overflow-hidden">
@@ -253,7 +277,7 @@
 <span class="how-step-breath absolute inset-0 rounded-full border-2 border-primary/80"></span>
 </div>
 <div>
-<h5 class="text-lg font-bold text-white mb-2">Detailed Evaluation</h5>
+<h3 class="text-lg font-bold text-white mb-2">Detailed Evaluation</h3>
 <p class="text-slate-400 text-sm leading-relaxed">Comprehensive assessment of your movement, strength, and clinical history.</p>
 </div>
 </div>
@@ -269,7 +293,7 @@
 <span class="how-step-breath absolute inset-0 rounded-full border-2 border-primary/80"></span>
 </div>
 <div>
-<h5 class="text-lg font-bold text-white mb-2">Personalized Plan</h5>
+<h3 class="text-lg font-bold text-white mb-2">Personalized Plan</h3>
 <p class="text-slate-400 text-sm leading-relaxed">We design a custom roadmap focused on your specific recovery goals.</p>
 </div>
 </div>
@@ -281,7 +305,7 @@
 <span class="how-step-breath absolute inset-0 rounded-full border-2 border-primary/80"></span>
 </div>
 <div>
-<h5 class="text-lg font-bold text-white mb-2">Guided Recovery</h5>
+<h3 class="text-lg font-bold text-white mb-2">Guided Recovery</h3>
 <p class="text-slate-400 text-sm leading-relaxed">One-on-one sessions with expert therapists using modern techniques.</p>
 </div>
 </div>
@@ -293,7 +317,7 @@
 <span class="how-step-breath absolute inset-0 rounded-full border-2 border-primary/80"></span>
 </div>
 <div>
-<h5 class="text-lg font-bold text-white mb-2">Prevention &amp; Maintenance</h5>
+<h3 class="text-lg font-bold text-white mb-2">Prevention &amp; Maintenance</h3>
 <p class="text-slate-400 text-sm leading-relaxed">Empowering you with the knowledge to stay healthy and injury-free long-term.</p>
 </div>
 </div>
@@ -363,25 +387,25 @@
 <!-- Team Member 1 -->
 <div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
 <div class="aspect-[4/5] rounded-2xl overflow-hidden mb-6 group-hover:grayscale-0 transition-all duration-500"><img alt="Dr. Alex Rivera" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110" decoding="async" loading="lazy" src="./assets/images/team-alex.webp"></div>
-<h5 class="text-white font-bold text-lg">Dr. Alex Rivera</h5>
+<h3 class="text-white font-bold text-lg">Dr. Alex Rivera</h3>
 <p class="text-primary text-xs font-bold uppercase tracking-widest mb-4">Lead Specialist</p>
 </div>
 <!-- Team Member 2 -->
 <div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
 <div class="aspect-[4/5] rounded-2xl overflow-hidden mb-6 group-hover:grayscale-0 transition-all duration-500"><img alt="Dr. Sarah Jenkins" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110" decoding="async" loading="lazy" src="./assets/images/team-sarah.webp"></div>
-<h5 class="text-white font-bold text-lg">Dr. Sarah Jenkins</h5>
+<h3 class="text-white font-bold text-lg">Dr. Sarah Jenkins</h3>
 <p class="text-primary text-xs font-bold uppercase tracking-widest mb-4">Orthopedic Specialist</p>
 </div>
 <!-- Team Member 3 -->
 <div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
 <div class="aspect-[4/5] rounded-2xl overflow-hidden mb-6 group-hover:grayscale-0 transition-all duration-500"><img alt="Mark Thompson" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110" decoding="async" loading="lazy" src="./assets/images/team-mark.webp"></div>
-<h5 class="text-white font-bold text-lg">Mark Thompson</h5>
+<h3 class="text-white font-bold text-lg">Mark Thompson</h3>
 <p class="text-primary text-xs font-bold uppercase tracking-widest mb-4">Sports Rehabilitation</p>
 </div>
 <!-- Team Member 4 -->
 <div class="glass-panel rounded-3xl p-8 refractive-border bg-white/[0.02] rotating-border-container transition-all">
 <div class="aspect-[4/5] rounded-2xl overflow-hidden mb-6 group-hover:grayscale-0 transition-all duration-500"><img alt="Dr. Emily Chen" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110" decoding="async" loading="lazy" src="./assets/images/team-emily.webp"></div>
-<h5 class="text-white font-bold text-lg">Dr. Emily Chen</h5>
+<h3 class="text-white font-bold text-lg">Dr. Emily Chen</h3>
 <p class="text-primary text-xs font-bold uppercase tracking-widest mb-4">Manual Therapist</p>
 </div>
 </div>
@@ -443,7 +467,7 @@
 <div class="appointment-cta-inner">
 <div class="appointment-cta-copy">
 <p class="text-primary text-[10px] font-black uppercase tracking-[0.28em] mb-4">Start Your Recovery</p>
-<h3 class="text-3xl md:text-5xl font-extrabold text-white leading-tight mb-4">Pain should not set your limits.<br><span class="text-primary">Your custom therapy plan can start today.</span></h3>
+<h2 class="text-3xl md:text-5xl font-extrabold text-white leading-tight mb-4">Pain should not set your limits.<br><span class="text-primary">Your custom therapy plan can start today.</span></h2>
 <p class="text-slate-300 max-w-2xl text-lg">Book a focused first session with our specialists and get a clear roadmap built around your pain points, movement goals, and daily routine.</p>
 </div>
 <a class="appointment-cta-button" href="/booking">
