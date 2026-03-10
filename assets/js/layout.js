@@ -600,14 +600,15 @@ ${buildAvatarMarkup(profile, {
     syncHeaderAuthUI();
   }
 
-  const renderFooter = () => {
-    if (!footerSlot) {
-      return;
-    }
-    footerSlot.innerHTML = footerHtml;
+  const bindFooterInteractions = () => {
     const newsletterForm = document.getElementById('footer-newsletter-form');
     const newsletterInput = document.getElementById('footer-newsletter-email');
     const newsletterStatus = document.getElementById('footer-newsletter-status');
+    if (!(newsletterForm instanceof HTMLFormElement) || newsletterForm.dataset.bound === 'true') {
+      return;
+    }
+
+    newsletterForm.dataset.bound = 'true';
     newsletterForm?.addEventListener('submit', (event) => {
       event.preventDefault();
       if (!(newsletterInput instanceof HTMLInputElement)) {
@@ -632,7 +633,8 @@ ${buildAvatarMarkup(profile, {
   };
 
   if (footerSlot) {
-    runWhenIdle(renderFooter, 1800);
+    footerSlot.innerHTML = footerHtml;
+    runWhenIdle(bindFooterInteractions, 1200);
   }
 
   window.addEventListener('storage', (event) => {

@@ -301,7 +301,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       isHeaderScrolled = scrolled;
       header.classList.toggle('header-scrolled', scrolled);
-      header.classList.toggle('py-4', !scrolled);
     };
 
     const onScroll = () => {

@@ -1582,7 +1582,6 @@ html.light {
   background: transparent;
   backdrop-filter: none;
   border-bottom: 0;
-  padding: 0.85rem 0.5rem;
 }
 
 @keyframes pulse-glow {
@@ -1800,7 +1799,9 @@ html.light {
   }
 
   .header-scrolled {
-    padding: 0.7rem 0.4rem;
+    background: transparent;
+    backdrop-filter: none;
+    border-bottom: 0;
   }
 }
 
