@@ -288,6 +288,25 @@ html.light {
   pointer-events: none;
 }
 
+/* Keep above-the-fold paint cheap until first load settles (LCP first). */
+html:not(.perf-enhanced) .liquid-blob,
+html:not(.perf-enhanced) .liquid-glow,
+html:not(.perf-enhanced) .hero-lcp-glow,
+html:not(.perf-enhanced) .hero-status-card {
+  display: none;
+}
+
+html:not(.perf-enhanced) .hero-lcp-frame {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+html:not(.perf-enhanced) .hero-lcp-frame.rotating-border-container::before {
+  animation: none;
+  opacity: 0;
+}
+
 .refractive-border {
   position: relative;
 }

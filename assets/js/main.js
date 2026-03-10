@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.setTimeout(callback, 16);
   };
+  const enableEnhancedVisuals = () => {
+    html.classList.add('perf-enhanced');
+  };
 
   const readCounterConfig = (element) => {
     const end = Number.parseFloat(element.dataset.countUp ?? '0');
@@ -291,6 +294,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   syncThemeIcon();
+
+  if (document.readyState === 'complete') {
+    runWhenIdle(enableEnhancedVisuals, 1400);
+  } else {
+    window.addEventListener('load', () => {
+      runWhenIdle(enableEnhancedVisuals, 1400);
+    }, { once: true });
+  }
 
   if (header) {
     header.classList.remove('header-scrolled');
