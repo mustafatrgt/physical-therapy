@@ -452,7 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (smartVideos.length > 0) {
     runWhenIdle(() => {
-      let videoPlaybackReady = document.readyState === 'complete';
+      let videoPlaybackReady = document.readyState !== 'loading';
 
       const shouldPlayVideo = (video) => (
         !reducedMotion
@@ -480,6 +480,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       smartVideos.forEach((video) => {
         video.dataset.inView = 'false';
+        video.dataset.prewarmed = 'false';
         video.pause();
       });
 
@@ -490,13 +491,18 @@ document.addEventListener('DOMContentLoaded', () => {
               if (!(entry.target instanceof HTMLVideoElement)) {
                 return;
               }
+              if (entry.isIntersecting && entry.target.dataset.prewarmed !== 'true') {
+                entry.target.preload = 'auto';
+                entry.target.load();
+                entry.target.dataset.prewarmed = 'true';
+              }
               entry.target.dataset.inView = entry.isIntersecting ? 'true' : 'false';
               syncVideoPlayback(entry.target);
             });
           },
           {
-            threshold: 0.3,
-            rootMargin: '0px 0px -8% 0px',
+            threshold: 0.08,
+            rootMargin: '0px 0px 24% 0px',
           }
         );
 
@@ -524,7 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.addEventListener('pagehide', () => {
         smartVideos.forEach((video) => video.pause());
       });
-    }, 1800);
+    }, 600);
   }
 
   const revealStaggerContainer = (container) => {
