@@ -633,8 +633,18 @@ ${buildAvatarMarkup(profile, {
   };
 
   if (footerSlot) {
-    footerSlot.innerHTML = footerHtml;
-    runWhenIdle(bindFooterInteractions, 1200);
+    const renderFooter = () => {
+      footerSlot.innerHTML = footerHtml;
+      runWhenIdle(bindFooterInteractions, 800);
+    };
+
+    if (document.readyState === 'complete') {
+      runWhenIdle(renderFooter, 450);
+    } else {
+      window.addEventListener('load', () => {
+        runWhenIdle(renderFooter, 450);
+      }, { once: true });
+    }
   }
 
   window.addEventListener('storage', (event) => {
