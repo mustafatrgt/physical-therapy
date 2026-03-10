@@ -1852,6 +1852,43 @@ html.light {
     width: 2.25rem;
     height: 2.25rem;
   }
+
+  .hero-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .hero-layout {
+    gap: 2.5rem;
+  }
+
+  .hero-heading {
+    font-size: clamp(2.05rem, 8.2vw, 2.25rem);
+    line-height: 1.08;
+  }
+
+  #hero-typing {
+    display: inline;
+    width: auto;
+    max-width: none;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .hero-cta-grid {
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+
+  .hero-cta-grid > a {
+    width: 100%;
+  }
 }
 
 @media (pointer: coarse) {
