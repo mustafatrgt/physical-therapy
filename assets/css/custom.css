@@ -1688,6 +1688,7 @@ html.light {
 .defer-render {
   content-visibility: auto;
   contain-intrinsic-size: 1px 900px;
+  overflow-anchor: none;
 }
 
 .defer-render-tall {
