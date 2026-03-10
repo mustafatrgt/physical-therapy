@@ -293,22 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
   syncThemeIcon();
 
   if (header) {
-    let isHeaderScrolled = null;
-    const applyHeaderScrollState = (scrolled) => {
-      if (isHeaderScrolled === scrolled) {
-        return;
-      }
-
-      isHeaderScrolled = scrolled;
-      header.classList.toggle('header-scrolled', scrolled);
-    };
-
-    const onScroll = () => {
-      applyHeaderScrollState(window.scrollY > 50);
-    };
-
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
+    header.classList.remove('header-scrolled');
   }
 
   if (spotlight) {
