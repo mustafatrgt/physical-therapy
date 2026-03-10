@@ -99,6 +99,10 @@ body.menu-open {
   animation: hero-caret-blink 0.8s steps(1, end) infinite;
 }
 
+.hero-mobile-first-line {
+  display: inline;
+}
+
 @keyframes hero-caret-blink {
   0%,
   49% {
@@ -1888,6 +1892,12 @@ html.light {
 
   .hero-cta-grid > a {
     width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-mobile-first-line {
+    display: block;
   }
 }
 
