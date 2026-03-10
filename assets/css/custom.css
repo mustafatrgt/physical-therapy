@@ -1896,6 +1896,33 @@ html.light {
 }
 
 @media (max-width: 767px) {
+  .hero-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .hero-layout {
+    gap: 2.5rem;
+  }
+
+  #hero-typing {
+    display: inline;
+    width: auto;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .hero-cta-grid {
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+
+  .hero-cta-grid > a {
+    width: 100%;
+  }
+
   .hero-mobile-first-line {
     display: block;
   }
