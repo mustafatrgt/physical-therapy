@@ -103,6 +103,35 @@ body.menu-open {
   display: inline;
 }
 
+.hero-copy-top,
+.hero-copy-bottom {
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-layout {
+    column-gap: 5rem;
+    row-gap: 2rem;
+    align-items: center;
+  }
+
+  .hero-copy-top {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .hero-media {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
+  .hero-copy-bottom {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
+
 @keyframes hero-caret-blink {
   0%,
   49% {
@@ -1921,6 +1950,21 @@ html.light {
 
   .hero-cta-grid > a {
     width: 100%;
+  }
+
+  .hero-copy-top,
+  .hero-copy-bottom {
+    text-align: center;
+  }
+
+  .hero-copy-top .premium-badge {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-description {
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .hero-mobile-first-line {
