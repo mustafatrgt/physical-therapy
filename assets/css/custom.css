@@ -296,15 +296,36 @@ html:not(.perf-enhanced) .hero-status-card {
   display: none;
 }
 
+html:not(.perf-enhanced) .glass-panel {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html:not(.perf-enhanced) .refractive-border::after {
+  display: none;
+}
+
 html:not(.perf-enhanced) .hero-lcp-frame {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   background: rgba(255, 255, 255, 0.01);
 }
 
+html:not(.perf-enhanced) .rotating-border-container::before {
+  animation: none !important;
+  opacity: 0 !important;
+}
+
 html:not(.perf-enhanced) .hero-lcp-frame.rotating-border-container::before {
   animation: none;
   opacity: 0;
+}
+
+/* Reduce initial style/layout cost on home by deferring deep sections. */
+body[data-page='home'] main > section:nth-of-type(n + 3) {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 1100px;
+  overflow-anchor: none;
 }
 
 .refractive-border {

@@ -295,12 +295,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   syncThemeIcon();
 
+  const scheduleEnhancedVisuals = () => {
+    const delay = isHomePage ? 3200 : 800;
+    window.setTimeout(() => {
+      runWhenIdle(enableEnhancedVisuals, 2800);
+    }, delay);
+  };
+
   if (document.readyState === 'complete') {
-    runWhenIdle(enableEnhancedVisuals, 1400);
+    scheduleEnhancedVisuals();
   } else {
-    window.addEventListener('load', () => {
-      runWhenIdle(enableEnhancedVisuals, 1400);
-    }, { once: true });
+    window.addEventListener('load', scheduleEnhancedVisuals, { once: true });
   }
 
   if (header) {
