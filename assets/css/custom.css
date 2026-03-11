@@ -1629,6 +1629,21 @@ body[data-page='home'] main > section:nth-of-type(n + 3) {
   animation: floating 6s ease-in-out infinite;
 }
 
+@keyframes floating-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.floating-animation-soft {
+  animation: floating-soft 4.8s ease-in-out infinite;
+}
+
 .tracking-tightest {
   letter-spacing: -0.05em;
 }
