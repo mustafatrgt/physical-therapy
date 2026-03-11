@@ -615,9 +615,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  let revealAndCountersInitialized = false;
   const initRevealAndCounters = () => {
-    revealAndCountersInitialized = true;
     const revealElements = document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up');
     const staggerContainers = document.querySelectorAll('[data-stagger-reveal]');
     const statCounters = document.querySelectorAll('[data-count-up]');
@@ -708,26 +706,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  scheduleNonCritical(initRevealAndCounters, 450, 900);
-
-  // Failsafe: never keep reveal targets hidden if observers are delayed.
-  window.setTimeout(() => {
-    if (revealAndCountersInitialized) {
-      return;
-    }
-
-    document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up').forEach((element) => {
-      element.classList.add('is-visible');
-    });
-    document.querySelectorAll('[data-stagger-reveal]').forEach((container) => {
-      const children = Array.from(container.children).filter((child) => child instanceof HTMLElement);
-      children.forEach((child) => child.classList.add('is-visible'));
-      if (container instanceof HTMLElement) {
-        container.dataset.staggerDone = 'true';
-      }
-    });
-    document.querySelectorAll('[data-count-up]').forEach((counter) => {
-      setCounterFinal(counter);
-    });
-  }, 2400);
+  initRevealAndCounters();
 });
