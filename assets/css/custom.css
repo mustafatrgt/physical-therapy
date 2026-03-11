@@ -303,13 +303,6 @@ html:not(.perf-enhanced) .premium-badge .animate-ping {
   display: none;
 }
 
-/* Reduce initial style/layout cost on home by deferring deep sections. */
-body[data-page='home'] main > section:nth-of-type(n + 3) {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 1100px;
-  overflow-anchor: none;
-}
-
 .refractive-border {
   position: relative;
 }
@@ -1758,7 +1751,7 @@ body[data-page='home'] main > section:nth-of-type(n + 3) {
 .defer-render {
   content-visibility: auto;
   contain-intrinsic-size: 1px 900px;
-  overflow-anchor: none;
+  overflow-anchor: auto;
 }
 
 .defer-render-tall {
