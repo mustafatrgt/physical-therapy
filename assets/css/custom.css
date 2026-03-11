@@ -1784,6 +1784,11 @@ html:not(.perf-enhanced) .premium-badge .animate-ping {
   will-change: opacity, transform;
 }
 
+/* Prevent browser scroll anchoring from snapping back while staggered team cards reveal. */
+[data-stagger-reveal] {
+  overflow-anchor: none;
+}
+
 [data-stagger-reveal] > *.is-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0);
