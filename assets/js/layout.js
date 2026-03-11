@@ -302,7 +302,7 @@ ${mobileBookNowButton}
   const footerHtml = `
 <footer class="mt-40 border-t border-white/5 bg-background-dark/50 backdrop-blur-3xl"${footerIdAttr}>
 <div class="max-w-7xl mx-auto px-6 pt-14 pb-10 md:pt-20 md:pb-12">
-<div class="grid grid-cols-1 lg:grid-cols-4 gap-10 md:gap-14 mb-12 md:mb-16" data-stagger-reveal data-stagger-step="130">
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-10 md:gap-14 mb-12 md:mb-16">
 <div class="col-span-1 lg:col-span-1">
 <div class="flex items-center gap-3 mb-8">
 <div class="size-10 bg-primary rounded-xl flex items-center justify-center">
