@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:css": "tailwindcss -c tailwind.config.cjs -i ./assets/css/tailwind.input.css -o ./assets/css/tailwind.css --minify",
-    "dev:css": "tailwindcss -c tailwind.config.cjs -i ./assets/css/tailwind.input.css -o ./assets/css/tailwind.css --watch"
+    "dev:css": "tailwindcss -c tailwind.config.cjs -i ./assets/css/tailwind.input.css -o ./assets/css/tailwind.css --watch",
+    "build:css:pages": "node ./scripts/build-page-css.mjs",
+    "dev:css:pages": "node ./scripts/build-page-css.mjs --watch",
+    "build:styles": "npm run build:css && npm run build:css:pages",
+    "dev:styles": "sh -c 'npm run dev:css & npm run dev:css:pages'"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +19,8 @@
   "devDependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.10",
+    "clean-css": "^5.3.3",
+    "purgecss": "^8.0.0",
     "tailwindcss": "^3.4.17"
   },
   "dependencies": {
