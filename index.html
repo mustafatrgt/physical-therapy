@@ -97,6 +97,7 @@
   imagesizes="(max-width: 767px) 88vw, (max-width: 1279px) 46vw, 640px"
   fetchpriority="high"
 >
+<link rel="preload" href="/assets/js/main.js" as="script">
 <link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
@@ -562,6 +563,44 @@
 </main>
 <div id="site-footer-slot" data-page="home" data-footer-id="appointment"></div>
 <script defer src="./assets/js/layout.js"></script>
-<script defer src="./assets/js/main.js"></script>
+<script>
+(() => {
+  let loaded = false;
+  const loadMain = () => {
+    if (loaded) {
+      return;
+    }
+    loaded = true;
+    const script = document.createElement('script');
+    script.src = './assets/js/main.js';
+    script.defer = true;
+    document.body.appendChild(script);
+  };
+
+  const interactionEvents = ['pointerdown', 'keydown', 'touchstart', 'wheel', 'scroll'];
+  interactionEvents.forEach((eventName) => {
+    const options = eventName === 'keydown'
+      ? { once: true }
+      : { once: true, passive: true };
+    window.addEventListener(eventName, loadMain, options);
+  });
+
+  const kickoff = () => {
+    window.setTimeout(() => {
+      if (typeof window.requestIdleCallback === 'function') {
+        window.requestIdleCallback(loadMain, { timeout: 1800 });
+      } else {
+        loadMain();
+      }
+    }, 3200);
+  };
+
+  if (document.readyState === 'complete') {
+    kickoff();
+  } else {
+    window.addEventListener('load', kickoff, { once: true });
+  }
+})();
+</script>
 </body>
 </html>
