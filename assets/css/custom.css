@@ -1789,6 +1789,11 @@ html:not(.perf-enhanced) .premium-badge .animate-ping {
   overflow-anchor: none;
 }
 
+/* Prevent browser anchor snap-back while staggered cards are progressively revealed. */
+body[data-page='home'] {
+  overflow-anchor: none;
+}
+
 [data-stagger-reveal] > *.is-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0);
