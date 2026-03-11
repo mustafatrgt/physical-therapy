@@ -17,12 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
   const mobileMenuPanel = document.getElementById('mobile-menu-panel');
 
-  const revealElements = document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up');
-  const staggerContainers = document.querySelectorAll('[data-stagger-reveal]');
-  const statCounters = document.querySelectorAll('[data-count-up]');
   const heroTyping = document.getElementById('hero-typing');
-  const smartVideos = Array.from(document.querySelectorAll('[data-smart-video]'))
-    .filter((video) => video instanceof HTMLVideoElement);
   const runWhenIdle = (callback, timeout = 1200) => {
     if (typeof window.requestIdleCallback === 'function') {
       window.requestIdleCallback(callback, { timeout });
@@ -447,12 +442,77 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  runWhenIdle(() => {
-    initHeroTyping(reducedMotion);
-  }, 1400);
+  const scheduleNonCritical = (callback, homeDelay = 0, idleTimeout = 1200) => {
+    if (!isHomePage) {
+      runWhenIdle(callback, idleTimeout);
+      return;
+    }
 
-  if (smartVideos.length > 0) {
-    runWhenIdle(() => {
+    const kickoff = () => {
+      window.setTimeout(() => {
+        runWhenIdle(callback, idleTimeout);
+      }, homeDelay);
+    };
+
+    if (document.readyState === 'complete') {
+      kickoff();
+    } else {
+      window.addEventListener('load', kickoff, { once: true });
+    }
+  };
+
+  const scheduleInteractiveDeferred = (callback, homeDelay = 4200, idleTimeout = 1600) => {
+    if (!isHomePage) {
+      runWhenIdle(callback, idleTimeout);
+      return;
+    }
+
+    const interactionEvents = ['pointerdown', 'keydown', 'touchstart', 'wheel', 'scroll'];
+    let hasRun = false;
+    let timerId = 0;
+
+    const run = () => {
+      if (hasRun) {
+        return;
+      }
+      hasRun = true;
+      if (timerId !== 0) {
+        window.clearTimeout(timerId);
+      }
+      interactionEvents.forEach((eventName) => {
+        window.removeEventListener(eventName, run);
+      });
+      runWhenIdle(callback, idleTimeout);
+    };
+
+    const arm = () => {
+      timerId = window.setTimeout(run, homeDelay);
+      interactionEvents.forEach((eventName) => {
+        const options = eventName === 'keydown'
+          ? { once: true }
+          : { once: true, passive: true };
+        window.addEventListener(eventName, run, options);
+      });
+    };
+
+    if (document.readyState === 'complete') {
+      arm();
+    } else {
+      window.addEventListener('load', arm, { once: true });
+    }
+  };
+
+  scheduleNonCritical(() => {
+    initHeroTyping(reducedMotion);
+  }, 3200, 1800);
+
+  scheduleInteractiveDeferred(() => {
+    const smartVideos = Array.from(document.querySelectorAll('[data-smart-video]'))
+      .filter((video) => video instanceof HTMLVideoElement);
+    if (smartVideos.length === 0) {
+      return;
+    }
+
       let videoPlaybackReady = document.readyState !== 'loading';
 
       const shouldPlayVideo = (video) => (
@@ -531,8 +591,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.addEventListener('pagehide', () => {
         smartVideos.forEach((video) => video.pause());
       });
-    }, 600);
-  }
+    }, 3800, 1600);
 
   const revealStaggerContainer = (container) => {
     if (!(container instanceof HTMLElement)) {
@@ -556,85 +615,96 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  if (reducedMotion) {
-    revealElements.forEach((element) => {
-      element.classList.add('is-visible');
-    });
-    staggerContainers.forEach((container) => {
-      const children = Array.from(container.children).filter((child) => child instanceof HTMLElement);
-      children.forEach((child) => child.classList.add('is-visible'));
-      if (container instanceof HTMLElement) {
-        container.dataset.staggerDone = 'true';
-      }
-    });
-    statCounters.forEach((counter) => {
-      setCounterFinal(counter);
-    });
-    return;
-  }
-
-  const revealObserver = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      });
-    },
-    {
-      threshold: 0.16,
-      rootMargin: '0px 0px -8% 0px',
+  const initRevealAndCounters = () => {
+    const revealElements = document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up');
+    const staggerContainers = document.querySelectorAll('[data-stagger-reveal]');
+    const statCounters = document.querySelectorAll('[data-count-up]');
+    if (revealElements.length === 0 && staggerContainers.length === 0 && statCounters.length === 0) {
+      return;
     }
-  );
 
-  revealElements.forEach((element) => {
-    revealObserver.observe(element);
-  });
+    if (reducedMotion) {
+      revealElements.forEach((element) => {
+        element.classList.add('is-visible');
+      });
+      staggerContainers.forEach((container) => {
+        const children = Array.from(container.children).filter((child) => child instanceof HTMLElement);
+        children.forEach((child) => child.classList.add('is-visible'));
+        if (container instanceof HTMLElement) {
+          container.dataset.staggerDone = 'true';
+        }
+      });
+      statCounters.forEach((counter) => {
+        setCounterFinal(counter);
+      });
+      return;
+    }
 
-  if (staggerContainers.length > 0) {
-    const staggerObserver = new IntersectionObserver(
+    const revealObserver = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) {
             return;
           }
-          revealStaggerContainer(entry.target);
+          entry.target.classList.add('is-visible');
           observer.unobserve(entry.target);
         });
       },
       {
-        threshold: 0.12,
-        rootMargin: '0px 0px -10% 0px',
-      }
-    );
-
-    staggerContainers.forEach((container) => {
-      staggerObserver.observe(container);
-    });
-  }
-
-  if (statCounters.length > 0) {
-    const counterObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
-            return;
-          }
-
-          animateCounter(entry.target);
-          observer.unobserve(entry.target);
-        });
-      },
-      {
-        threshold: 0.45,
+        threshold: 0.16,
         rootMargin: '0px 0px -8% 0px',
       }
     );
 
-    statCounters.forEach((counter) => {
-      counterObserver.observe(counter);
+    revealElements.forEach((element) => {
+      revealObserver.observe(element);
     });
-  }
+
+    if (staggerContainers.length > 0) {
+      const staggerObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+            revealStaggerContainer(entry.target);
+            observer.unobserve(entry.target);
+          });
+        },
+        {
+          threshold: 0.12,
+          rootMargin: '0px 0px -10% 0px',
+        }
+      );
+
+      staggerContainers.forEach((container) => {
+        staggerObserver.observe(container);
+      });
+    }
+
+    if (statCounters.length > 0) {
+      const counterObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            animateCounter(entry.target);
+            observer.unobserve(entry.target);
+          });
+        },
+        {
+          threshold: 0.45,
+          rootMargin: '0px 0px -8% 0px',
+        }
+      );
+
+      statCounters.forEach((counter) => {
+        counterObserver.observe(counter);
+      });
+    }
+  };
+
+  scheduleInteractiveDeferred(initRevealAndCounters, 3600, 1600);
 });

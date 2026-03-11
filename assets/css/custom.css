@@ -292,6 +292,7 @@ html.light {
 html:not(.perf-enhanced) .liquid-blob,
 html:not(.perf-enhanced) .liquid-glow,
 html:not(.perf-enhanced) .hero-lcp-glow,
+html:not(.perf-enhanced) .hero-lcp-overlay,
 html:not(.perf-enhanced) .hero-status-card {
   display: none;
 }
@@ -319,6 +320,14 @@ html:not(.perf-enhanced) .rotating-border-container::before {
 html:not(.perf-enhanced) .hero-lcp-frame.rotating-border-container::before {
   animation: none;
   opacity: 0;
+}
+
+html:not(.perf-enhanced) #hero-typing::after {
+  animation: none;
+}
+
+html:not(.perf-enhanced) .premium-badge .animate-ping {
+  display: none;
 }
 
 /* Reduce initial style/layout cost on home by deferring deep sections. */
