@@ -79,6 +79,13 @@ const safelist = {
   ],
 };
 
+const defaultExtractor = (content) => {
+  // Keep Tailwind arbitrary values, e.g.:
+  // md:text-[4.5rem], bg-white/[0.02], shadow-[0_20px_40px_rgba(19,236,236,0.15)]
+  const matches = content.match(/[A-Za-z0-9-_:/.[\]%#(),]+/g);
+  return matches || [];
+};
+
 const ensureSourceFiles = () => {
   const required = [...cssSources, ...pages.flatMap((page) => [page.html, ...page.extraContent])];
   const missing = required.filter((file) => !existsSync(file));
@@ -100,6 +107,7 @@ const buildPageCss = async (page) => {
     content: [page.html, ...page.extraContent],
     css: cssSources,
     safelist,
+    defaultExtractor,
     rejected: false,
   });
 
